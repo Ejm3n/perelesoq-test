@@ -4,14 +4,9 @@ using UnityEngine;
 
 namespace SmartHome.Domain
 {
-    public sealed class GateOr : IDevice, IElectricNode
+    public sealed class GateOr : LogicGate
     {
-        private readonly IElectricNode _a;
-        private readonly IElectricNode _b;
-        public DeviceId Id { get; } = DeviceId.NewId();
-        public string Name => "Gate OR";
-        public bool HasCurrent => _a.HasCurrent || _b.HasCurrent;
-        public GateOr(IElectricNode a, IElectricNode b) { _a = a; _b = b; }
-        public void Tick(float _) { }
+        public GateOr(IElectricNode a, IElectricNode b) : base(a, b) { }
+        public override bool HasCurrent => _a.HasCurrent || _b.HasCurrent;
     }
 }
