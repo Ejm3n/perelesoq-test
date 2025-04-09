@@ -1,0 +1,34 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace SmartHome.Domain
+{
+    public sealed class PowerSource : IDevice, IElectricNode
+    {
+        public DeviceId Id { get; } = DeviceId.NewId();
+        public string Name => "Power Source";
+
+        public float CurrentPower { get; private set; }
+        public float TotalConsumedEnergy { get; private set; }
+
+        private readonly List<IConsumable> _consumers = new();
+
+        public void RegisterConsumer(IConsumable consumer) => _consumers.Add(consumer);
+
+        public void Tick(float deltaTime)
+        {
+            CurrentPower = 0f;
+            foreach (var c in _consumers)
+            {
+                if (c.IsOn)
+                {
+                    CurrentPower += c.RatedPower;
+                    TotalConsumedEnergy += c.RatedPower * deltaTime / 1000f; // W*s -> kWh
+                }
+            }
+        }
+
+        public bool HasCurrent => true; // Always powered
+    }
+}
