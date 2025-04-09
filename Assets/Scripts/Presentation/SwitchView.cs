@@ -9,18 +9,18 @@ namespace SmartHome.Presentation
 {
     public sealed class SwitchView : MonoBehaviour
     {
-        [SerializeField] private Button _button;
-        private ISwitchable _switch;
+        [SerializeField] private Toggle _toggle;
+        private Domain.ElectricSwitch _switch;
         private ToggleDeviceUseCase _useCase;
         private DeviceId _id;
 
-        public void Init(ISwitchable sw, ToggleDeviceUseCase uc)
+        public void Init(ElectricSwitch sw, ToggleDeviceUseCase uc)
         {
             _switch = sw;
             _useCase = uc;
             _id = (sw as IDevice)!.Id;
-            _button.onClick.AddListener(OnClick);
+            _toggle.onValueChanged.AddListener(OnClick);
         }
-        private void OnClick() => _useCase.Execute(_id);
+        private void OnClick(bool isOn) => _useCase.Execute(_id, isOn);
     }
 }

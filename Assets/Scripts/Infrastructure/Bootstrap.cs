@@ -10,7 +10,6 @@ namespace SmartHome.Infrastructure
     {
         [SerializeField] private Presentation.LampView _lampViewPrefab;
         [SerializeField] private Presentation.SwitchView _switchViewPrefab;
-        [SerializeField] private Presentation.CameraFeedView _cameraViewPrefab;
         [SerializeField] private Transform _uiRoot;
 
         private DeviceRepository _repo;

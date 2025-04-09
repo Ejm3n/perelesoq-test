@@ -11,10 +11,10 @@ namespace SmartHome.Application
         private readonly IDeviceRepository _repo;
         public ToggleDeviceUseCase(IDeviceRepository repo) => _repo = repo;
 
-        public void Execute(DeviceId id)
+        public void Execute(DeviceId id, bool isOn)
         {
             if (_repo.Get<IDevice>(id) is ISwitchable s)
-                s.Switch(!s.IsOn);
+                s.Switch(isOn);
             else
                 throw new InvalidOperationException("Device is not switchable");
         }

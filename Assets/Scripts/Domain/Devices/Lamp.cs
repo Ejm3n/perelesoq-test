@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SmartHome.Domain
 {
-    public sealed class Lamp : IDevice, IConsumable
+    public sealed class Lamp : IDevice, IConsumable, ISwitchable
     {
         private readonly IElectricNode _input;
         public DeviceId Id { get; } = DeviceId.NewId();
