@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace SmartHome.Presentation
 {
-    public sealed class SwitchView : MonoBehaviour
+    public sealed class SwitchView : DeviceWidgetView
     {
         [SerializeField] private Toggle _toggle;
         private Domain.ElectricSwitch _switch;
@@ -20,7 +20,12 @@ namespace SmartHome.Presentation
             _useCase = uc;
             _id = (sw as IDevice)!.Id;
             _toggle.onValueChanged.AddListener(OnClick);
+            OnClick(_toggle.isOn);
         }
-        private void OnClick(bool isOn) => _useCase.Execute(_id, isOn);
+        private void OnClick(bool isOn)
+        {
+            _useCase.ExecuteRepository(isOn);
+            SetStatus(isOn ? "ON" : "OFF");
+        }
     }
 }

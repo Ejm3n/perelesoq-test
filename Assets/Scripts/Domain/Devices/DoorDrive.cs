@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +11,7 @@ namespace SmartHome.Domain
         private const float _operationEnergyWh = 50f; // per open/close
         public DeviceId Id { get; } = DeviceId.NewId();
         public string Name => "Door Drive";
-
+        public event Action<bool> OnSwitch;
         public bool IsOn => _progress > 0f && _progress < 1f;
         public float RatedPower => 0f; // N/A – energy counted per operation
         public float ConsumedEnergy { get; private set; }

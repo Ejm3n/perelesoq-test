@@ -9,9 +9,16 @@ namespace SmartHome.Presentation
         public void Init(Lamp lamp)
         {
             _lamp = lamp;
-            Refresh();
+            if (_lamp != null)
+                _lamp.OnSwitch += Refresh;
         }
 
-        private void Refresh() => SetStatus(_lamp.IsOn ? "ON" : "OFF");
+        private void OnDisable()
+        {
+            if (_lamp != null)
+                _lamp.OnSwitch -= Refresh;
+        }
+
+        private void Refresh(bool status) => SetStatus(status ? "ON" : "OFF");
     }
 }
