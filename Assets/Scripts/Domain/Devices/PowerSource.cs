@@ -39,6 +39,8 @@ namespace SmartHome.Domain
             OnTimeChange?.Invoke(Time);
         }
 
+        public void ConnectInput(IElectricNode input) { }
+        public void AddOutput(IElectricNode output) { }
         public bool HasCurrent => true; // Always powered
     }
 }

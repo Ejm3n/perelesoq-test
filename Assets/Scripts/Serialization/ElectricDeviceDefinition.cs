@@ -1,18 +1,15 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using SmartHome.Domain;
 using UnityEngine;
 
-public class ElectricDeviceDefinition : MonoBehaviour
+namespace SmartHome.Serialization
 {
-    // Start is called before the first frame update
-    void Start()
+    [Serializable]
+    public sealed class ElectricDeviceDefinition
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public string id;
+        public ElectricDeviceType type;
+        public List<string> inputs;
     }
 }

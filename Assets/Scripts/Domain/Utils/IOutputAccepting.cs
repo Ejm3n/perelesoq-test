@@ -4,9 +4,8 @@ using UnityEngine;
 
 namespace SmartHome.Domain
 {
-    public interface IElectricNode
+    public interface IOutputAccepting
     {
-        bool HasCurrent { get; }
+        void ConnectOutput(IElectricNode output);
     }
-
 }

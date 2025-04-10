@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace SmartHome.Domain
 {
-    public sealed class Lamp : IDevice, IConsumable, ISwitchable
+    public sealed class Lamp : IDevice, IConsumable, ISwitchable, IInputAccepting, IElectricNode
     {
-        private readonly IElectricNode _input;
+        private IElectricNode _input;
         public DeviceId Id { get; } = DeviceId.NewId();
         public string Name => "Lamp";
         public event Action<bool> OnSwitch;
@@ -31,5 +31,12 @@ namespace SmartHome.Domain
             if (IsOn)
                 ConsumedEnergy += RatedPower * deltaTime / 1000f;
         }
+
+        public void ConnectInput(IElectricNode node)
+        {
+            _input = node;
+        }
+
+        public bool HasCurrent => IsOn && _input.HasCurrent;
     }
 }

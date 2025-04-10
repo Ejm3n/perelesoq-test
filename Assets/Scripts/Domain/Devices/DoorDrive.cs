@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace SmartHome.Domain
 {
-    public sealed class DoorDrive : IDevice, IConsumable
+    public sealed class DoorDrive : IDevice, IConsumable, IInputAccepting, IElectricNode
     {
-        private readonly IElectricNode _input;
+        private IElectricNode _input;
         private const float _operationEnergyWh = 50f; // per open/close
         public DeviceId Id { get; } = DeviceId.NewId();
         public string Name => "Door Drive";
@@ -32,6 +32,13 @@ namespace SmartHome.Domain
             _progress = Mathf.Clamp01(_progress + dir * deltaTime / 5f); // 5 seconds
             ConsumedEnergy += _operationEnergyWh * deltaTime / 5f / 1000f;
         }
+
+        public void ConnectInput(IElectricNode input)
+        {
+            _input = input;
+        }
+
+        public bool HasCurrent => _input.HasCurrent;
     }
 
 }

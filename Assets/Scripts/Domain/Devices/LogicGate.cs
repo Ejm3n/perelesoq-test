@@ -18,5 +18,7 @@ namespace SmartHome.Domain
         }
         public abstract bool HasCurrent { get; }
         public void Tick(float _) { }
+        public void ConnectInput(IElectricNode input) { }
+        public void AddOutput(IElectricNode output) { }
     }
 }

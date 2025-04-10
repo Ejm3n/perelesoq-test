@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 namespace SmartHome.Domain
 {
-    public interface IElectricNode
+    public interface IInputAccepting
     {
-        bool HasCurrent { get; }
+        void ConnectInput(IElectricNode input);
     }
-
 }

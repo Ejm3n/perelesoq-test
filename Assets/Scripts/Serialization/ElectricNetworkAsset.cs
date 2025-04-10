@@ -2,17 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ElectricNetworkAsset : MonoBehaviour
+namespace SmartHome.Serialization
 {
-    // Start is called before the first frame update
-    void Start()
+    [CreateAssetMenu(menuName = "Electric/ElectricNetworkAsset")]
+    public class ElectricNetworkAsset : ScriptableObject
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public List<ElectricDeviceDefinition> devices = new();
     }
 }
