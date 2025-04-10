@@ -15,6 +15,11 @@ namespace SmartHome.Serialization
         private GraphNode _selectedOutput;
         private ElectricNetworkAsset _currentAsset;
         private bool _dirty;
+        private const float NODE_WIDTH = 200f;
+        private const float NODE_HEIGHT = 120f;
+        private const float ARROW_SIZE = 10f;
+        private const float CURVE_OFFSET = 50f;
+
 
         [MenuItem("SmartHome/Graph Editor")]
         public static void ShowWindow()
@@ -41,7 +46,7 @@ namespace SmartHome.Serialization
             {
                 if (GUILayout.Button($"Add {type}"))
                 {
-                    _nodes.Add(new GraphNode(type, new Rect(300, 200, 200, 120)));
+                    _nodes.Add(new GraphNode(type, new Rect(300, 200, NODE_WIDTH, NODE_HEIGHT)));
                     _dirty = true;
                 }
             }
@@ -138,17 +143,36 @@ namespace SmartHome.Serialization
         {
             foreach (var edge in _edges)
             {
-                Handles.DrawBezier(
-                    edge.output.rect.center,
-                    edge.input.rect.center,
-                    edge.output.rect.center + Vector2.right * 50f,
-                    edge.input.rect.center + Vector2.left * 50f,
-                    Color.yellow,
-                    null,
-                    3f
-                );
+                // выход — справа от output node
+                var start = new Vector2(edge.output.rect.xMax, edge.output.rect.center.y);
+                // вход — слева от input node
+                var end = new Vector2(edge.input.rect.xMin, edge.input.rect.center.y);
+
+                var startTangent = start + Vector2.right * 50f;
+                var endTangent = end + Vector2.left * 50f;
+
+                // рисуем связь
+                Handles.DrawBezier(start, end, startTangent, endTangent, Color.yellow, null, 3f);
+
+                // рисуем стрелочку у конца (у input)
+                DrawArrow(endTangent, end);
             }
         }
+
+        private void DrawArrow(Vector2 from, Vector2 to)
+        {
+            Vector2 direction = (to - from).normalized;
+            Vector2 perp = Vector2.Perpendicular(direction);
+            float size = 10f;
+
+            Vector2 p1 = to;
+            Vector2 p2 = to - direction * size + perp * size * 0.5f;
+            Vector2 p3 = to - direction * size - perp * size * 0.5f;
+
+            Handles.color = Color.yellow;
+            Handles.DrawAAConvexPolygon(p1, p2, p3);
+        }
+
 
         private void HandleEdgeClick()
         {
@@ -183,7 +207,8 @@ namespace SmartHome.Serialization
 
             var asset = ScriptableObject.CreateInstance<ElectricNetworkAsset>();
 
-            // 1. Переносим все ноды
+            // Создаём словарь ID → Definition
+            var definitions = new Dictionary<string, ElectricDeviceDefinition>();
             foreach (var node in _nodes)
             {
                 if (string.IsNullOrEmpty(node.id))
@@ -192,37 +217,31 @@ namespace SmartHome.Serialization
                     continue;
                 }
 
-                asset.devices.Add(new ElectricDeviceDefinition
+                var def = new ElectricDeviceDefinition
                 {
                     id = node.id,
                     type = node.type,
-                    inputs = new List<string>()
-                });
+                    inputs = new List<string>(),
+                    outputs = new List<string>()
+                };
+
+                definitions[node.id] = def;
+                asset.devices.Add(def);
             }
 
-            // 2. Переносим связи
+            // Связываем
             foreach (var edge in _edges)
             {
-                if (edge.output == null || edge.input == null)
-                {
-                    Debug.LogWarning("Edge with null endpoint found. Skipping.");
-                    continue;
-                }
+                if (edge.output == null || edge.input == null) continue;
 
-                var from = asset.devices.Find(d => d.id == edge.output.id);
-                if (from == null)
+                if (definitions.TryGetValue(edge.output.id, out var from) &&
+                    definitions.TryGetValue(edge.input.id, out var to))
                 {
-                    Debug.LogWarning($"Could not find output node with ID: {edge.output.id}");
-                    continue;
-                }
-
-                if (!from.inputs.Contains(edge.input.id))
-                {
-                    from.inputs.Add(edge.input.id);
+                    if (!from.outputs.Contains(to.id)) from.outputs.Add(to.id);
+                    if (!to.inputs.Contains(from.id)) to.inputs.Add(from.id);
                 }
             }
 
-            // 3. Показываем диалог
             string path = EditorUtility.SaveFilePanelInProject(
                 "Save Electric Network",
                 "NewElectricGraph",
@@ -230,15 +249,12 @@ namespace SmartHome.Serialization
                 "Choose location to save the electric graph asset"
             );
 
-            if (string.IsNullOrEmpty(path))
-                return;
+            if (string.IsNullOrEmpty(path)) return;
 
-            // 4. Проверяем и удаляем, если есть
             var existing = AssetDatabase.LoadAssetAtPath<ElectricNetworkAsset>(path);
             if (existing != null)
                 AssetDatabase.DeleteAsset(path);
 
-            // 5. Сохраняем
             AssetDatabase.CreateAsset(asset, path);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
@@ -253,26 +269,35 @@ namespace SmartHome.Serialization
             if (_currentAsset == null) return;
             _currentAsset.devices.Clear();
 
+            var definitions = new Dictionary<string, ElectricDeviceDefinition>();
             foreach (var node in _nodes)
             {
-                _currentAsset.devices.Add(new ElectricDeviceDefinition
+                var def = new ElectricDeviceDefinition
                 {
                     id = node.id,
-                    type = node.type
-                });
+                    type = node.type,
+                    inputs = new List<string>(),
+                    outputs = new List<string>()
+                };
+                definitions[node.id] = def;
+                _currentAsset.devices.Add(def);
             }
 
             foreach (var edge in _edges)
             {
-                var from = _currentAsset.devices.Find(d => d.id == edge.output.id);
-                if (!from.inputs.Contains(edge.input.id))
-                    from.inputs.Add(edge.input.id);
+                if (definitions.TryGetValue(edge.output.id, out var from) &&
+                    definitions.TryGetValue(edge.input.id, out var to))
+                {
+                    if (!from.outputs.Contains(to.id)) from.outputs.Add(to.id);
+                    if (!to.inputs.Contains(from.id)) to.inputs.Add(from.id);
+                }
             }
 
             EditorUtility.SetDirty(_currentAsset);
             AssetDatabase.SaveAssets();
             _dirty = false;
         }
+
 
         private void LoadAsset()
         {
@@ -301,7 +326,7 @@ namespace SmartHome.Serialization
                     continue;
                 }
 
-                var node = new GraphNode(def.type, new Rect(UnityEngine.Random.Range(100, 600), UnityEngine.Random.Range(100, 500), 200, 120), def.id);
+                var node = new GraphNode(def.type, new Rect(UnityEngine.Random.Range(100, 600), UnityEngine.Random.Range(100, 500), NODE_WIDTH, NODE_HEIGHT), def.id);
                 _nodes.Add(node);
                 map[def.id] = node;
             }
@@ -312,9 +337,9 @@ namespace SmartHome.Serialization
 
                 foreach (var inputId in def.inputs)
                 {
-                    if (map.TryGetValue(def.id, out var outputNode) && map.TryGetValue(inputId, out var inputNode))
+                    if (map.TryGetValue(def.id, out var inputNode) && map.TryGetValue(inputId, out var outputNode))
                     {
-                        _edges.Add(new GraphEdge(outputNode, inputNode));
+                        _edges.Add(new GraphEdge(outputNode, inputNode)); // <-- было наоборот
                     }
                     else
                     {

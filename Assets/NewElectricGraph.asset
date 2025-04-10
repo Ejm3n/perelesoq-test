@@ -13,10 +13,19 @@ MonoBehaviour:
   m_Name: NewElectricGraph
   m_EditorClassIdentifier: 
   devices:
-  - id: 2
+  - id: PS
     type: 0
     inputs: []
-  - id: 1
+    outputs:
+    - S1
+  - id: S1
     type: 1
     inputs:
-    - 2
+    - PS
+    outputs:
+    - Lamp 1
+  - id: Lamp 1
+    type: 2
+    inputs:
+    - S1
+    outputs: []

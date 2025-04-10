@@ -11,5 +11,6 @@ namespace SmartHome.Serialization
         public string id;
         public ElectricDeviceType type;
         public List<string> inputs;
+        public List<string> outputs;
     }
 }
