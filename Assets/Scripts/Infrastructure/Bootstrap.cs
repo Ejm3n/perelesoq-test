@@ -10,6 +10,7 @@ namespace SmartHome.Infrastructure
     {
         [SerializeField] private Presentation.LampView _lampViewPrefab;
         [SerializeField] private Presentation.SwitchView _switchViewPrefab;
+        [SerializeField] private Presentation.PowerSourceView _powerSourceView;
         [SerializeField] private Transform _uiRoot;
 
         private DeviceRepository _repo;
@@ -28,6 +29,7 @@ namespace SmartHome.Infrastructure
             _repo.Add(_power);
             _repo.Add(wallSwitch);
             _repo.Add(lamp);
+            _power.RegisterConsumer(lamp);
 
             // 3. Use‑cases
             _toggleUC = new Application.ToggleDeviceUseCase(_repo);
@@ -38,6 +40,10 @@ namespace SmartHome.Infrastructure
 
             var switchView = Instantiate(_switchViewPrefab, _uiRoot);
             switchView.Init(wallSwitch, _toggleUC);
+
+            _powerSourceView.Init(_power);
+
+            gameObject.AddComponent<SimulationLoop>().Init(_repo);
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,9 @@ namespace SmartHome.Domain
 
         public float CurrentPower { get; private set; }
         public float TotalConsumedEnergy { get; private set; }
+        public float Time { get; private set; }
+        public event Action<float, float> OnPowerChange; // current power, total consumed energy
+        public event Action<float> OnTimeChange; // time
 
         private readonly List<IConsumable> _consumers = new();
 
@@ -25,8 +29,14 @@ namespace SmartHome.Domain
                 {
                     CurrentPower += c.RatedPower;
                     TotalConsumedEnergy += c.RatedPower * deltaTime / 1000f; // W*s -> kWh
+
                 }
             }
+
+            OnPowerChange?.Invoke(CurrentPower, TotalConsumedEnergy);
+
+            Time += deltaTime;
+            OnTimeChange?.Invoke(Time);
         }
 
         public bool HasCurrent => true; // Always powered

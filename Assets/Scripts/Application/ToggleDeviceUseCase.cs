@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using SmartHome.Domain;
-using UnityEngine;
 
 namespace SmartHome.Application
 {
@@ -23,7 +19,6 @@ namespace SmartHome.Application
         {
             if (_repo.Get<IDevice>(id) is ISwitchable s)
             {
-                Debug.Log($"Switching device {id} to {isOn}");
                 s.Switch(isOn);
             }
         }
