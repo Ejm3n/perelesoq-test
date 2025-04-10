@@ -12,5 +12,8 @@ namespace SmartHome.Serialization
         public ElectricDeviceType type;
         public List<string> inputs;
         public List<string> outputs;
+        public float posX;
+        public float posY;
+
     }
 }

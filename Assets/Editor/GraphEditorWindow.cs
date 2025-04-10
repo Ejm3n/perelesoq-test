@@ -19,6 +19,8 @@ namespace SmartHome.Serialization
         private const float NODE_HEIGHT = 120f;
         private const float ARROW_SIZE = 10f;
         private const float CURVE_OFFSET = 50f;
+        private Rect _canvasRect;
+        private Vector2 _canvasOffset; // Смещение всех нод относительно канваса
 
 
         [MenuItem("SmartHome/Graph Editor")]
@@ -32,10 +34,48 @@ namespace SmartHome.Serialization
         private void OnGUI()
         {
             EditorGUILayout.BeginHorizontal();
+
             DrawSidebar();
-            DrawCanvas();
+
+            _canvasRect = CalculateCanvasRect();
+
+            _scrollPos = EditorGUILayout.BeginScrollView(
+                _scrollPos, true, true,
+                GUILayout.Width(position.width - 250),
+                GUILayout.Height(position.height)
+            );
+
+            GUI.BeginGroup(_canvasRect);
+
+            // ✅ ФОН
+            GUI.color = new Color(0.2f, 0.2f, 0.2f, 1f);
+            GUI.DrawTexture(new Rect(0, 0, _canvasRect.width, _canvasRect.height), Texture2D.whiteTexture);
+            GUI.color = Color.white;
+
+            // ✅ СВЯЗИ
+            DrawEdges(_canvasOffset);
+
+            // ✅ НОДЫ
+            BeginWindows();
+            for (int i = 0; i < _nodes.Count; i++)
+            {
+                var node = _nodes[i];
+                var drawRect = node.rect;
+                drawRect.position -= _canvasOffset;
+                var updated = GUI.Window(i, drawRect, id => DrawNodeWindow(id), node.id);
+                node.rect.position = updated.position + _canvasOffset;
+            }
+            EndWindows();
+
+            GUI.EndGroup();
+            EditorGUILayout.EndScrollView();
+
             EditorGUILayout.EndHorizontal();
+
+            HandleEdgeClick(Vector2.zero);
         }
+
+
 
         private void DrawSidebar()
         {
@@ -48,6 +88,7 @@ namespace SmartHome.Serialization
                 {
                     _nodes.Add(new GraphNode(type, new Rect(300, 200, NODE_WIDTH, NODE_HEIGHT)));
                     _dirty = true;
+                    FocusCanvas();
                 }
             }
 
@@ -88,41 +129,78 @@ namespace SmartHome.Serialization
 
         private void DrawCanvas()
         {
-            Rect canvasRect = CalculateCanvasRect();
-            _scrollPos = EditorGUILayout.BeginScrollView(_scrollPos, true, true, GUILayout.Width(position.width - 250), GUILayout.Height(position.height));
-            GUILayout.BeginArea(canvasRect);
+            var canvasRect = CalculateCanvasRect(); // динамический канвас
+            _scrollPos = EditorGUILayout.BeginScrollView(
+                _scrollPos, true, true,
+                GUILayout.Width(position.width - 250),
+                GUILayout.Height(position.height)
+            );
+
+            GUI.BeginGroup(new Rect(-_scrollPos.x, -_scrollPos.y, canvasRect.width, canvasRect.height));
 
 
             BeginWindows();
             for (int i = 0; i < _nodes.Count; i++)
             {
-                _nodes[i].rect = GUI.Window(i, _nodes[i].rect, DrawNodeWindow, _nodes[i].id);
+                var node = _nodes[i];
+                node.rect = GUI.Window(i, node.rect, id => DrawNodeWindow(id), node.id);
             }
             EndWindows();
-            GUILayout.EndArea();
-            EditorGUILayout.EndScrollView();
-            DrawEdges();
-            HandleEdgeClick();
+
+            DrawEdges(Vector2.zero); // offset уже включен в позиции
+            GUI.EndGroup();
             EditorGUILayout.EndScrollView();
 
+            HandleEdgeClick(Vector2.zero);
         }
+
         private Rect CalculateCanvasRect()
         {
-            float padding = 500f;
-
             if (_nodes.Count == 0)
-                return new Rect(0, 0, 4000, 4000); // default big canvas
+            {
+                _canvasOffset = Vector2.zero;
+                return new Rect(0, 0, 2000, 2000);
+            }
 
             float minX = _nodes.Min(n => n.rect.xMin);
             float minY = _nodes.Min(n => n.rect.yMin);
             float maxX = _nodes.Max(n => n.rect.xMax);
             float maxY = _nodes.Max(n => n.rect.yMax);
 
-            return new Rect(
-                minX - padding,
-                minY - padding,
-                (maxX - minX) + padding * 2,
-                (maxY - minY) + padding * 2
+            float padding = 300f;
+
+            _canvasOffset = new Vector2(minX - padding, minY - padding);
+            float width = (maxX - minX) + 2 * padding;
+            float height = (maxY - minY) + 2 * padding;
+
+            return new Rect(0, 0, width, height);
+        }
+
+
+        private void FocusCanvas()
+        {
+            if (_nodes.Count == 0) return;
+
+            var bounds = new Rect(
+                _nodes.Min(n => n.rect.xMin),
+                _nodes.Min(n => n.rect.yMin),
+                _nodes.Max(n => n.rect.xMax) - _nodes.Min(n => n.rect.xMin),
+                _nodes.Max(n => n.rect.yMax) - _nodes.Min(n => n.rect.yMin)
+            );
+
+            // Improved scroll position calculation
+            var canvasRect = CalculateCanvasRect();
+            float viewWidth = position.width - 250; // Account for sidebar
+            float viewHeight = position.height;
+
+            _scrollPos.x = Mathf.Clamp(
+                (canvasRect.width - viewWidth) * 0.5f,
+                0, canvasRect.width - viewWidth
+            );
+
+            _scrollPos.y = Mathf.Clamp(
+                (canvasRect.height - viewHeight) * 0.5f,
+                0, canvasRect.height - viewHeight
             );
         }
 
@@ -130,6 +208,7 @@ namespace SmartHome.Serialization
         {
             var node = _nodes[id];
             node.id = EditorGUILayout.TextField("ID", node.id);
+            // node.rect.position = GUI.Window(id, node.rect, id => DrawNodeWindow(id), node.id).position;
             GUILayout.Label(node.type.ToString());
 
             if (GUILayout.Button("Connect"))
@@ -164,25 +243,20 @@ namespace SmartHome.Serialization
             GUI.DragWindow();
         }
 
-        private void DrawEdges()
+        private void DrawEdges(Vector2 offset)
         {
             foreach (var edge in _edges)
             {
-                // выход — справа от output node
-                var start = new Vector2(edge.output.rect.xMax, edge.output.rect.center.y);
-                // вход — слева от input node
-                var end = new Vector2(edge.input.rect.xMin, edge.input.rect.center.y);
-
+                var start = new Vector2(edge.output.rect.xMax, edge.output.rect.center.y) - offset;
+                var end = new Vector2(edge.input.rect.xMin, edge.input.rect.center.y) - offset;
                 var startTangent = start + Vector2.right * 50f;
                 var endTangent = end + Vector2.left * 50f;
 
-                // рисуем связь
                 Handles.DrawBezier(start, end, startTangent, endTangent, Color.yellow, null, 3f);
-
-                // рисуем стрелочку у конца (у input)
                 DrawArrow(endTangent, end);
             }
         }
+
 
         private void DrawArrow(Vector2 from, Vector2 to)
         {
@@ -199,12 +273,12 @@ namespace SmartHome.Serialization
         }
 
 
-        private void HandleEdgeClick()
+        private void HandleEdgeClick(Vector2 offset)
         {
             Event e = Event.current;
             if (e.type == EventType.MouseDown && e.button == 1)
             {
-                Vector2 mousePos = e.mousePosition;
+                Vector2 mousePos = e.mousePosition - offset;
                 var toRemove = _edges.FirstOrDefault(edge =>
                 {
                     float dist = HandleUtility.DistancePointBezier(mousePos, edge.output.rect.center, edge.input.rect.center,
@@ -221,6 +295,7 @@ namespace SmartHome.Serialization
                 }
             }
         }
+
 
         private void SaveAsset()
         {
@@ -247,8 +322,11 @@ namespace SmartHome.Serialization
                     id = node.id,
                     type = node.type,
                     inputs = new List<string>(),
-                    outputs = new List<string>()
+                    outputs = new List<string>(),
+                    posX = node.rect.x,
+                    posY = node.rect.y
                 };
+
 
                 definitions[node.id] = def;
                 asset.devices.Add(def);
@@ -302,7 +380,9 @@ namespace SmartHome.Serialization
                     id = node.id,
                     type = node.type,
                     inputs = new List<string>(),
-                    outputs = new List<string>()
+                    outputs = new List<string>(),
+                    posX = node.rect.x,
+                    posY = node.rect.y
                 };
                 definitions[node.id] = def;
                 _currentAsset.devices.Add(def);
@@ -350,8 +430,8 @@ namespace SmartHome.Serialization
                     Debug.LogWarning("Skipping node with empty ID.");
                     continue;
                 }
-
-                var node = new GraphNode(def.type, new Rect(UnityEngine.Random.Range(100, 600), UnityEngine.Random.Range(100, 500), NODE_WIDTH, NODE_HEIGHT), def.id);
+                var rect = new Rect(def.posX, def.posY, NODE_WIDTH, NODE_HEIGHT);
+                var node = new GraphNode(def.type, rect, def.id);
                 _nodes.Add(node);
                 map[def.id] = node;
             }
@@ -372,7 +452,15 @@ namespace SmartHome.Serialization
                     }
                 }
             }
-
+            // Центрируем канвас по содержимому
+            var bounds = new Rect(
+                _nodes.Min(n => n.rect.xMin),
+                _nodes.Min(n => n.rect.yMin),
+                _nodes.Max(n => n.rect.xMax) - _nodes.Min(n => n.rect.xMin),
+                _nodes.Max(n => n.rect.yMax) - _nodes.Min(n => n.rect.yMin)
+            );
+            _scrollPos = new Vector2(bounds.x - 100f, bounds.y - 100f);
+            FocusCanvas();
             _dirty = false;
         }
 
