@@ -34,10 +34,15 @@ namespace SmartHome.Serialization
 
         private void OnGUI()
         {
+            // Draw full canvas background
+            GUI.color = new Color(0.2f, 0.2f, 0.2f, 1f);
+            GUI.DrawTexture(new Rect(0, 0, position.width, position.height), Texture2D.whiteTexture);
+            GUI.color = Color.white;
+
+            // Start main horizontal layout
             EditorGUILayout.BeginHorizontal();
 
-            DrawSidebar();
-
+            // Draw the canvas with scroll and nodes
             GUILayout.BeginVertical();
             scrollPosition = GUI.BeginScrollView(new Rect(0, 0, position.width, position.height), scrollPosition, scrollAreaSize);
 
@@ -52,22 +57,33 @@ namespace SmartHome.Serialization
             EndWindows();
 
             GUI.EndScrollView();
-
             GUILayout.EndVertical();
+
+            // Draw sidebar as overlay
+            float sidebarWidth = 250f;
+            Rect sidebarRect = new Rect(0, 0, sidebarWidth, position.height);
+            GUI.color = new Color(0.12f, 0.12f, 0.12f, 1f); // darker than canvas
+            GUI.DrawTexture(sidebarRect, Texture2D.whiteTexture);
+            GUI.color = Color.white;
+
+            GUILayout.BeginArea(sidebarRect);
+            DrawSidebar();
+            GUILayout.EndArea();
 
             EditorGUILayout.EndHorizontal();
         }
 
+
         private void DrawSidebar()
         {
-            EditorGUILayout.BeginVertical(GUILayout.Width(250));
+            EditorGUILayout.BeginVertical();
             EditorGUILayout.LabelField("Devices", EditorStyles.boldLabel);
 
             foreach (ElectricDeviceType type in Enum.GetValues(typeof(ElectricDeviceType)))
             {
                 if (GUILayout.Button($"Add {type}"))
                 {
-                    _nodes.Add(new GraphNode(type, new Rect(UnityEngine.Random.Range(100, 400), UnityEngine.Random.Range(100, 400), NODE_WIDTH, NODE_HEIGHT)));
+                    _nodes.Add(new GraphNode(type, new Rect(UnityEngine.Random.Range(300, 700), UnityEngine.Random.Range(100, 400), NODE_WIDTH, NODE_HEIGHT)));
                     _dirty = true;
                 }
             }
