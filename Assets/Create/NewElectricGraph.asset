@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: NewElectricGraph
   m_EditorClassIdentifier: 
   devices:
-  - id: 0c011fcf-b5cc-4e81-93b0-5564c11e6c67
+  - id: 2
     type: 0
     inputs: []
+  - id: 1
+    type: 1
+    inputs:
+    - 2
