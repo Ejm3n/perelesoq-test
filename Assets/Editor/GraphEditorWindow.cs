@@ -88,7 +88,10 @@ namespace SmartHome.Serialization
 
         private void DrawCanvas()
         {
+            Rect canvasRect = CalculateCanvasRect();
             _scrollPos = EditorGUILayout.BeginScrollView(_scrollPos, true, true, GUILayout.Width(position.width - 250), GUILayout.Height(position.height));
+            GUILayout.BeginArea(canvasRect);
+
 
             BeginWindows();
             for (int i = 0; i < _nodes.Count; i++)
@@ -96,9 +99,31 @@ namespace SmartHome.Serialization
                 _nodes[i].rect = GUI.Window(i, _nodes[i].rect, DrawNodeWindow, _nodes[i].id);
             }
             EndWindows();
+            GUILayout.EndArea();
+            EditorGUILayout.EndScrollView();
             DrawEdges();
             HandleEdgeClick();
             EditorGUILayout.EndScrollView();
+
+        }
+        private Rect CalculateCanvasRect()
+        {
+            float padding = 500f;
+
+            if (_nodes.Count == 0)
+                return new Rect(0, 0, 4000, 4000); // default big canvas
+
+            float minX = _nodes.Min(n => n.rect.xMin);
+            float minY = _nodes.Min(n => n.rect.yMin);
+            float maxX = _nodes.Max(n => n.rect.xMax);
+            float maxY = _nodes.Max(n => n.rect.yMax);
+
+            return new Rect(
+                minX - padding,
+                minY - padding,
+                (maxX - minX) + padding * 2,
+                (maxY - minY) + padding * 2
+            );
         }
 
         private void DrawNodeWindow(int id)
