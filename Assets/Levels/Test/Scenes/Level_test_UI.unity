@@ -210,7 +210,7 @@ MonoBehaviour:
   _lampPrefab: {fileID: 5601340230633188733, guid: ccf58d821c65c3e4bad7f4e6d087504b, type: 3}
   _switchPrefab: {fileID: 8441482422895203116, guid: 2bd7cbc29f1abfa499f4b61e26b4b0b2, type: 3}
   _doorPrefab: {fileID: 9221084069286670176, guid: f391bf2cd9b2b5a4b87539c73db9f849, type: 3}
-  _cameraPrefab: {fileID: 0}
+  _cameraPrefab: {fileID: 5369287420893426885, guid: a008335cf31c7ed42af6cd66b54f9a9d, type: 3}
 --- !u!114 &360091074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -576,7 +576,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.00010113625}
+  m_AnchoredPosition: {x: 0, y: -0.000109802924}
   m_SizeDelta: {x: 0, y: 886.3367}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &481993302
@@ -1056,7 +1056,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1334784485}
   m_HandleRect: {fileID: 1334784484}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2640,11 +2640,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2806585787481988980, guid: a008335cf31c7ed42af6cd66b54f9a9d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 407.5
+      value: 130.5
       objectReference: {fileID: 0}
     - target: {fileID: 2806585787481988980, guid: a008335cf31c7ed42af6cd66b54f9a9d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -257
+      value: -45
       objectReference: {fileID: 0}
     - target: {fileID: 2806585787481988980, guid: a008335cf31c7ed42af6cd66b54f9a9d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

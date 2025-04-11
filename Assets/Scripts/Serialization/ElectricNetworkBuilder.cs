@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using SmartHome.Application;
 using SmartHome.Domain;
 using UnityEngine;
 
@@ -6,21 +7,35 @@ namespace SmartHome.Serialization
 {
     public static class ElectricNetworkBuilder
     {
-        public static Dictionary<string, IElectricNode> BuildFromAsset(ElectricNetworkAsset asset)
+        public static Dictionary<string, IElectricNode> BuildFromAsset(ElectricNetworkAsset asset,
+            IDeviceRepository repo,
+            List<CameraDevice> cameraDevices)
         {
             var nodes = new Dictionary<string, IElectricNode>();
 
-            // 1. Создание всех нод
             foreach (var def in asset.devices)
             {
                 var id = new DeviceId(def.id);
-                nodes[def.id] = CreateNode(def.type, id, def.energyRequired, def.useDuration);
+                var node = CreateNode(def.type, id, def.energyRequired, def.useDuration);
+
+                if (node is IDevice device)
+                {
+                    repo.Add(device);
+                    DeviceFactoryNotifier.Notify(id, device);
+                }
+
+                if (node is CameraDevice cam)
+                    cameraDevices.Add(cam);
+
+                if (node is IElectricNode electricNode)
+                    nodes[def.id] = electricNode;
             }
 
-            // 2. Подключение связей: входы и выходы
+            // Подключение связей
             foreach (var def in asset.devices)
             {
-                var current = nodes[def.id];
+                if (!nodes.TryGetValue(def.id, out var current))
+                    continue;
 
                 foreach (var inputId in def.inputs)
                 {
@@ -31,17 +46,14 @@ namespace SmartHome.Serialization
                         inputAccepting.ConnectInput(input);
 
                     if (input is IOutputAccepting outputAccepting)
-                    {
                         outputAccepting.ConnectOutput(current);
-                    }
                 }
             }
 
             return nodes;
         }
 
-
-        public static IElectricNode CreateNode(ElectricDeviceType type, DeviceId id, float energyRequired, float useDuration)
+        public static object CreateNode(ElectricDeviceType type, DeviceId id, float energyRequired, float useDuration)
         {
             return type switch
             {
@@ -51,7 +63,8 @@ namespace SmartHome.Serialization
                 ElectricDeviceType.Door => new DoorDrive(null, id, energyRequired, useDuration),
                 ElectricDeviceType.AndGate => new ElectricNodeComposite(Logic.And, id),
                 ElectricDeviceType.OrGate => new ElectricNodeComposite(Logic.Or, id),
-                _ => throw new System.Exception($"Unsupported type: {type}")
+                ElectricDeviceType.Camera => new CameraDevice(id),
+                _ => throw new System.Exception($"Unsupported device type: {type}")
             };
         }
     }

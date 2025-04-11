@@ -9,7 +9,6 @@ namespace SmartHome.Domain
     {
         private IElectricNode _input;
         public DeviceId Id { get; private set; }
-        public string Name => "Lamp";
         public event Action<bool> OnSwitch;
         public bool IsOn { get; private set; }
         public float RatedPower { get; }

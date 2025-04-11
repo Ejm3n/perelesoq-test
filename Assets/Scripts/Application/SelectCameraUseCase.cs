@@ -1,20 +1,24 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using SmartHome.Domain;
-using UnityEngine;
 
 namespace SmartHome.Application
 {
     public sealed class SelectCameraUseCase
     {
-        private readonly IDeviceRepository _repo;
-        public CameraDevice ActiveCamera { get; private set; }
-        public SelectCameraUseCase(IDeviceRepository repo) => _repo = repo;
+        private readonly List<CameraDevice> _allCameras;
 
-        public void Execute(DeviceId id)
+        public SelectCameraUseCase(List<CameraDevice> cameras)
         {
-            ActiveCamera = _repo.Get<CameraDevice>(id) ?? throw new ArgumentException("Camera not found");
+            _allCameras = cameras;
+        }
+
+        public void Select(CameraDevice target)
+        {
+            foreach (var cam in _allCameras)
+            {
+                if (cam == target) cam.Select();
+                else cam.Deselect();
+            }
         }
     }
 }

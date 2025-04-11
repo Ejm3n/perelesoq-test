@@ -8,7 +8,6 @@ namespace SmartHome.Domain
     public sealed class PowerSource : IDevice, IElectricNode
     {
         public DeviceId Id { get; private set; }
-        public string Name => "Power Source";
 
         public float CurrentPower { get; private set; }
         public float TotalConsumedEnergy { get; private set; }

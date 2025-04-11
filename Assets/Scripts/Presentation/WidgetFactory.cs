@@ -48,7 +48,7 @@ namespace SmartHome.Presentation
                 else if (device is CameraDevice camera)
                 {
                     var view = Instantiate(_cameraPrefab, _root);
-                    view.Init(camera, _cameraUC, names[camera.Id]);
+                    view.Init(camera, _cameraUC);
                     DeviceFactoryNotifier.Notify(camera.Id, camera);
                 }
                 // etc... можно вынести в словарь-реестр фабрик, если устройств будет много

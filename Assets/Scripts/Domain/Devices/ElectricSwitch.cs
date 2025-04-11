@@ -11,7 +11,6 @@ namespace SmartHome.Domain
         private readonly List<IElectricNode> _outputs = new();
 
         public DeviceId Id { get; private set; }
-        public string Name => "Switch";
         public bool IsOn { get; private set; }
         public bool HasCurrent => IsOn && _input?.HasCurrent == true;
 

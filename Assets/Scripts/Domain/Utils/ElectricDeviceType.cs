@@ -7,6 +7,7 @@ namespace SmartHome.Domain
         Lamp,
         Door,
         AndGate,
-        OrGate
+        OrGate,
+        Camera
     }
 }

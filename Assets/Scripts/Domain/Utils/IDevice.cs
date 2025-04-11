@@ -7,7 +7,6 @@ namespace SmartHome.Domain
     public interface IDevice
     {
         DeviceId Id { get; }
-        string Name { get; }
         void Tick(float deltaTime);
     }
 }

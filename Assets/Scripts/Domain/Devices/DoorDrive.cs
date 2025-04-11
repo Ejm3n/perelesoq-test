@@ -67,6 +67,5 @@ namespace SmartHome.Domain
         public void ConnectInput(IElectricNode input) => _input = input;
         public bool HasCurrent => _input.HasCurrent;
         public float Progress => _progress;
-        public string Name => "DoorDrive";
     }
 }

@@ -71,3 +71,33 @@ MonoBehaviour:
     outputs: []
     posX: 841
     posY: 477
+  - id: Cam
+    displayName: Camera 1
+    consumptionMode: 0
+    energyRequired: 0
+    useDuration: 0
+    type: 6
+    inputs: []
+    outputs: []
+    posX: 87
+    posY: 308
+  - id: Cam 1
+    displayName: Camera 2
+    consumptionMode: 0
+    energyRequired: 0
+    useDuration: 0
+    type: 6
+    inputs: []
+    outputs: []
+    posX: 373
+    posY: 286
+  - id: Cam 2
+    displayName: Camera 3
+    consumptionMode: 0
+    energyRequired: 0
+    useDuration: 0
+    type: 6
+    inputs: []
+    outputs: []
+    posX: 631
+    posY: 231

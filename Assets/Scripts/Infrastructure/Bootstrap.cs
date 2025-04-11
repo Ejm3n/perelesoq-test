@@ -18,29 +18,26 @@ namespace SmartHome.Infrastructure
 
         private void Start()
         {
-            // 1. Загрузка графа из ассета
-            Dictionary<string, IElectricNode> nodeMap = ElectricNetworkBuilder.BuildFromAsset(_electricAsset);
+            // 1. Подготовка репозитория и списка камер
+            _repo = new DeviceRepository();
+            var cameras = new List<CameraDevice>();
+
+            // 2. Загрузка графа и наполнение
+            Dictionary<string, IElectricNode> nodeMap = ElectricNetworkBuilder.BuildFromAsset(_electricAsset, _repo, cameras);
+
+            // 3. Сбор имён
             foreach (var def in _electricAsset.devices)
             {
-                if (nodeMap.TryGetValue(def.id, out var node) && node is IDevice device)
-                {
-                    _deviceNames[device.Id] = def.displayName ?? def.id;
-                }
-            }
-            // 2. Заполнение репозитория
-            _repo = new DeviceRepository();
-            foreach (var node in nodeMap.Values)
-            {
-                if (node is IDevice device)
-                    _repo.Add(device);
+                var id = new DeviceId(def.id);
+                _deviceNames[id] = def.displayName ?? def.id;
             }
 
-            // 3. Инициализация UseCases
+            // 4. Инициализация UseCases
             var toggleUC = new ToggleDeviceUseCase(_repo);
-            var selectCameraUC = new SelectCameraUseCase(_repo);
+            var selectCameraUC = new SelectCameraUseCase(cameras);
+            selectCameraUC.Select(cameras[0]);
             PowerSource powerSource = null;
-            // 4. UI
-            // Поиск PowerSource для инициализации UI — можно упростить, если у тебя их несколько
+            // 5. UI: PowerSource
             foreach (var node in nodeMap.Values)
             {
                 if (node is PowerSource power)
@@ -51,9 +48,10 @@ namespace SmartHome.Infrastructure
                 }
             }
 
+            // 6. UI: виджеты
             _widgetFactory.Init(_repo, toggleUC, selectCameraUC, powerSource, _deviceNames);
 
-            // 5. Симуляция
+            // 7. Симуляция
             gameObject.AddComponent<SimulationLoop>().Init(_repo);
         }
     }

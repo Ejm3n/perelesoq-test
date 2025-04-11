@@ -2,26 +2,50 @@ using System.Collections;
 using System.Collections.Generic;
 using SmartHome.Application;
 using SmartHome.Domain;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 namespace SmartHome.Presentation
 {
-    public sealed class CameraView : DeviceWidgetView
+    public class CameraView : DeviceWidgetView
     {
-        private CameraDevice _cam;
-        private SelectCameraUseCase _select;
-        public void Init(CameraDevice cam, SelectCameraUseCase sel, string name)
+        [SerializeField] private Button selectButton;
+        private CameraDevice _device;
+        private SelectCameraUseCase _useCase;
+
+        public void Init(CameraDevice device, SelectCameraUseCase useCase)
         {
-            _cam = cam; _select = sel;
-            SetName(name);
-            Refresh();
+            _device = device;
+            _useCase = useCase;
+
+            SetName(_device.Id.Value);
+            UpdateUI();
+
+            selectButton.onClick.AddListener(OnSelectClick);
+            _device.OnSelected += _ => UpdateUI();
+            if (_device.IsSelected)
+                OnSelectClick();
         }
-        public void OnClicked()
+
+        public void OnSelectClick()
         {
-            _select.Execute(_cam.Id);
-            Refresh();
+            _useCase.Select(_device);
         }
-        private void Refresh() => SetStatus(_select.ActiveCamera == _cam ? "ACTIVE" : "- -");
+
+        private void UpdateUI()
+        {
+            bool selected = _device.IsSelected;
+
+            SetStatus(selected ? "Selected" : "Select");
+            selectButton.interactable = !selected;
+        }
+
+        private void OnDestroy()
+        {
+            if (_device != null)
+                _device.OnSelected -= _ => UpdateUI();
+        }
     }
 }
