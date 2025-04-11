@@ -10,6 +10,8 @@ namespace SmartHome.Serialization
     {
         public string id;
         public string displayName;
+        public EnergyConsumptionMode consumptionMode;
+        public float energyRequired;
         public ElectricDeviceType type;
         public List<string> inputs;
         public List<string> outputs;

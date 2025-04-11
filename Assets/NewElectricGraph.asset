@@ -15,6 +15,8 @@ MonoBehaviour:
   devices:
   - id: PS
     displayName: Power Source
+    consumptionMode: 0
+    energyRequired: 0
     type: 0
     inputs: []
     outputs:
@@ -23,6 +25,8 @@ MonoBehaviour:
     posY: 650
   - id: S1
     displayName: Switch 1
+    consumptionMode: 0
+    energyRequired: 0
     type: 1
     inputs:
     - S2
@@ -32,16 +36,20 @@ MonoBehaviour:
     posY: 485
   - id: S2
     displayName: Switch 2
+    consumptionMode: 0
+    energyRequired: 0
     type: 1
     inputs:
     - PS
     outputs:
-    - S3
     - S1
+    - S3
     posX: 426
     posY: 716
   - id: S3
     displayName: Switch 3
+    consumptionMode: 0
+    energyRequired: 0
     type: 1
     inputs:
     - S2
@@ -51,6 +59,8 @@ MonoBehaviour:
     posY: 706
   - id: L2
     displayName: Lamp 2
+    consumptionMode: 1
+    energyRequired: 10
     type: 2
     inputs:
     - S1
@@ -59,6 +69,8 @@ MonoBehaviour:
     posY: 459
   - id: L1
     displayName: Lamp 1
+    consumptionMode: 0
+    energyRequired: 1000
     type: 2
     inputs:
     - S3

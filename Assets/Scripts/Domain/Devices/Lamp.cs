@@ -15,19 +15,19 @@ namespace SmartHome.Domain
         public float RatedPower { get; }
         public float ConsumedEnergy { get; private set; }
 
-        public Lamp(IElectricNode input, DeviceId id, float ratedPower = 100f)
+        public Lamp(IElectricNode input, DeviceId id, float energyRequired)
         {
             _input = input;
             Id = id;
-            RatedPower = ratedPower;
+            RatedPower = energyRequired;
         }
 
-
-        public void Tick(float deltaTime)
+        public void Tick(float delta)
         {
             if (IsOn)
-                ConsumedEnergy += RatedPower * deltaTime / 1000f;
+                ConsumedEnergy += RatedPower * delta / 1000f;
         }
+
 
         public void ConnectInput(IElectricNode node)
         {

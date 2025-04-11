@@ -8,21 +8,20 @@ namespace SmartHome.Domain
     public sealed class DoorDrive : IDevice, IConsumable, IInputAccepting, IElectricNode
     {
         private IElectricNode _input;
-        private const float _operationEnergyWh = 50f; // per open/close
         public DeviceId Id { get; private set; }
         public string Name => "Door Drive";
         public event Action<bool> OnSwitch;
         public bool IsOn => _progress > 0f && _progress < 1f;
-        public float RatedPower => 0f; // N/A – energy counted per operation
+        public float RatedPower { get; private set; }
         public float ConsumedEnergy { get; private set; }
-
         private float _progress; // 0 closed, 1 open
         private bool _targetOpen;
 
-        public DoorDrive(IElectricNode input, DeviceId id)
+        public DoorDrive(IElectricNode input, DeviceId id, float energyRequired)
         {
             _input = input;
             Id = id;
+            RatedPower = energyRequired;
         }
 
         public void Switch(bool open) => _targetOpen = open;
@@ -34,7 +33,7 @@ namespace SmartHome.Domain
 
             var dir = _targetOpen ? 1f : -1f;
             _progress = Mathf.Clamp01(_progress + dir * deltaTime / 5f); // 5 seconds
-            ConsumedEnergy += _operationEnergyWh * deltaTime / 5f / 1000f;
+            ConsumedEnergy += RatedPower * deltaTime;
         }
         public void RefreshState()
         {
