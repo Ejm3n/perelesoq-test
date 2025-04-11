@@ -9,7 +9,7 @@ namespace SmartHome.Domain
     {
         private IElectricNode _input;
         private const float _operationEnergyWh = 50f; // per open/close
-        public DeviceId Id { get; } = DeviceId.NewId();
+        public DeviceId Id { get; private set; }
         public string Name => "Door Drive";
         public event Action<bool> OnSwitch;
         public bool IsOn => _progress > 0f && _progress < 1f;
@@ -19,7 +19,11 @@ namespace SmartHome.Domain
         private float _progress; // 0 closed, 1 open
         private bool _targetOpen;
 
-        public DoorDrive(IElectricNode input) => _input = input;
+        public DoorDrive(IElectricNode input, DeviceId id)
+        {
+            _input = input;
+            Id = id;
+        }
 
         public void Switch(bool open) => _targetOpen = open;
 

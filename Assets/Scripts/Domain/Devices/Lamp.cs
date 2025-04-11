@@ -8,16 +8,17 @@ namespace SmartHome.Domain
     public sealed class Lamp : IDevice, IConsumable, ISwitchable, IInputAccepting, IElectricNode
     {
         private IElectricNode _input;
-        public DeviceId Id { get; } = DeviceId.NewId();
+        public DeviceId Id { get; private set; }
         public string Name => "Lamp";
         public event Action<bool> OnSwitch;
         public bool IsOn { get; private set; }
         public float RatedPower { get; }
         public float ConsumedEnergy { get; private set; }
 
-        public Lamp(IElectricNode input, float ratedPower = 100f)
+        public Lamp(IElectricNode input, DeviceId id, float ratedPower = 100f)
         {
             _input = input;
+            Id = id;
             RatedPower = ratedPower;
         }
 

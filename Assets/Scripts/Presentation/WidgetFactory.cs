@@ -30,21 +30,25 @@ namespace SmartHome.Presentation
                 {
                     var view = Instantiate(_lampPrefab, _root);
                     view.Init(lamp, names[lamp.Id]);
+                    DeviceFactoryNotifier.Notify(lamp.Id, lamp);
                 }
                 else if (device is ElectricSwitch sw)
                 {
                     var view = Instantiate(_switchPrefab, _root);
                     view.Init(sw, _toggleUC, names[sw.Id]);
+                    DeviceFactoryNotifier.Notify(sw.Id, sw);
                 }
                 else if (device is DoorDrive door)
                 {
                     var view = Instantiate(_doorPrefab, _root);
                     view.Init(door, names[door.Id]);
+                    DeviceFactoryNotifier.Notify(door.Id, door);
                 }
                 else if (device is CameraDevice camera)
                 {
                     var view = Instantiate(_cameraPrefab, _root);
                     view.Init(camera, _cameraUC, names[camera.Id]);
+                    DeviceFactoryNotifier.Notify(camera.Id, camera);
                 }
                 // etc... можно вынести в словарь-реестр фабрик, если устройств будет много
             }

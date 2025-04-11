@@ -7,7 +7,7 @@ namespace SmartHome.Domain
 {
     public sealed class PowerSource : IDevice, IElectricNode
     {
-        public DeviceId Id { get; } = DeviceId.NewId();
+        public DeviceId Id { get; private set; }
         public string Name => "Power Source";
 
         public float CurrentPower { get; private set; }
@@ -19,6 +19,11 @@ namespace SmartHome.Domain
         private readonly List<IConsumable> _consumers = new();
 
         public void RegisterConsumer(IConsumable consumer) => _consumers.Add(consumer);
+
+        public PowerSource(DeviceId id)
+        {
+            Id = id;
+        }
 
         public void Tick(float deltaTime)
         {

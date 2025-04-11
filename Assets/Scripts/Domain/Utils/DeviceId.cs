@@ -1,20 +1,28 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace SmartHome.Domain
 {
-    public readonly struct DeviceId
+    [Serializable]
+    public struct DeviceId : IEquatable<DeviceId>
     {
-        public Guid Value { get; }
+        public string Value;
 
-        public DeviceId(Guid value)
+        public DeviceId(string value)
         {
             Value = value;
         }
 
-        public static DeviceId NewId() => new(Guid.NewGuid());
-        public override string ToString() => Value.ToString();
+        public static DeviceId NewId() => new DeviceId(Guid.NewGuid().ToString());
+
+        public override string ToString() => Value;
+
+        public bool Equals(DeviceId other) => Value == other.Value;
+
+        public override bool Equals(object obj) => obj is DeviceId other && Equals(other);
+
+        public override int GetHashCode() => Value != null ? Value.GetHashCode() : 0;
+
+        public static bool operator ==(DeviceId a, DeviceId b) => a.Equals(b);
+        public static bool operator !=(DeviceId a, DeviceId b) => !a.Equals(b);
     }
 }

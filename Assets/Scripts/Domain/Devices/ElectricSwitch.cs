@@ -10,14 +10,18 @@ namespace SmartHome.Domain
         private IElectricNode _input;
         private readonly List<IElectricNode> _outputs = new();
 
-        public DeviceId Id { get; } = DeviceId.NewId();
+        public DeviceId Id { get; private set; }
         public string Name => "Switch";
         public bool IsOn { get; private set; }
         public bool HasCurrent => IsOn && _input?.HasCurrent == true;
 
         public event Action<bool> OnSwitch;
 
-        public ElectricSwitch(IElectricNode input) => _input = input;
+        public ElectricSwitch(IElectricNode input, DeviceId id)
+        {
+            _input = input;
+            Id = id;
+        }
 
         public void Switch(bool state)
         {
