@@ -10,6 +10,7 @@ namespace SmartHome.Presentation
         {
             _door = door;
             Refresh();
+            // SetName(_door.Id.ToString());
         }
         public void OnOpen() { _door.Switch(true); Refresh(); }
         public void OnClose() { _door.Switch(false); Refresh(); }

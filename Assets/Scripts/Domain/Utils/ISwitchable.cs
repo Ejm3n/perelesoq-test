@@ -10,5 +10,6 @@ namespace SmartHome.Domain
         bool IsOn { get; }
         void Switch(bool state);
         event Action<bool> OnSwitch;
+        void RefreshState();
     }
 }

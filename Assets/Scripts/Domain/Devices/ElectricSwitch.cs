@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace SmartHome.Domain
 {
-    public sealed class ElectricSwitch : IDevice, IElectricNode, ISwitchable, IInputAccepting
+    public sealed class ElectricSwitch : IDevice, IElectricNode, ISwitchable, IInputAccepting, IOutputAccepting
     {
         private IElectricNode _input;
         private readonly List<IElectricNode> _outputs = new();
@@ -22,13 +22,32 @@ namespace SmartHome.Domain
         public void Switch(bool state)
         {
             IsOn = state;
+            Debug.Log($"[ElectricSwitch] {Name} ({Id}) Switch({state}), HasCurrent={HasCurrent}");
+            OnSwitch?.Invoke(HasCurrent);
+            RefreshOutputs();
+        }
+
+        public void RefreshOutputs()
+        {
+            Debug.Log($"[ElectricSwitch] {Name} ({Id}) RefreshOutputs(), outputs={_outputs.Count}");
             foreach (var output in _outputs)
             {
-                // можно уведомить их или вызвать Tick/Update
+                if (output is ISwitchable sw)
+                {
+                    Debug.Log($"[ElectricSwitch] → Refreshing output {output.GetType().Name}");
+                    sw.RefreshState();
+                }
             }
-
-            OnSwitch?.Invoke(HasCurrent);
         }
+
+        public void ConnectOutput(IElectricNode output) => _outputs.Add(output);
+
+        public void RefreshState()
+        {
+            OnSwitch?.Invoke(HasCurrent);
+            RefreshOutputs();
+        }
+
 
         public void Tick(float _) { }
 

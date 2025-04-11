@@ -21,10 +21,11 @@ namespace SmartHome.Presentation
             _id = (sw as IDevice)!.Id;
             _toggle.onValueChanged.AddListener(OnClick);
             OnClick(_toggle.isOn);
+            //SetName(sw.Name);
         }
         private void OnClick(bool isOn)
         {
-            _useCase.ExecuteRepository(isOn);
+            _useCase.Execute(_id, isOn);
             SetStatus(isOn ? "ON" : "OFF");
         }
     }

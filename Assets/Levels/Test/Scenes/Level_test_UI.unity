@@ -176,6 +176,71 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &360091072
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 360091075}
+  - component: {fileID: 360091074}
+  - component: {fileID: 360091073}
+  m_Layer: 0
+  m_Name: BOOTSTRAP
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &360091073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 360091072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9cd8c1d25569794c9b0289a2ebedc97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _root: {fileID: 481993301}
+  _lampPrefab: {fileID: 5601340230633188733, guid: ccf58d821c65c3e4bad7f4e6d087504b, type: 3}
+  _switchPrefab: {fileID: 8441482422895203116, guid: 2bd7cbc29f1abfa499f4b61e26b4b0b2, type: 3}
+  _doorPrefab: {fileID: 0}
+  _cameraPrefab: {fileID: 0}
+--- !u!114 &360091074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 360091072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce51d76695023bc45b741faef2642e5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _widgetFactory: {fileID: 360091073}
+  _powerSourceView: {fileID: 424473124}
+  _electricAsset: {fileID: 11400000, guid: dcdacca102e328b43bc85735fd5de184, type: 2}
+--- !u!4 &360091075
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 360091072}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -7.8277555, y: 2.342288, z: 0.7506237}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &412809551
 GameObject:
   m_ObjectHideFlags: 0
@@ -632,7 +697,7 @@ RectTransform:
   m_Children:
   - {fileID: 1809834389}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1542,7 +1607,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2103196776}
-  - component: {fileID: 2103196777}
   m_Layer: 5
   m_Name: DeviceList
   m_TagString: Untagged
@@ -1571,22 +1635,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 935.7714}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2103196777
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2103196775}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce51d76695023bc45b741faef2642e5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _lampViewPrefab: {fileID: 5601340230633188733, guid: ccf58d821c65c3e4bad7f4e6d087504b, type: 3}
-  _switchViewPrefab: {fileID: 8441482422895203116, guid: 2bd7cbc29f1abfa499f4b61e26b4b0b2, type: 3}
-  _powerSourceView: {fileID: 424473124}
-  _uiRoot: {fileID: 481993301}
 --- !u!1001 &419652956421765639
 PrefabInstance:
   m_ObjectHideFlags: 0

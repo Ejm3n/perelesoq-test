@@ -11,6 +11,8 @@ namespace SmartHome.Presentation
             _lamp = lamp;
             if (_lamp != null)
                 _lamp.OnSwitch += Refresh;
+
+            //SetName(_lamp.Id.ToString());
         }
 
         private void OnDisable()

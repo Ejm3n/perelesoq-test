@@ -18,14 +18,44 @@ MonoBehaviour:
     inputs: []
     outputs:
     - S1
+    - S2
+    - S3
+    posX: 76
+    posY: 650
   - id: S1
     type: 1
     inputs:
     - PS
     outputs:
-    - Lamp 1
-  - id: Lamp 1
+    - L2
+    posX: 435
+    posY: 401
+  - id: S2
+    type: 1
+    inputs:
+    - PS
+    outputs: []
+    posX: 444
+    posY: 617
+  - id: S3
+    type: 1
+    inputs:
+    - PS
+    outputs:
+    - L1
+    posX: 440
+    posY: 851
+  - id: L2
     type: 2
     inputs:
     - S1
     outputs: []
+    posX: 793
+    posY: 405
+  - id: L1
+    type: 2
+    inputs:
+    - S3
+    outputs: []
+    posX: 851
+    posY: 870

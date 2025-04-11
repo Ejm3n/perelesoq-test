@@ -1,48 +1,51 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using SmartHome.Domain;
 using SmartHome.Application;
+using SmartHome.Presentation;
+using SmartHome.Serialization;
+using System.Collections.Generic;
 
 namespace SmartHome.Infrastructure
 {
     public sealed class Bootstrap : MonoBehaviour
     {
-        [SerializeField] private Presentation.LampView _lampViewPrefab;
-        [SerializeField] private Presentation.SwitchView _switchViewPrefab;
-        [SerializeField] private Presentation.PowerSourceView _powerSourceView;
-        [SerializeField] private Transform _uiRoot;
+        [SerializeField] private WidgetFactory _widgetFactory;
+        [SerializeField] private PowerSourceView _powerSourceView;
+        [SerializeField] private ElectricNetworkAsset _electricAsset;
 
         private DeviceRepository _repo;
-        private PowerSource _power;
-        private Application.ToggleDeviceUseCase _toggleUC;
 
         private void Awake()
         {
-            // 1. Create domain graph
-            _power = new PowerSource();
-            var wallSwitch = new ElectricSwitch(_power);
-            var lamp = new Lamp(wallSwitch);
+            // 1. Загрузка графа из ассета
+            Dictionary<string, IElectricNode> nodeMap = ElectricNetworkBuilder.BuildFromAsset(_electricAsset);
 
-            // 2. Repo
+            // 2. Заполнение репозитория
             _repo = new DeviceRepository();
-            _repo.Add(_power);
-            _repo.Add(wallSwitch);
-            _repo.Add(lamp);
-            _power.RegisterConsumer(lamp);
+            foreach (var node in nodeMap.Values)
+            {
+                if (node is IDevice device)
+                    _repo.Add(device);
+            }
 
-            // 3. Use‑cases
-            _toggleUC = new Application.ToggleDeviceUseCase(_repo);
+            // 3. Инициализация UseCases
+            var toggleUC = new ToggleDeviceUseCase(_repo);
+            var selectCameraUC = new SelectCameraUseCase(_repo);
 
-            // 4. UI binding
-            var lampView = Instantiate(_lampViewPrefab, _uiRoot);
-            lampView.Init(lamp);
+            // 4. UI
+            // Поиск PowerSource для инициализации UI — можно упростить, если у тебя их несколько
+            foreach (var node in nodeMap.Values)
+            {
+                if (node is PowerSource power)
+                {
+                    _powerSourceView.Init(power);
+                    break;
+                }
+            }
 
-            var switchView = Instantiate(_switchViewPrefab, _uiRoot);
-            switchView.Init(wallSwitch, _toggleUC);
+            _widgetFactory.Init(_repo, toggleUC, selectCameraUC);
 
-            _powerSourceView.Init(_power);
-
+            // 5. Симуляция
             gameObject.AddComponent<SimulationLoop>().Init(_repo);
         }
     }

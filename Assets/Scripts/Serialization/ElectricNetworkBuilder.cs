@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using SmartHome.Domain;
+using UnityEngine;
 
 namespace SmartHome.Serialization
 {
@@ -15,25 +16,31 @@ namespace SmartHome.Serialization
                 nodes[def.id] = CreateNode(def.type);
             }
 
-            // 2. Подключение связей
+            // 2. Подключение связей: входы и выходы
             foreach (var def in asset.devices)
             {
                 var current = nodes[def.id];
 
                 foreach (var inputId in def.inputs)
                 {
-                    var input = nodes[inputId];
+                    if (!nodes.TryGetValue(inputId, out var input))
+                        continue;
 
                     if (current is IInputAccepting inputAccepting)
                         inputAccepting.ConnectInput(input);
 
                     if (input is IOutputAccepting outputAccepting)
+                    {
+                        Debug.Log($"[Builder] {input.GetType().Name} connects to {current.GetType().Name}");
                         outputAccepting.ConnectOutput(current);
+                    }
+
                 }
             }
 
             return nodes;
         }
+
 
         public static IElectricNode CreateNode(ElectricDeviceType type)
         {

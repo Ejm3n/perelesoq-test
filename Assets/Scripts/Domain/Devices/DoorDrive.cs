@@ -32,6 +32,13 @@ namespace SmartHome.Domain
             _progress = Mathf.Clamp01(_progress + dir * deltaTime / 5f); // 5 seconds
             ConsumedEnergy += _operationEnergyWh * deltaTime / 5f / 1000f;
         }
+        public void RefreshState()
+        {
+            // var prev = IsOn;
+            //IsOn = IsOn && _input.HasCurrent;
+            //if (IsOn != prev)
+            //    OnSwitch?.Invoke(IsOn);
+        }
 
         public void ConnectInput(IElectricNode input)
         {
