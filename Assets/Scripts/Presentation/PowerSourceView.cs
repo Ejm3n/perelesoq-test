@@ -36,20 +36,8 @@ namespace SmartHome.Presentation
         private void RefreshTime(float time)
         {
             // Обновляем текст времени
-            _timeText.text = FormatTime(time);
+            _timeText.text = SmartHome.Utils.Utils.FormatTime(time);
         }
 
-        // TODO: move to utils - вынести в отдельный класс с общими функциями
-        private string FormatTime(float timeInSeconds)
-        {
-            // Преобразуем секунды в дни, часы, минуты и секунды
-            int days = (int)(timeInSeconds / 86400); // 86400 seconds in a day
-            int hours = (int)((timeInSeconds % 86400) / 3600);
-            int minutes = (int)((timeInSeconds % 3600) / 60);
-            int seconds = (int)(timeInSeconds % 60);
-
-            // Возвращаем строку в формате "Xd Yh Zm Ws"
-            return $"{days}d {hours}h {minutes}m {seconds}s";
-        }
     }
 }
