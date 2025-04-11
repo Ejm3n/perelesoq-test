@@ -22,6 +22,7 @@ MonoBehaviour:
     inputs: []
     outputs:
     - S2
+    - S3
     posX: 76
     posY: 650
   - id: S2
@@ -33,9 +34,9 @@ MonoBehaviour:
     inputs:
     - PS
     outputs:
-    - S3
-    posX: 426
-    posY: 716
+    - L1
+    posX: 497
+    posY: 485
   - id: S3
     displayName: Switch 3
     consumptionMode: 0
@@ -43,11 +44,11 @@ MonoBehaviour:
     useDuration: 0
     type: 1
     inputs:
-    - S2
+    - PS
     outputs:
     - D1
-    posX: 732
-    posY: 706
+    posX: 537
+    posY: 793
   - id: D1
     displayName: Door 1
     consumptionMode: 2
@@ -57,5 +58,16 @@ MonoBehaviour:
     inputs:
     - S3
     outputs: []
-    posX: 1137
-    posY: 855
+    posX: 869
+    posY: 814
+  - id: L1
+    displayName: Lamp 1
+    consumptionMode: 1
+    energyRequired: 100
+    useDuration: 0
+    type: 2
+    inputs:
+    - S2
+    outputs: []
+    posX: 841
+    posY: 477

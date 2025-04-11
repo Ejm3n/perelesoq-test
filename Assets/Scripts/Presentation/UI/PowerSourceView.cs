@@ -28,14 +28,12 @@ namespace SmartHome.Presentation
 
         private void Refresh(float currentPower, float totalConsumedEnergy)
         {
-            // Обновляем отдельные текстовые поля
             _currentPowerText.text = $"CURRENT: {currentPower} W";
-            _totalConsumedEnergyText.text = $"TOTAL: {totalConsumedEnergy} kWh";
+            _totalConsumedEnergyText.text = $"TOTAL: {totalConsumedEnergy} W";
         }
 
         private void RefreshTime(float time)
         {
-            // Обновляем текст времени
             _timeText.text = SmartHome.Utils.Utils.FormatTime(time);
         }
 

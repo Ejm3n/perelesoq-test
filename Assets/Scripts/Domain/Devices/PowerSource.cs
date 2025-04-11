@@ -28,13 +28,14 @@ namespace SmartHome.Domain
         public void Tick(float deltaTime)
         {
             CurrentPower = 0f;
+            TotalConsumedEnergy = 0f;
             foreach (var c in _consumers)
             {
                 if (c.IsOn)
                 {
                     CurrentPower += c.RatedPower;
-                    TotalConsumedEnergy += c.RatedPower * deltaTime / 1000f; // W*s -> kWh
                 }
+                TotalConsumedEnergy += c.ConsumedEnergy;
             }
 
             OnPowerChange?.Invoke(CurrentPower, TotalConsumedEnergy);

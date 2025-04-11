@@ -25,7 +25,7 @@ namespace SmartHome.Domain
         public void Tick(float delta)
         {
             if (IsOn)
-                ConsumedEnergy += RatedPower * delta / 1000f;
+                ConsumedEnergy += RatedPower * delta;
         }
 
 

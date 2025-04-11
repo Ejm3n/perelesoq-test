@@ -41,18 +41,20 @@ namespace SmartHome.Domain
             if (!_input.HasCurrent || !_isMoving) return;
 
             var dir = _targetOpen ? 1f : -1f;
-            var prevProgress = _progress;
-
             _progress = Mathf.Clamp01(_progress + dir * deltaTime / _useDuration);
 
-            ConsumedEnergy += RatedPower * deltaTime;
+            // 💡 Равномерное потребление энергии:
+            float energyPerSecond = RatedPower / _useDuration;
+            ConsumedEnergy += energyPerSecond * deltaTime;
 
-            if (_progress == 1f || _progress == 0f)
+            if (_progress == 0f || _progress == 1f)
             {
+                Debug.Log($"DoorDrive {Id} completed movement, consumed energy: {ConsumedEnergy}");
                 _isMoving = false;
-                OnSwitch?.Invoke(false); // закончено движение
+                OnSwitch?.Invoke(false);
             }
         }
+
         public void RefreshState()
         {
             var prev = IsOn;

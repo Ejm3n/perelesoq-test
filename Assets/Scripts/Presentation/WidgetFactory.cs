@@ -22,6 +22,7 @@ namespace SmartHome.Presentation
             _toggleUC = toggleUC;
             _cameraUC = cameraUC;
             _powerSource = powerSource;
+            DeviceFactoryNotifier.Notify(powerSource.Id, powerSource);
             foreach (var device in repo.All)
             {
                 if (device is IConsumable consumable)
