@@ -6091,6 +6091,17 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!114 &931817900 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7575623853682366001, guid: 91085d37a3c4da6429677fa7b49dac73, type: 3}
+  m_PrefabInstance: {fileID: 8334916311006963771}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &971734267
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12304,6 +12315,10 @@ MonoBehaviour:
   targetTransform: {fileID: 264793371}
   closedRotation: {x: 0, y: 0, z: 0}
   openRotation: {x: 0, y: -90, z: 0}
+  _statusText: {fileID: 931817900}
+  _openColor: {r: 0, g: 1, b: 0, a: 1}
+  _closedColor: {r: 1, g: 0, b: 0, a: 1}
+  _movingColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!1001 &2919836805507186300
 PrefabInstance:
   m_ObjectHideFlags: 0

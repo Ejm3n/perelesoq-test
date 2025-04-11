@@ -43,7 +43,7 @@ namespace SmartHome.Presentation
 
         private void UpdateText()
         {
-            _statusText.text = $"Time: {Utils.Utils.FormatTime(_powerSource.Time)}\nTotal: {_powerSource.TotalConsumedEnergy.ToString("F1")} W\nCurrent: {_powerSource.CurrentPower.ToString("F1")} W";
+            _statusText.text = $"Time: {Utils.Utils.FormatTime(_powerSource.Time)}\nTotal: {_powerSource.TotalConsumedEnergy.ToString("F0")} W\nCurrent: {_powerSource.CurrentPower.ToString("F0")} W";
         }
 
         void OnDestroy()

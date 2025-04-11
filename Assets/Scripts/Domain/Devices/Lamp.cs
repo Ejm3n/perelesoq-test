@@ -19,15 +19,14 @@ namespace SmartHome.Domain
         {
             _input = input;
             Id = id;
-            RatedPower = energyRequired / 3600f; // потому что в час а не в секунду.
+            RatedPower = energyRequired;
         }
 
         public void Tick(float delta)
         {
             if (IsOn)
-                ConsumedEnergy += RatedPower * delta;
+                ConsumedEnergy += RatedPower / 3600f * delta; // потому что в час а не в секунду.
         }
-
 
         public void ConnectInput(IElectricNode node)
         {
