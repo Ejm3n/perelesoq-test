@@ -28,7 +28,6 @@ namespace SmartHome.Domain
         public void Tick(float deltaTime)
         {
             CurrentPower = 0f;
-            Debug.Log("Tick PowerSource, consumers: " + _consumers.Count);
             foreach (var c in _consumers)
             {
                 if (c.IsOn)

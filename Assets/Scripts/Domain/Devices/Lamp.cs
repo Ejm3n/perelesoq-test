@@ -37,7 +37,7 @@ namespace SmartHome.Domain
         public void RefreshState()
         {
             var prev = IsOn;
-            IsOn = _input.HasCurrent; // <-- без учета старого состояния
+            IsOn = _input.HasCurrent;
             if (IsOn != prev)
             {
                 OnSwitch?.Invoke(IsOn);

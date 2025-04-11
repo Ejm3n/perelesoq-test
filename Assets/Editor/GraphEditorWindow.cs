@@ -18,6 +18,7 @@ namespace SmartHome.Serialization
         private const float NODE_HEIGHT = 170f;
         private const float ARROW_SIZE = 10f;
         private const float CURVE_OFFSET = 50f;
+        private const float HEIGHT_FOR_ADDITIONAL_INFO = 20f;
         private Rect _canvasRect = new Rect(0, 0, 5000, 5000); // зафиксированный огромный канвас
         private Vector2 _canvasOffset = Vector2.zero;
         private Vector2 scrollPosition;
@@ -78,7 +79,13 @@ namespace SmartHome.Serialization
             {
                 if (GUILayout.Button($"Add {type}"))
                 {
-                    _nodes.Add(new GraphNode(type, new Rect(UnityEngine.Random.Range(300, 700), UnityEngine.Random.Range(100, 400), NODE_WIDTH, NODE_HEIGHT)));
+                    var rect = new Rect(UnityEngine.Random.Range(300, 700), UnityEngine.Random.Range(100, 400), NODE_WIDTH, NODE_HEIGHT);
+                    var node = new GraphNode(type, rect);
+
+                    if (node.consumptionMode == EnergyConsumptionMode.PerUse)
+                        node.rect.height += HEIGHT_FOR_ADDITIONAL_INFO;
+
+                    _nodes.Add(node);
                     _dirty = true;
                 }
             }
@@ -207,6 +214,16 @@ namespace SmartHome.Serialization
             GUILayout.EndHorizontal();
 
             node.consumptionMode = (EnergyConsumptionMode)EditorGUILayout.EnumPopup("Consumption", node.consumptionMode);
+            float desiredHeight = NODE_HEIGHT;
+
+            if (node.consumptionMode == EnergyConsumptionMode.PerUse)
+                desiredHeight += HEIGHT_FOR_ADDITIONAL_INFO;
+
+            if (Mathf.Abs(node.rect.height - desiredHeight) > 0.1f)
+            {
+                node.rect.height = desiredHeight;
+                _dirty = true;
+            }
             node.energyRequired = EditorGUILayout.FloatField("Energy Required", node.energyRequired);
 
             if (node.consumptionMode == EnergyConsumptionMode.PerUse)
@@ -438,7 +455,7 @@ namespace SmartHome.Serialization
                 }
                 if (def.consumptionMode == EnergyConsumptionMode.PerUse)
                 {
-                    var rect = new Rect(def.posX, def.posY, NODE_WIDTH, NODE_HEIGHT + 50);
+                    var rect = new Rect(def.posX, def.posY, NODE_WIDTH, NODE_HEIGHT + HEIGHT_FOR_ADDITIONAL_INFO);
                     var node = new GraphNode(def.type, rect, def.id, def.displayName, def.consumptionMode, def.energyRequired, def.useDuration);
                     _nodes.Add(node);
                     map[def.id] = node;

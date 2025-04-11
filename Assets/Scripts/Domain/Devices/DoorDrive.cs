@@ -11,7 +11,7 @@ namespace SmartHome.Domain
         public float ConsumedEnergy { get; private set; }
 
         public event Action<bool> OnSwitch;
-
+        public bool IsOn { get; private set; }
         private float _progress; // 0 закрыто, 1 открыто
         private bool _targetOpen;
         private bool _isMoving;
@@ -53,14 +53,19 @@ namespace SmartHome.Domain
                 OnSwitch?.Invoke(false); // закончено движение
             }
         }
+        public void RefreshState()
+        {
+            var prev = IsOn;
+            IsOn = _input.HasCurrent;
+            if (IsOn != prev)
+            {
+                OnSwitch?.Invoke(IsOn);
+            }
+        }
 
         public void ConnectInput(IElectricNode input) => _input = input;
         public bool HasCurrent => _input.HasCurrent;
         public float Progress => _progress;
-
-        public void RefreshState() { /* no-op for now */ }
-        public bool IsOn => _isMoving;
-
         public string Name => "DoorDrive";
     }
 }
