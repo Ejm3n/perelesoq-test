@@ -16,7 +16,7 @@ namespace SmartHome.Infrastructure
         private DeviceRepository _repo;
         private Dictionary<DeviceId, string> _deviceNames = new();
 
-        private void Awake()
+        private void Start()
         {
             // 1. Загрузка графа из ассета
             Dictionary<string, IElectricNode> nodeMap = ElectricNetworkBuilder.BuildFromAsset(_electricAsset);
