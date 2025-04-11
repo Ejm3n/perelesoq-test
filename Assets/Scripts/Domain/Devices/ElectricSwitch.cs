@@ -22,19 +22,16 @@ namespace SmartHome.Domain
         public void Switch(bool state)
         {
             IsOn = state;
-            Debug.Log($"[ElectricSwitch] {Name} ({Id}) Switch({state}), HasCurrent={HasCurrent}");
             OnSwitch?.Invoke(HasCurrent);
             RefreshOutputs();
         }
 
         public void RefreshOutputs()
         {
-            Debug.Log($"[ElectricSwitch] {Name} ({Id}) RefreshOutputs(), outputs={_outputs.Count}");
             foreach (var output in _outputs)
             {
                 if (output is ISwitchable sw)
                 {
-                    Debug.Log($"[ElectricSwitch] → Refreshing output {output.GetType().Name}");
                     sw.RefreshState();
                 }
             }

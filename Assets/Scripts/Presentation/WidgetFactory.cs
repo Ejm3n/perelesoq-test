@@ -15,14 +15,17 @@ namespace SmartHome.Presentation
 
         private ToggleDeviceUseCase _toggleUC;
         private SelectCameraUseCase _cameraUC;
+        private PowerSource _powerSource;
 
-        public void Init(IDeviceRepository repo, ToggleDeviceUseCase toggleUC, SelectCameraUseCase cameraUC, Dictionary<DeviceId, string> names)
+        public void Init(IDeviceRepository repo, ToggleDeviceUseCase toggleUC, SelectCameraUseCase cameraUC, PowerSource powerSource, Dictionary<DeviceId, string> names)
         {
             _toggleUC = toggleUC;
             _cameraUC = cameraUC;
-
+            _powerSource = powerSource;
             foreach (var device in repo.All)
             {
+                if (device is IConsumable consumable)
+                    _powerSource.RegisterConsumer(consumable);
                 if (device is Lamp lamp)
                 {
                     var view = Instantiate(_lampPrefab, _root);

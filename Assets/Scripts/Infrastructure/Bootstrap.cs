@@ -38,7 +38,7 @@ namespace SmartHome.Infrastructure
             // 3. Инициализация UseCases
             var toggleUC = new ToggleDeviceUseCase(_repo);
             var selectCameraUC = new SelectCameraUseCase(_repo);
-
+            PowerSource powerSource = null;
             // 4. UI
             // Поиск PowerSource для инициализации UI — можно упростить, если у тебя их несколько
             foreach (var node in nodeMap.Values)
@@ -46,11 +46,12 @@ namespace SmartHome.Infrastructure
                 if (node is PowerSource power)
                 {
                     _powerSourceView.Init(power);
+                    powerSource = power;
                     break;
                 }
             }
 
-            _widgetFactory.Init(_repo, toggleUC, selectCameraUC, _deviceNames);
+            _widgetFactory.Init(_repo, toggleUC, selectCameraUC, powerSource, _deviceNames);
 
             // 5. Симуляция
             gameObject.AddComponent<SimulationLoop>().Init(_repo);

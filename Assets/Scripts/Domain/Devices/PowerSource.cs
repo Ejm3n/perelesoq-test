@@ -29,7 +29,6 @@ namespace SmartHome.Domain
                 {
                     CurrentPower += c.RatedPower;
                     TotalConsumedEnergy += c.RatedPower * deltaTime / 1000f; // W*s -> kWh
-
                 }
             }
 

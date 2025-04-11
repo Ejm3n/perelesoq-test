@@ -11,7 +11,6 @@ namespace SmartHome.Presentation
         [SerializeField] private TMP_Text _currentPowerText;
         [SerializeField] private TMP_Text _totalConsumedEnergyText;
         [SerializeField] private TMP_Text _timeText;
-        //[SerializeField] private TMP_Text _ingameDisplayText;
         private PowerSource _power;
 
         public void Init(PowerSource power)
@@ -39,20 +38,6 @@ namespace SmartHome.Presentation
             // Обновляем текст времени
             _timeText.text = FormatTime(time);
         }
-
-        // private void UpdateIngameDisplay(float currentPower, float totalConsumedEnergy)
-        // {
-        // Получаем текущее время из PowerSource
-        //    float time = _power?.Time ?? 0f;
-
-        // Форматируем текст для ингейм дисплея
-        //    string formattedTime = FormatTime(time);
-        //    string ingameDisplay = $"TIME: {formattedTime}\nTOTAL: {totalConsumedEnergy}W\nCURRENT: {currentPower}W";
-
-        // Применяем текст к _ingameDisplayText
-        //    _ingameDisplayText.text = ingameDisplay;
-        //}
-
 
         // TODO: move to utils - вынести в отдельный класс с общими функциями
         private string FormatTime(float timeInSeconds)
