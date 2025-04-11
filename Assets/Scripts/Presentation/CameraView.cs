@@ -11,9 +11,10 @@ namespace SmartHome.Presentation
     {
         private CameraDevice _cam;
         private SelectCameraUseCase _select;
-        public void Init(CameraDevice cam, SelectCameraUseCase sel)
+        public void Init(CameraDevice cam, SelectCameraUseCase sel, string name)
         {
             _cam = cam; _select = sel;
+            SetName(name);
             Refresh();
         }
         public void OnClicked()

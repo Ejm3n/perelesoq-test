@@ -14,8 +14,8 @@ namespace SmartHome.Serialization
         private GraphNode _selectedOutput;
         private ElectricNetworkAsset _currentAsset;
         private bool _dirty;
-        private const float NODE_WIDTH = 200f;
-        private const float NODE_HEIGHT = 120f;
+        private const float NODE_WIDTH = 210f;
+        private const float NODE_HEIGHT = 140f;
         private const float ARROW_SIZE = 10f;
         private const float CURVE_OFFSET = 50f;
         private Rect _canvasRect = new Rect(0, 0, 5000, 5000); // зафиксированный огромный канвас
@@ -192,7 +192,20 @@ namespace SmartHome.Serialization
         private void DrawNodeWindow(int id)
         {
             var node = _nodes[id];
-            node.id = EditorGUILayout.TextField("ID", node.id);
+            // ID — стандартная ширина
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("ID", GUILayout.Width(30));
+            node.id = EditorGUILayout.TextField(node.id);
+            GUILayout.EndHorizontal();
+
+            // Name — растянутая ширина
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Name", GUILayout.Width(40));
+            GUIStyle nameFieldStyle = new GUIStyle(GUI.skin.textField);
+            nameFieldStyle.fontStyle = FontStyle.Bold;
+            node.displayName = EditorGUILayout.TextField(node.displayName, nameFieldStyle, GUILayout.MinWidth(100));
+            GUILayout.EndHorizontal();
+
             GUILayout.Label(node.type.ToString());
 
             if (GUILayout.Button("Connect"))
@@ -295,12 +308,14 @@ namespace SmartHome.Serialization
                 var def = new ElectricDeviceDefinition
                 {
                     id = node.id,
+                    displayName = node.displayName, // ← здесь
                     type = node.type,
                     inputs = new List<string>(),
                     outputs = new List<string>(),
                     posX = node.rect.x,
                     posY = node.rect.y
                 };
+
 
 
                 definitions[node.id] = def;
@@ -353,12 +368,14 @@ namespace SmartHome.Serialization
                 var def = new ElectricDeviceDefinition
                 {
                     id = node.id,
+                    displayName = node.displayName, // ← здесь
                     type = node.type,
                     inputs = new List<string>(),
                     outputs = new List<string>(),
                     posX = node.rect.x,
                     posY = node.rect.y
                 };
+
                 definitions[node.id] = def;
                 _currentAsset.devices.Add(def);
             }
@@ -406,7 +423,7 @@ namespace SmartHome.Serialization
                     continue;
                 }
                 var rect = new Rect(def.posX, def.posY, NODE_WIDTH, NODE_HEIGHT);
-                var node = new GraphNode(def.type, rect, def.id);
+                var node = new GraphNode(def.type, rect, def.id, def.displayName);
                 _nodes.Add(node);
                 map[def.id] = node;
             }
@@ -443,16 +460,19 @@ namespace SmartHome.Serialization
         private class GraphNode
         {
             public string id;
+            public string displayName; // ← новое поле
             public ElectricDeviceType type;
             public Rect rect;
 
-            public GraphNode(ElectricDeviceType type, Rect rect, string id = null)
+            public GraphNode(ElectricDeviceType type, Rect rect, string id = null, string displayName = "")
             {
                 this.type = type;
                 this.rect = rect;
                 this.id = id ?? Guid.NewGuid().ToString();
+                this.displayName = displayName;
             }
         }
+
 
         private class GraphEdge
         {

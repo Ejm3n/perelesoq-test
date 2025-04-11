@@ -6,13 +6,13 @@ namespace SmartHome.Presentation
     public sealed class LampView : DeviceWidgetView
     {
         private Lamp _lamp;
-        public void Init(Lamp lamp)
+        public void Init(Lamp lamp, string name)
         {
             _lamp = lamp;
             if (_lamp != null)
                 _lamp.OnSwitch += Refresh;
 
-            //SetName(_lamp.Id.ToString());
+            SetName(name);
         }
 
         private void OnDisable()

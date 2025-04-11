@@ -9,6 +9,7 @@ namespace SmartHome.Serialization
     public sealed class ElectricDeviceDefinition
     {
         public string id;
+        public string displayName;
         public ElectricDeviceType type;
         public List<string> inputs;
         public List<string> outputs;

@@ -14,12 +14,19 @@ namespace SmartHome.Infrastructure
         [SerializeField] private ElectricNetworkAsset _electricAsset;
 
         private DeviceRepository _repo;
+        private Dictionary<DeviceId, string> _deviceNames = new();
 
         private void Awake()
         {
             // 1. Загрузка графа из ассета
             Dictionary<string, IElectricNode> nodeMap = ElectricNetworkBuilder.BuildFromAsset(_electricAsset);
-
+            foreach (var def in _electricAsset.devices)
+            {
+                if (nodeMap.TryGetValue(def.id, out var node) && node is IDevice device)
+                {
+                    _deviceNames[device.Id] = def.displayName ?? def.id;
+                }
+            }
             // 2. Заполнение репозитория
             _repo = new DeviceRepository();
             foreach (var node in nodeMap.Values)
@@ -43,7 +50,7 @@ namespace SmartHome.Infrastructure
                 }
             }
 
-            _widgetFactory.Init(_repo, toggleUC, selectCameraUC);
+            _widgetFactory.Init(_repo, toggleUC, selectCameraUC, _deviceNames);
 
             // 5. Симуляция
             gameObject.AddComponent<SimulationLoop>().Init(_repo);

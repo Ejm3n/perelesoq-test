@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   devices:
   - id: PS
+    displayName: Power Source
     type: 0
     inputs: []
     outputs:
@@ -21,6 +22,7 @@ MonoBehaviour:
     posX: 76
     posY: 650
   - id: S1
+    displayName: Switch 1
     type: 1
     inputs:
     - S2
@@ -29,6 +31,7 @@ MonoBehaviour:
     posX: 755
     posY: 485
   - id: S2
+    displayName: Switch 2
     type: 1
     inputs:
     - PS
@@ -38,6 +41,7 @@ MonoBehaviour:
     posX: 426
     posY: 716
   - id: S3
+    displayName: Switch 3
     type: 1
     inputs:
     - S2
@@ -46,6 +50,7 @@ MonoBehaviour:
     posX: 732
     posY: 706
   - id: L2
+    displayName: Lamp 2
     type: 2
     inputs:
     - S1
@@ -53,6 +58,7 @@ MonoBehaviour:
     posX: 1142
     posY: 459
   - id: L1
+    displayName: Lamp 1
     type: 2
     inputs:
     - S3

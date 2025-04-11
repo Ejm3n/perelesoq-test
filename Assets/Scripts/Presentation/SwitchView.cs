@@ -14,14 +14,14 @@ namespace SmartHome.Presentation
         private ToggleDeviceUseCase _useCase;
         private DeviceId _id;
 
-        public void Init(ElectricSwitch sw, ToggleDeviceUseCase uc)
+        public void Init(ElectricSwitch sw, ToggleDeviceUseCase uc, string name)
         {
             _switch = sw;
             _useCase = uc;
             _id = (sw as IDevice)!.Id;
+            SetName(name);
             _toggle.onValueChanged.AddListener(OnClick);
             OnClick(_toggle.isOn);
-            //SetName(sw.Name);
         }
         private void OnClick(bool isOn)
         {

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using SmartHome.Application;
 using SmartHome.Domain;
 using UnityEngine;
@@ -15,7 +16,7 @@ namespace SmartHome.Presentation
         private ToggleDeviceUseCase _toggleUC;
         private SelectCameraUseCase _cameraUC;
 
-        public void Init(IDeviceRepository repo, ToggleDeviceUseCase toggleUC, SelectCameraUseCase cameraUC)
+        public void Init(IDeviceRepository repo, ToggleDeviceUseCase toggleUC, SelectCameraUseCase cameraUC, Dictionary<DeviceId, string> names)
         {
             _toggleUC = toggleUC;
             _cameraUC = cameraUC;
@@ -25,22 +26,22 @@ namespace SmartHome.Presentation
                 if (device is Lamp lamp)
                 {
                     var view = Instantiate(_lampPrefab, _root);
-                    view.Init(lamp);
+                    view.Init(lamp, names[lamp.Id]);
                 }
                 else if (device is ElectricSwitch sw)
                 {
                     var view = Instantiate(_switchPrefab, _root);
-                    view.Init(sw, _toggleUC);
+                    view.Init(sw, _toggleUC, names[sw.Id]);
                 }
                 else if (device is DoorDrive door)
                 {
                     var view = Instantiate(_doorPrefab, _root);
-                    view.Init(door);
+                    view.Init(door, names[door.Id]);
                 }
                 else if (device is CameraDevice camera)
                 {
                     var view = Instantiate(_cameraPrefab, _root);
-                    view.Init(camera, _cameraUC);
+                    view.Init(camera, _cameraUC, names[camera.Id]);
                 }
                 // etc... можно вынести в словарь-реестр фабрик, если устройств будет много
             }
