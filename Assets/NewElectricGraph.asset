@@ -17,45 +17,45 @@ MonoBehaviour:
     type: 0
     inputs: []
     outputs:
-    - S1
     - S2
-    - S3
     posX: 76
     posY: 650
   - id: S1
     type: 1
     inputs:
-    - PS
+    - S2
     outputs:
     - L2
-    posX: 435
-    posY: 401
+    posX: 755
+    posY: 485
   - id: S2
     type: 1
     inputs:
     - PS
-    outputs: []
-    posX: 444
-    posY: 617
+    outputs:
+    - S3
+    - S1
+    posX: 426
+    posY: 716
   - id: S3
     type: 1
     inputs:
-    - PS
+    - S2
     outputs:
     - L1
-    posX: 440
-    posY: 851
+    posX: 732
+    posY: 706
   - id: L2
     type: 2
     inputs:
     - S1
     outputs: []
-    posX: 793
-    posY: 405
+    posX: 1142
+    posY: 459
   - id: L1
     type: 2
     inputs:
     - S3
     outputs: []
-    posX: 851
-    posY: 870
+    posX: 1069
+    posY: 704

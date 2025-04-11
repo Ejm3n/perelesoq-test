@@ -31,10 +31,8 @@ namespace SmartHome.Serialization
 
                     if (input is IOutputAccepting outputAccepting)
                     {
-                        Debug.Log($"[Builder] {input.GetType().Name} connects to {current.GetType().Name}");
                         outputAccepting.ConnectOutput(current);
                     }
-
                 }
             }
 

@@ -53,6 +53,7 @@ namespace SmartHome.Serialization
                 node.rect = GUI.Window(i, node.rect, id => DrawNodeWindow(id), node.id);
             }
             EndWindows();
+            HandleEdgeClick(Vector2.zero);
 
             GUI.EndScrollView();
 
