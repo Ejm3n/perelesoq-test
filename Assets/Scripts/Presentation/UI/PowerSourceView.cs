@@ -28,8 +28,8 @@ namespace SmartHome.Presentation
 
         private void Refresh(float currentPower, float totalConsumedEnergy)
         {
-            _currentPowerText.text = $"CURRENT: {currentPower} W";
-            _totalConsumedEnergyText.text = $"TOTAL: {totalConsumedEnergy} W";
+            _currentPowerText.text = $"CURRENT: {currentPower.ToString("F1")} W";
+            _totalConsumedEnergyText.text = $"TOTAL: {totalConsumedEnergy.ToString("F1")} W";
         }
 
         private void RefreshTime(float time)

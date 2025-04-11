@@ -19,7 +19,7 @@ namespace SmartHome.Domain
         {
             _input = input;
             Id = id;
-            RatedPower = energyRequired;
+            RatedPower = energyRequired / 3600f; // потому что в час а не в секунду.
         }
 
         public void Tick(float delta)

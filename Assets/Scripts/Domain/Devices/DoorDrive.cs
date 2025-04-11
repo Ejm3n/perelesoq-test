@@ -49,7 +49,6 @@ namespace SmartHome.Domain
 
             if (_progress == 0f || _progress == 1f)
             {
-                Debug.Log($"DoorDrive {Id} completed movement, consumed energy: {ConsumedEnergy}");
                 _isMoving = false;
                 OnSwitch?.Invoke(false);
             }
