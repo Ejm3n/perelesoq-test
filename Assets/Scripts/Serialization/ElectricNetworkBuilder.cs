@@ -14,7 +14,7 @@ namespace SmartHome.Serialization
             foreach (var def in asset.devices)
             {
                 var id = new DeviceId(def.id);
-                nodes[def.id] = CreateNode(def.type, id, def.energyRequired);
+                nodes[def.id] = CreateNode(def.type, id, def.energyRequired, def.useDuration);
             }
 
             // 2. Подключение связей: входы и выходы
@@ -41,14 +41,14 @@ namespace SmartHome.Serialization
         }
 
 
-        public static IElectricNode CreateNode(ElectricDeviceType type, DeviceId id, float energyRequired)
+        public static IElectricNode CreateNode(ElectricDeviceType type, DeviceId id, float energyRequired, float useDuration)
         {
             return type switch
             {
                 ElectricDeviceType.PowerSource => new PowerSource(id),
                 ElectricDeviceType.ElectricSwitch => new ElectricSwitch(null, id),
                 ElectricDeviceType.Lamp => new Lamp(null, id, energyRequired),
-                ElectricDeviceType.Door => new DoorDrive(null, id, energyRequired),
+                ElectricDeviceType.Door => new DoorDrive(null, id, energyRequired, useDuration),
                 ElectricDeviceType.AndGate => new ElectricNodeComposite(Logic.And, id),
                 ElectricDeviceType.OrGate => new ElectricNodeComposite(Logic.Or, id),
                 _ => throw new System.Exception($"Unsupported type: {type}")

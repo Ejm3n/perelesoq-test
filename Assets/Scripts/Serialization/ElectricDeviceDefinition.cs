@@ -12,6 +12,7 @@ namespace SmartHome.Serialization
         public string displayName;
         public EnergyConsumptionMode consumptionMode;
         public float energyRequired;
+        public float useDuration;
         public ElectricDeviceType type;
         public List<string> inputs;
         public List<string> outputs;

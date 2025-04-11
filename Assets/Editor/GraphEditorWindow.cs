@@ -209,6 +209,10 @@ namespace SmartHome.Serialization
             node.consumptionMode = (EnergyConsumptionMode)EditorGUILayout.EnumPopup("Consumption", node.consumptionMode);
             node.energyRequired = EditorGUILayout.FloatField("Energy Required", node.energyRequired);
 
+            if (node.consumptionMode == EnergyConsumptionMode.PerUse)
+            {
+                node.useDuration = EditorGUILayout.FloatField("Use Duration", node.useDuration);
+            }
 
             GUILayout.Label(node.type.ToString());
 
@@ -319,7 +323,8 @@ namespace SmartHome.Serialization
                     posX = node.rect.x,
                     posY = node.rect.y,
                     consumptionMode = node.consumptionMode,
-                    energyRequired = node.energyRequired
+                    energyRequired = node.energyRequired,
+                    useDuration = node.useDuration
                 };
 
 
@@ -381,7 +386,8 @@ namespace SmartHome.Serialization
                     posX = node.rect.x,
                     posY = node.rect.y,
                     consumptionMode = node.consumptionMode,
-                    energyRequired = node.energyRequired
+                    energyRequired = node.energyRequired,
+                    useDuration = node.useDuration
                 };
 
                 definitions[node.id] = def;
@@ -430,10 +436,20 @@ namespace SmartHome.Serialization
                     Debug.LogWarning("Skipping node with empty ID.");
                     continue;
                 }
-                var rect = new Rect(def.posX, def.posY, NODE_WIDTH, NODE_HEIGHT);
-                var node = new GraphNode(def.type, rect, def.id, def.displayName, def.consumptionMode, def.energyRequired);
-                _nodes.Add(node);
-                map[def.id] = node;
+                if (def.consumptionMode == EnergyConsumptionMode.PerUse)
+                {
+                    var rect = new Rect(def.posX, def.posY, NODE_WIDTH, NODE_HEIGHT + 50);
+                    var node = new GraphNode(def.type, rect, def.id, def.displayName, def.consumptionMode, def.energyRequired, def.useDuration);
+                    _nodes.Add(node);
+                    map[def.id] = node;
+                }
+                else
+                {
+                    var rect = new Rect(def.posX, def.posY, NODE_WIDTH, NODE_HEIGHT);
+                    var node = new GraphNode(def.type, rect, def.id, def.displayName, def.consumptionMode, def.energyRequired);
+                    _nodes.Add(node);
+                    map[def.id] = node;
+                }
             }
 
             foreach (var def in _currentAsset.devices)
@@ -473,8 +489,9 @@ namespace SmartHome.Serialization
             public Rect rect;
             public EnergyConsumptionMode consumptionMode;
             public float energyRequired;
+            public float useDuration;
 
-            public GraphNode(ElectricDeviceType type, Rect rect, string id = null, string displayName = "", EnergyConsumptionMode consumptionMode = EnergyConsumptionMode.PerTick, float energyRequired = 0)
+            public GraphNode(ElectricDeviceType type, Rect rect, string id = null, string displayName = "", EnergyConsumptionMode consumptionMode = EnergyConsumptionMode.PerTick, float energyRequired = 0, float useDuration = 0)
             {
                 this.type = type;
                 this.rect = rect;
@@ -482,6 +499,7 @@ namespace SmartHome.Serialization
                 this.displayName = displayName;
                 this.consumptionMode = consumptionMode;
                 this.energyRequired = energyRequired;
+                this.useDuration = useDuration;
             }
         }
 

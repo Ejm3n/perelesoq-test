@@ -55,6 +55,7 @@ MonoBehaviour:
     - S2
     outputs:
     - L1
+    - D1
     posX: 732
     posY: 706
   - id: L2
@@ -75,5 +76,15 @@ MonoBehaviour:
     inputs:
     - S3
     outputs: []
-    posX: 1069
-    posY: 704
+    posX: 1143
+    posY: 643
+  - id: D1
+    displayName: Door 1
+    consumptionMode: 2
+    energyRequired: 50
+    type: 3
+    inputs:
+    - S3
+    outputs: []
+    posX: 1137
+    posY: 855
