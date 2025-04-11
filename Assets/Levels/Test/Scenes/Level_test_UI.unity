@@ -209,7 +209,7 @@ MonoBehaviour:
   _root: {fileID: 481993301}
   _lampPrefab: {fileID: 5601340230633188733, guid: ccf58d821c65c3e4bad7f4e6d087504b, type: 3}
   _switchPrefab: {fileID: 8441482422895203116, guid: 2bd7cbc29f1abfa499f4b61e26b4b0b2, type: 3}
-  _doorPrefab: {fileID: 0}
+  _doorPrefab: {fileID: 9221084069286670176, guid: f391bf2cd9b2b5a4b87539c73db9f849, type: 3}
   _cameraPrefab: {fileID: 0}
 --- !u!114 &360091074
 MonoBehaviour:
@@ -1056,7 +1056,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1334784485}
   m_HandleRect: {fileID: 1334784484}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
