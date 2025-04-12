@@ -9,6 +9,8 @@ namespace SmartHome.Domain
         AndGate,
         OrGate,
         Camera,
-        Bridge
+        Bridge,
+        CleanerBot,
+        ChargingStation
     }
 }

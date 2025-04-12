@@ -218,17 +218,28 @@ namespace SmartHome.Serialization
 
             if (node.consumptionMode == EnergyConsumptionMode.PerUse)
                 desiredHeight += HEIGHT_FOR_ADDITIONAL_INFO;
+            else if (node.consumptionMode == EnergyConsumptionMode.BatteryPowered)
+                desiredHeight += HEIGHT_FOR_ADDITIONAL_INFO * 2;
 
             if (Mathf.Abs(node.rect.height - desiredHeight) > 0.1f)
             {
                 node.rect.height = desiredHeight;
                 _dirty = true;
             }
-            node.energyRequired = EditorGUILayout.FloatField("Energy Required", node.energyRequired);
-
-            if (node.consumptionMode == EnergyConsumptionMode.PerUse)
+            if (node.consumptionMode == EnergyConsumptionMode.PerTick)
             {
+                node.energyRequired = EditorGUILayout.FloatField("Energy Required", node.energyRequired);
+            }
+            else if (node.consumptionMode == EnergyConsumptionMode.PerUse)
+            {
+                node.energyRequired = EditorGUILayout.FloatField("Energy Required", node.energyRequired);
                 node.useDuration = EditorGUILayout.FloatField("Use Duration", node.useDuration);
+            }
+            else if (node.consumptionMode == EnergyConsumptionMode.BatteryPowered)
+            {
+                node.batteryCapacity = EditorGUILayout.FloatField("Battery Capacity", node.batteryCapacity);
+                node.drainPerSecond = EditorGUILayout.FloatField("Drain Per Second", node.drainPerSecond);
+                node.chargePerSecond = EditorGUILayout.FloatField("Charge Per Second", node.chargePerSecond);
             }
 
             GUILayout.Label(node.type.ToString());
@@ -341,7 +352,10 @@ namespace SmartHome.Serialization
                     posY = node.rect.y,
                     consumptionMode = node.consumptionMode,
                     energyRequired = node.energyRequired,
-                    useDuration = node.useDuration
+                    useDuration = node.useDuration,
+                    batteryCapacity = node.batteryCapacity,
+                    drainPerSecond = node.drainPerSecond,
+                    chargePerSecond = node.chargePerSecond
                 };
 
 
@@ -404,7 +418,10 @@ namespace SmartHome.Serialization
                     posY = node.rect.y,
                     consumptionMode = node.consumptionMode,
                     energyRequired = node.energyRequired,
-                    useDuration = node.useDuration
+                    useDuration = node.useDuration,
+                    batteryCapacity = node.batteryCapacity,
+                    drainPerSecond = node.drainPerSecond,
+                    chargePerSecond = node.chargePerSecond
                 };
 
                 definitions[node.id] = def;
@@ -460,6 +477,13 @@ namespace SmartHome.Serialization
                     _nodes.Add(node);
                     map[def.id] = node;
                 }
+                else if (def.consumptionMode == EnergyConsumptionMode.BatteryPowered)
+                {
+                    var rect = new Rect(def.posX, def.posY, NODE_WIDTH, NODE_HEIGHT + HEIGHT_FOR_ADDITIONAL_INFO * 2);
+                    var node = new GraphNode(def.type, rect, def.id, def.displayName, def.consumptionMode, def.energyRequired, def.useDuration, def.batteryCapacity, def.drainPerSecond, def.chargePerSecond);
+                    _nodes.Add(node);
+                    map[def.id] = node;
+                }
                 else
                 {
                     var rect = new Rect(def.posX, def.posY, NODE_WIDTH, NODE_HEIGHT);
@@ -507,8 +531,12 @@ namespace SmartHome.Serialization
             public EnergyConsumptionMode consumptionMode;
             public float energyRequired;
             public float useDuration;
+            public float batteryCapacity;
+            public float drainPerSecond;
+            public float chargePerSecond;
 
-            public GraphNode(ElectricDeviceType type, Rect rect, string id = null, string displayName = "", EnergyConsumptionMode consumptionMode = EnergyConsumptionMode.PerTick, float energyRequired = 0, float useDuration = 0)
+
+            public GraphNode(ElectricDeviceType type, Rect rect, string id = null, string displayName = "", EnergyConsumptionMode consumptionMode = EnergyConsumptionMode.PerTick, float energyRequired = 0, float useDuration = 0, float batteryCapacity = 0, float drainPerSecond = 0, float chargePerSecond = 0)
             {
                 this.type = type;
                 this.rect = rect;
@@ -517,6 +545,9 @@ namespace SmartHome.Serialization
                 this.consumptionMode = consumptionMode;
                 this.energyRequired = energyRequired;
                 this.useDuration = useDuration;
+                this.batteryCapacity = batteryCapacity;
+                this.drainPerSecond = drainPerSecond;
+                this.chargePerSecond = chargePerSecond;
             }
         }
 

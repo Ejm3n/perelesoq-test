@@ -18,6 +18,9 @@ MonoBehaviour:
     consumptionMode: 0
     energyRequired: 0
     useDuration: 0
+    batteryCapacity: 0
+    drainPerSecond: 0
+    chargePerSecond: 0
     type: 0
     inputs: []
     outputs:
@@ -31,6 +34,9 @@ MonoBehaviour:
     consumptionMode: 0
     energyRequired: 0
     useDuration: 0
+    batteryCapacity: 0
+    drainPerSecond: 0
+    chargePerSecond: 0
     type: 6
     inputs: []
     outputs: []
@@ -41,6 +47,9 @@ MonoBehaviour:
     consumptionMode: 0
     energyRequired: 0
     useDuration: 0
+    batteryCapacity: 0
+    drainPerSecond: 0
+    chargePerSecond: 0
     type: 6
     inputs: []
     outputs: []
@@ -51,6 +60,9 @@ MonoBehaviour:
     consumptionMode: 0
     energyRequired: 0
     useDuration: 0
+    batteryCapacity: 0
+    drainPerSecond: 0
+    chargePerSecond: 0
     type: 6
     inputs: []
     outputs: []
@@ -61,6 +73,9 @@ MonoBehaviour:
     consumptionMode: 0
     energyRequired: 0
     useDuration: 0
+    batteryCapacity: 0
+    drainPerSecond: 0
+    chargePerSecond: 0
     type: 1
     inputs:
     - PS
@@ -73,10 +88,14 @@ MonoBehaviour:
     consumptionMode: 0
     energyRequired: 0
     useDuration: 0
+    batteryCapacity: 0
+    drainPerSecond: 0
+    chargePerSecond: 0
     type: 1
     inputs:
     - PS
-    outputs: []
+    outputs:
+    - ChargingStation
     posX: 1097
     posY: 773
   - id: Switch 3
@@ -84,6 +103,9 @@ MonoBehaviour:
     consumptionMode: 0
     energyRequired: 0
     useDuration: 0
+    batteryCapacity: 0
+    drainPerSecond: 0
+    chargePerSecond: 0
     type: 1
     inputs:
     - PS
@@ -97,6 +119,9 @@ MonoBehaviour:
     consumptionMode: 1
     energyRequired: 100
     useDuration: 0
+    batteryCapacity: 0
+    drainPerSecond: 0
+    chargePerSecond: 0
     type: 2
     inputs:
     - Switch 1
@@ -108,6 +133,9 @@ MonoBehaviour:
     consumptionMode: 2
     energyRequired: 50
     useDuration: 5
+    batteryCapacity: 0
+    drainPerSecond: 0
+    chargePerSecond: 0
     type: 3
     inputs:
     - Switch 3
@@ -119,6 +147,9 @@ MonoBehaviour:
     consumptionMode: 0
     energyRequired: 0
     useDuration: 0
+    batteryCapacity: 0
+    drainPerSecond: 0
+    chargePerSecond: 0
     type: 7
     inputs:
     - Switch 3
@@ -132,6 +163,9 @@ MonoBehaviour:
     consumptionMode: 0
     energyRequired: 0
     useDuration: 0
+    batteryCapacity: 0
+    drainPerSecond: 0
+    chargePerSecond: 0
     type: 1
     inputs:
     - Bridge 1
@@ -144,6 +178,9 @@ MonoBehaviour:
     consumptionMode: 0
     energyRequired: 0
     useDuration: 0
+    batteryCapacity: 0
+    drainPerSecond: 0
+    chargePerSecond: 0
     type: 1
     inputs:
     - Switch 5
@@ -156,6 +193,9 @@ MonoBehaviour:
     consumptionMode: 0
     energyRequired: 0
     useDuration: 0
+    batteryCapacity: 0
+    drainPerSecond: 0
+    chargePerSecond: 0
     type: 1
     inputs:
     - Switch 5
@@ -168,6 +208,9 @@ MonoBehaviour:
     consumptionMode: 0
     energyRequired: 0
     useDuration: 0
+    batteryCapacity: 0
+    drainPerSecond: 0
+    chargePerSecond: 0
     type: 1
     inputs:
     - Bridge 1
@@ -183,6 +226,9 @@ MonoBehaviour:
     consumptionMode: 0
     energyRequired: 0
     useDuration: 0
+    batteryCapacity: 0
+    drainPerSecond: 0
+    chargePerSecond: 0
     type: 1
     inputs:
     - Switch 5
@@ -195,6 +241,9 @@ MonoBehaviour:
     consumptionMode: 0
     energyRequired: 0
     useDuration: 0
+    batteryCapacity: 0
+    drainPerSecond: 0
+    chargePerSecond: 0
     type: 1
     inputs:
     - Switch 5
@@ -207,6 +256,9 @@ MonoBehaviour:
     consumptionMode: 1
     energyRequired: 100
     useDuration: 0
+    batteryCapacity: 0
+    drainPerSecond: 0
+    chargePerSecond: 0
     type: 2
     inputs:
     - Switch 4
@@ -218,6 +270,9 @@ MonoBehaviour:
     consumptionMode: 0
     energyRequired: 0
     useDuration: 0
+    batteryCapacity: 0
+    drainPerSecond: 0
+    chargePerSecond: 0
     type: 5
     inputs:
     - Switch 6
@@ -231,6 +286,9 @@ MonoBehaviour:
     consumptionMode: 0
     energyRequired: 0
     useDuration: 0
+    batteryCapacity: 0
+    drainPerSecond: 0
+    chargePerSecond: 0
     type: 4
     inputs:
     - Switch 8
@@ -244,6 +302,9 @@ MonoBehaviour:
     consumptionMode: 1
     energyRequired: 50
     useDuration: 0
+    batteryCapacity: 0
+    drainPerSecond: 0
+    chargePerSecond: 0
     type: 2
     inputs:
     - AndGate 1
@@ -255,9 +316,41 @@ MonoBehaviour:
     consumptionMode: 1
     energyRequired: 50
     useDuration: 0
+    batteryCapacity: 0
+    drainPerSecond: 0
+    chargePerSecond: 0
     type: 2
     inputs:
     - OrGate 1
     outputs: []
     posX: 2148
     posY: 1453
+  - id: ChargingStation
+    displayName: ChargingStation
+    consumptionMode: 0
+    energyRequired: 0
+    useDuration: 0
+    batteryCapacity: 0
+    drainPerSecond: 0
+    chargePerSecond: 0
+    type: 9
+    inputs:
+    - Switch 2
+    outputs:
+    - CleanerBot
+    posX: 1409
+    posY: 750
+  - id: CleanerBot
+    displayName: Cleaner Bot
+    consumptionMode: 3
+    energyRequired: 0
+    useDuration: 0
+    batteryCapacity: 50
+    drainPerSecond: 0.8
+    chargePerSecond: 1.6
+    type: 8
+    inputs:
+    - ChargingStation
+    outputs: []
+    posX: 1762
+    posY: 736

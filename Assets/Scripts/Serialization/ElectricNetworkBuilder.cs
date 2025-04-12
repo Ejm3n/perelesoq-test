@@ -65,6 +65,8 @@ namespace SmartHome.Serialization
                 ElectricDeviceType.OrGate => new GateOr(id),
                 ElectricDeviceType.Camera => new CameraDevice(id),
                 ElectricDeviceType.Bridge => new Bridge(id),
+                ElectricDeviceType.CleanerBot => new CleanerBot(id),
+                ElectricDeviceType.ChargingStation => new ChargingStation(id),
                 _ => throw new System.Exception($"Unsupported device type: {type}")
             };
         }
