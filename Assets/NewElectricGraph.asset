@@ -21,57 +21,11 @@ MonoBehaviour:
     type: 0
     inputs: []
     outputs:
-    - S2
-    - S3
-    posX: 76
-    posY: 650
-  - id: S2
-    displayName: Switch 2
-    consumptionMode: 0
-    energyRequired: 0
-    useDuration: 0
-    type: 1
-    inputs:
-    - PS
-    outputs:
-    - GateOr 1
-    posX: 497
-    posY: 485
-  - id: S3
-    displayName: Switch 3
-    consumptionMode: 0
-    energyRequired: 0
-    useDuration: 0
-    type: 1
-    inputs:
-    - PS
-    outputs:
-    - D1
-    - GateOr 1
-    posX: 524
-    posY: 749
-  - id: D1
-    displayName: Door 1
-    consumptionMode: 2
-    energyRequired: 50
-    useDuration: 5
-    type: 3
-    inputs:
-    - S3
-    outputs: []
-    posX: 869
-    posY: 814
-  - id: L1
-    displayName: Lamp 1
-    consumptionMode: 1
-    energyRequired: 100
-    useDuration: 0
-    type: 2
-    inputs:
-    - GateOr 1
-    outputs: []
-    posX: 1100
-    posY: 579
+    - Switch 1
+    - Switch 2
+    - Switch 3
+    posX: 80
+    posY: 770
   - id: Cam
     displayName: Camera 1
     consumptionMode: 0
@@ -102,16 +56,208 @@ MonoBehaviour:
     outputs: []
     posX: 631
     posY: 231
-  - id: GateOr 1
-    displayName: GateOr 1
+  - id: Switch 1
+    displayName: Switch 1
+    consumptionMode: 0
+    energyRequired: 0
+    useDuration: 0
+    type: 1
+    inputs:
+    - PS
+    outputs:
+    - Lamp 1
+    posX: 398
+    posY: 625
+  - id: Switch 2
+    displayName: Switch 2
+    consumptionMode: 0
+    energyRequired: 0
+    useDuration: 0
+    type: 1
+    inputs:
+    - PS
+    outputs: []
+    posX: 1097
+    posY: 773
+  - id: Switch 3
+    displayName: Switch 3
+    consumptionMode: 0
+    energyRequired: 0
+    useDuration: 0
+    type: 1
+    inputs:
+    - PS
+    outputs:
+    - Door 1
+    - Bridge 1
+    posX: 397
+    posY: 1119
+  - id: Lamp 1
+    displayName: Lamp 1
+    consumptionMode: 1
+    energyRequired: 100
+    useDuration: 0
+    type: 2
+    inputs:
+    - Switch 1
+    outputs: []
+    posX: 731
+    posY: 605
+  - id: Door 1
+    displayName: Door 1
+    consumptionMode: 2
+    energyRequired: 50
+    useDuration: 5
+    type: 3
+    inputs:
+    - Switch 3
+    outputs: []
+    posX: 793
+    posY: 908
+  - id: Bridge 1
+    displayName: Bridge
+    consumptionMode: 0
+    energyRequired: 0
+    useDuration: 0
+    type: 7
+    inputs:
+    - Switch 3
+    outputs:
+    - Switch 4
+    - Switch 5
+    posX: 797
+    posY: 1179
+  - id: Switch 4
+    displayName: Switch 4
+    consumptionMode: 0
+    energyRequired: 0
+    useDuration: 0
+    type: 1
+    inputs:
+    - Bridge 1
+    outputs:
+    - Lamp 2
+    posX: 1150
+    posY: 1129
+  - id: Switch 7
+    displayName: Switch 7
+    consumptionMode: 0
+    energyRequired: 0
+    useDuration: 0
+    type: 1
+    inputs:
+    - Switch 5
+    outputs:
+    - OrGate 1
+    posX: 1555
+    posY: 1591
+  - id: Switch 8
+    displayName: Switch 8
+    consumptionMode: 0
+    energyRequired: 0
+    useDuration: 0
+    type: 1
+    inputs:
+    - Switch 5
+    outputs:
+    - AndGate 1
+    posX: 875
+    posY: 1750
+  - id: Switch 5
+    displayName: Switch 5
+    consumptionMode: 0
+    energyRequired: 0
+    useDuration: 0
+    type: 1
+    inputs:
+    - Bridge 1
+    outputs:
+    - Switch 6
+    - Switch 7
+    - Switch 8
+    - Switch 9
+    posX: 1144
+    posY: 1440
+  - id: Switch 9
+    displayName: Switch 9
+    consumptionMode: 0
+    energyRequired: 0
+    useDuration: 0
+    type: 1
+    inputs:
+    - Switch 5
+    outputs:
+    - AndGate 1
+    posX: 1195
+    posY: 1835
+  - id: Switch 6
+    displayName: Switch 6
+    consumptionMode: 0
+    energyRequired: 0
+    useDuration: 0
+    type: 1
+    inputs:
+    - Switch 5
+    outputs:
+    - OrGate 1
+    posX: 1556
+    posY: 1355
+  - id: Lamp 2
+    displayName: Lamp 2
+    consumptionMode: 1
+    energyRequired: 100
+    useDuration: 0
+    type: 2
+    inputs:
+    - Switch 4
+    outputs: []
+    posX: 1466
+    posY: 1121
+  - id: OrGate 1
+    displayName: OrGate 1
     consumptionMode: 0
     energyRequired: 0
     useDuration: 0
     type: 5
     inputs:
-    - S2
-    - S3
+    - Switch 6
+    - Switch 7
     outputs:
-    - L1
-    posX: 822
-    posY: 576
+    - Torsher 1
+    posX: 1864
+    posY: 1463
+  - id: AndGate 1
+    displayName: AndGate 1
+    consumptionMode: 0
+    energyRequired: 0
+    useDuration: 0
+    type: 4
+    inputs:
+    - Switch 8
+    - Switch 9
+    outputs:
+    - Torsher 2
+    posX: 999
+    posY: 2040
+  - id: Torsher 2
+    displayName: Table Lamp 1
+    consumptionMode: 1
+    energyRequired: 50
+    useDuration: 0
+    type: 2
+    inputs:
+    - AndGate 1
+    outputs: []
+    posX: 1297
+    posY: 2058
+  - id: Torsher 1
+    displayName: Table Lamp 1
+    consumptionMode: 1
+    energyRequired: 50
+    useDuration: 0
+    type: 2
+    inputs:
+    - OrGate 1
+    outputs: []
+    posX: 2148
+    posY: 1453
