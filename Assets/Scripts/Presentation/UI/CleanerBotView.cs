@@ -9,7 +9,6 @@ namespace SmartHome.Presentation
     {
         [SerializeField] private Button cleanBtn;
         [SerializeField] private TMP_Text buttonLabel;
-
         private CleanerBot _bot;
 
         public void Init(CleanerBot bot)
@@ -26,27 +25,34 @@ namespace SmartHome.Presentation
             });
 
             bot.OnStateChanged += OnStateChanged;
+
             OnStateChanged(bot.State);
         }
 
         private void OnStateChanged(CleanerBotState state)
         {
-            SetStatus(state.ToString());
-
             switch (state)
             {
                 case CleanerBotState.Patrolling:
+                    SetStatus("Patrolling");
                     buttonLabel.text = "Stop";
                     cleanBtn.interactable = true;
                     break;
 
                 case CleanerBotState.Idle:
+                    SetStatus("Idle");
+                    buttonLabel.text = "Start";
+                    cleanBtn.interactable = true;
+                    break;
+
                 case CleanerBotState.Charging:
+                    SetStatus(_bot.IsFullyCharged ? "Ready" : "Charging");
                     buttonLabel.text = "Start";
                     cleanBtn.interactable = true;
                     break;
 
                 case CleanerBotState.Returning:
+                    SetStatus("Returning");
                     buttonLabel.text = "Returning...";
                     cleanBtn.interactable = false;
                     break;

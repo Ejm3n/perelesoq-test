@@ -25,12 +25,12 @@ namespace SmartHome.Domain
         public float RatedPower => IsOn ? DrainRate : 0f;
         public float ConsumedEnergy { get; private set; }
         public CleanerBotState State { get; private set; }
-
+        public bool IsFullyCharged => Mathf.Approximately(BatteryLevel, BatteryCapacity);
         public Vector3 DockPosition { get; set; } // передаётся из сценвью
 
         public event Action<CleanerBotState> OnStateChanged;
         public bool HasCurrent => BatteryLevel > 0f;
-
+        public bool _wasFullyCharged { get; private set; }
         public event Action<bool> OnSwitch;
 
         public CleanerBot(DeviceId id)
@@ -71,10 +71,21 @@ namespace SmartHome.Domain
                     break;
 
                 case CleanerBotState.Charging:
-                    if (_input?.HasCurrent == true && BatteryLevel < BatteryCapacity)
+                    if (State == CleanerBotState.Charging && _input?.HasCurrent == true)
                     {
                         BatteryLevel += ChargeRate * deltaTime;
                         BatteryLevel = Mathf.Min(BatteryLevel, BatteryCapacity);
+
+                        bool nowFullyCharged = Mathf.Approximately(BatteryLevel, BatteryCapacity);
+                        if (!_wasFullyCharged && nowFullyCharged)
+                        {
+                            _wasFullyCharged = true;
+                            OnStateChanged?.Invoke(CleanerBotState.Charging);
+                        }
+                        else if (!nowFullyCharged)
+                        {
+                            _wasFullyCharged = false;
+                        }
                     }
                     break;
             }
