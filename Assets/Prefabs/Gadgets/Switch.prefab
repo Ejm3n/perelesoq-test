@@ -740,9 +740,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: S
-  visualRenderer: {fileID: 3006234701637313551}
-  onMaterial: {fileID: 2100000, guid: 8f06f88536682b94abaffa2764b52f9f, type: 2}
-  offMaterial: {fileID: 2100000, guid: 0beffbed72a29764c911945ff80620af, type: 2}
+  targetRenderer: {fileID: 3006234701637313551}
+  activeMat: {fileID: 2100000, guid: 8f06f88536682b94abaffa2764b52f9f, type: 2}
+  inactiveMat: {fileID: 2100000, guid: 0beffbed72a29764c911945ff80620af, type: 2}
 --- !u!1 &5165626563369386784
 GameObject:
   m_ObjectHideFlags: 0

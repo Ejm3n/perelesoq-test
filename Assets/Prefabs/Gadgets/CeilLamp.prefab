@@ -97,6 +97,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: Lamp
-  LampMesh: {fileID: 7185220706437533140}
-  LampOnMaterial: {fileID: 2100000, guid: 559c96d2754c1774d952cc0f2979bbd0, type: 2}
-  LampOffMaterial: {fileID: 2100000, guid: d8a62ab40d402914da72efdd0c273534, type: 2}
+  targetRenderer: {fileID: 7185220706437533140}
+  activeMat: {fileID: 2100000, guid: 559c96d2754c1774d952cc0f2979bbd0, type: 2}
+  inactiveMat: {fileID: 2100000, guid: d8a62ab40d402914da72efdd0c273534, type: 2}

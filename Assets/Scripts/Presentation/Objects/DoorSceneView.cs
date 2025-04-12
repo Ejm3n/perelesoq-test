@@ -4,9 +4,8 @@ using TMPro;
 
 namespace SmartHome.Presentation
 {
-    public class DoorSceneView : MonoBehaviour
+    public class DoorSceneView : SceneViewBase<DoorDrive>
     {
-        [SerializeField] private string id;
         [SerializeField] private Transform targetTransform;
         [SerializeField] private Vector3 closedRotation;
         [SerializeField] private Vector3 openRotation;
@@ -17,21 +16,11 @@ namespace SmartHome.Presentation
 
         private DoorDrive _door;
 
-        void Awake()
+        protected override void OnDeviceBound(DoorDrive door)
         {
-            DeviceFactoryNotifier.OnDeviceCreated += TryBind;
-        }
-
-        private void TryBind(DeviceId deviceId, IDevice device)
-        {
-            if (deviceId.Value != id) return;
-            if (device is DoorDrive door)
-            {
-                _door = door;
-                _door.OnSwitch += UpdateStatusText;
-                UpdateStatusText(_door.IsOpen);
-                DeviceFactoryNotifier.OnDeviceCreated -= TryBind;
-            }
+            _door = door;
+            door.OnSwitch += UpdateStatusText;
+            UpdateStatusText(door.IsOpen);
         }
 
         void Update()
@@ -59,11 +48,6 @@ namespace SmartHome.Presentation
                 _statusText.text = "CLOSED";
                 _statusText.color = _closedColor;
             }
-        }
-
-        void OnDestroy()
-        {
-            DeviceFactoryNotifier.OnDeviceCreated -= TryBind;
         }
     }
 }
