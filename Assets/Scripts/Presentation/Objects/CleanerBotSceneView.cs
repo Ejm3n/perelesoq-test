@@ -51,19 +51,21 @@ public class CleanerBotSceneView : SceneViewBase<CleanerBot>
 
             if (_device.State == CleanerBotState.Returning)
             {
-                // Проверка: текущий путь недоступен
-                if (!_agent.hasPath || _agent.pathStatus != NavMeshPathStatus.PathComplete)
+                // Если он стоит (т.к. путь был недоступен), проверим ещё раз
+                if (_agent.isStopped)
+                {
+                    TrySetDockAsTarget(); // попытаемся снова построить путь
+                }
+                // Если путь внезапно стал неполным — остановим
+                else if (!_agent.hasPath || _agent.pathStatus != NavMeshPathStatus.PathComplete)
                 {
                     _agent.isStopped = true;
                     Debug.Log("Путь к базе пропал. Жду, пока снова откроется...");
-
-                    // Пробуем снова построить путь
-                    TrySetDockAsTarget();
-                    return;
                 }
             }
         }
 
+        // Обработка завершения пути
         if (!_agent.pathPending && !_agent.isStopped && _agent.remainingDistance < 0.2f)
         {
             if (_device.State == CleanerBotState.Patrolling)
@@ -77,7 +79,6 @@ public class CleanerBotSceneView : SceneViewBase<CleanerBot>
             }
         }
     }
-
 
     private void TryPickRandomTarget()
     {
