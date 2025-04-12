@@ -5995,7 +5995,7 @@ PrefabInstance:
       objectReference: {fileID: 1698615931}
     - target: {fileID: 2174384005818707063, guid: 5d9eddf59daa4a44bb16bc6c7650f930, type: 3}
       propertyPath: id
-      value: OrGate 1
+      value: GateOr 1
       objectReference: {fileID: 0}
     - target: {fileID: 2233091137463558242, guid: 5d9eddf59daa4a44bb16bc6c7650f930, type: 3}
       propertyPath: m_Mesh

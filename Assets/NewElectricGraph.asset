@@ -34,7 +34,7 @@ MonoBehaviour:
     inputs:
     - PS
     outputs:
-    - AndGate 1
+    - GateOr 1
     posX: 497
     posY: 485
   - id: S3
@@ -47,7 +47,7 @@ MonoBehaviour:
     - PS
     outputs:
     - D1
-    - AndGate 1
+    - GateOr 1
     posX: 524
     posY: 749
   - id: D1
@@ -68,10 +68,10 @@ MonoBehaviour:
     useDuration: 0
     type: 2
     inputs:
-    - AndGate 1
+    - GateOr 1
     outputs: []
-    posX: 1101
-    posY: 595
+    posX: 1100
+    posY: 579
   - id: Cam
     displayName: Camera 1
     consumptionMode: 0
@@ -102,16 +102,16 @@ MonoBehaviour:
     outputs: []
     posX: 631
     posY: 231
-  - id: AndGate 1
-    displayName: AndGate 1
+  - id: GateOr 1
+    displayName: GateOr 1
     consumptionMode: 0
     energyRequired: 0
     useDuration: 0
-    type: 4
+    type: 5
     inputs:
     - S2
     - S3
     outputs:
     - L1
-    posX: 820
-    posY: 588
+    posX: 822
+    posY: 576
