@@ -172,10 +172,10 @@ MonoBehaviour:
     inputs:
     - Bridge 1
     outputs:
-    - Switch 6
     - Switch 7
     - Switch 8
     - Switch 9
+    - Switch 6
     posX: 1144
     posY: 1440
   - id: Switch 9
