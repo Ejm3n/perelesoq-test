@@ -204,6 +204,7 @@ MonoBehaviour:
   id: AndGate 1
   _inputA: {fileID: 7389468757001462661}
   _inputB: {fileID: 4735559387770921667}
+  _output: {fileID: 3386247213280508309}
   _activeMat: {fileID: 2100000, guid: 8f06f88536682b94abaffa2764b52f9f, type: 2}
   _inactiveMat: {fileID: 2100000, guid: 0beffbed72a29764c911945ff80620af, type: 2}
 --- !u!1 &2670087269659233843
@@ -3629,8 +3630,6 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 2100000, guid: 935a14bb2096cb943a7035509a29ed89, type: 2}
   - {fileID: 2100000, guid: 0beffbed72a29764c911945ff80620af, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0

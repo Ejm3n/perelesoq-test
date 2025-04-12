@@ -9,6 +9,7 @@ namespace SmartHome.Presentation
         [SerializeField] private string id;
         [SerializeField] private Renderer _inputA;
         [SerializeField] private Renderer _inputB;
+        [SerializeField] private Renderer _output;
         [SerializeField] private Material _activeMat;
         [SerializeField] private Material _inactiveMat;
 
@@ -45,6 +46,7 @@ namespace SmartHome.Presentation
 
         private void OnStateChanged(bool isOn)
         {
+            _output.material = isOn ? _activeMat : _inactiveMat;
         }
 
         private void OnDestroy()
