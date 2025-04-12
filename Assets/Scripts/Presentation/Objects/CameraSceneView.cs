@@ -34,8 +34,6 @@ namespace SmartHome.Presentation
         private void ApplyCameraPosition(bool isSelected)
         {
             if (!isSelected || cameraTransform == null) return;
-
-            Debug.Log("ApplyCameraPosition");
             cameraTransform.SetParent(transform, false);
             cameraTransform.localPosition = Vector3.zero;
             cameraTransform.localEulerAngles = cameraRotation;

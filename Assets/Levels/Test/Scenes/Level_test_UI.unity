@@ -211,6 +211,7 @@ MonoBehaviour:
   _switchPrefab: {fileID: 8441482422895203116, guid: 2bd7cbc29f1abfa499f4b61e26b4b0b2, type: 3}
   _doorPrefab: {fileID: 9221084069286670176, guid: f391bf2cd9b2b5a4b87539c73db9f849, type: 3}
   _cameraPrefab: {fileID: 5369287420893426885, guid: a008335cf31c7ed42af6cd66b54f9a9d, type: 3}
+  _gatePrefab: {fileID: 4441696751221808179, guid: 77581754d3dbcf049bbbb9cb14afe641, type: 3}
 --- !u!114 &360091074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3172,7 +3173,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5009165850642696833, guid: 77581754d3dbcf049bbbb9cb14afe641, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -363
+      value: -45
       objectReference: {fileID: 0}
     - target: {fileID: 5009165850642696833, guid: 77581754d3dbcf049bbbb9cb14afe641, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

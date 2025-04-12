@@ -12,6 +12,7 @@ namespace SmartHome.Presentation
         [SerializeField] private SwitchView _switchPrefab;
         [SerializeField] private DoorDriveView _doorPrefab;
         [SerializeField] private CameraView _cameraPrefab;
+        [SerializeField] private GateView _gatePrefab;
 
         private ToggleDeviceUseCase _toggleUC;
         private SelectCameraUseCase _cameraUC;
@@ -50,6 +51,12 @@ namespace SmartHome.Presentation
                     var view = Instantiate(_cameraPrefab, _root);
                     view.Init(camera, _cameraUC);
                     DeviceFactoryNotifier.Notify(camera.Id, camera);
+                }
+                else if (device is LogicGate gate)
+                {
+                    var view = Instantiate(_gatePrefab, _root);
+                    view.Init(gate, names[gate.Id]);
+                    DeviceFactoryNotifier.Notify(gate.Id, gate);
                 }
                 // etc... можно вынести в словарь-реестр фабрик, если устройств будет много
             }

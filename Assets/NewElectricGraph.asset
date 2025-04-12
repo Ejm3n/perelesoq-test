@@ -34,7 +34,7 @@ MonoBehaviour:
     inputs:
     - PS
     outputs:
-    - Bridge 1
+    - AndGate 1
     posX: 497
     posY: 485
   - id: S3
@@ -47,8 +47,9 @@ MonoBehaviour:
     - PS
     outputs:
     - D1
-    posX: 537
-    posY: 793
+    - AndGate 1
+    posX: 524
+    posY: 749
   - id: D1
     displayName: Door 1
     consumptionMode: 2
@@ -67,10 +68,10 @@ MonoBehaviour:
     useDuration: 0
     type: 2
     inputs:
-    - Bridge 1
+    - AndGate 1
     outputs: []
-    posX: 1117
-    posY: 485
+    posX: 1101
+    posY: 595
   - id: Cam
     displayName: Camera 1
     consumptionMode: 0
@@ -101,15 +102,16 @@ MonoBehaviour:
     outputs: []
     posX: 631
     posY: 231
-  - id: Bridge 1
-    displayName: Bridge 1
+  - id: AndGate 1
+    displayName: AndGate 1
     consumptionMode: 0
     energyRequired: 0
     useDuration: 0
-    type: 7
+    type: 4
     inputs:
     - S2
+    - S3
     outputs:
     - L1
-    posX: 825
-    posY: 498
+    posX: 820
+    posY: 588

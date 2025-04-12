@@ -61,8 +61,8 @@ namespace SmartHome.Serialization
                 ElectricDeviceType.ElectricSwitch => new ElectricSwitch(null, id),
                 ElectricDeviceType.Lamp => new Lamp(null, id, energyRequired),
                 ElectricDeviceType.Door => new DoorDrive(null, id, energyRequired, useDuration),
-                ElectricDeviceType.AndGate => new ElectricNodeComposite(Logic.And, id),
-                ElectricDeviceType.OrGate => new ElectricNodeComposite(Logic.Or, id),
+                ElectricDeviceType.AndGate => new GateAnd(id),
+                ElectricDeviceType.OrGate => new GateOr(id),
                 ElectricDeviceType.Camera => new CameraDevice(id),
                 ElectricDeviceType.Bridge => new Bridge(id),
                 _ => throw new System.Exception($"Unsupported device type: {type}")
