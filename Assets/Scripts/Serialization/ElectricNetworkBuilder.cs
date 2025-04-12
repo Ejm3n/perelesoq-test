@@ -64,6 +64,7 @@ namespace SmartHome.Serialization
                 ElectricDeviceType.AndGate => new ElectricNodeComposite(Logic.And, id),
                 ElectricDeviceType.OrGate => new ElectricNodeComposite(Logic.Or, id),
                 ElectricDeviceType.Camera => new CameraDevice(id),
+                ElectricDeviceType.Bridge => new Bridge(id),
                 _ => throw new System.Exception($"Unsupported device type: {type}")
             };
         }

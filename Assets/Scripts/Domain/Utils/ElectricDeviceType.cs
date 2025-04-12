@@ -8,6 +8,7 @@ namespace SmartHome.Domain
         Door,
         AndGate,
         OrGate,
-        Camera
+        Camera,
+        Bridge
     }
 }

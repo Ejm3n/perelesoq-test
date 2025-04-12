@@ -34,7 +34,7 @@ MonoBehaviour:
     inputs:
     - PS
     outputs:
-    - L1
+    - Bridge 1
     posX: 497
     posY: 485
   - id: S3
@@ -67,10 +67,10 @@ MonoBehaviour:
     useDuration: 0
     type: 2
     inputs:
-    - S2
+    - Bridge 1
     outputs: []
-    posX: 841
-    posY: 477
+    posX: 1117
+    posY: 485
   - id: Cam
     displayName: Camera 1
     consumptionMode: 0
@@ -101,3 +101,15 @@ MonoBehaviour:
     outputs: []
     posX: 631
     posY: 231
+  - id: Bridge 1
+    displayName: Bridge 1
+    consumptionMode: 0
+    energyRequired: 0
+    useDuration: 0
+    type: 7
+    inputs:
+    - S2
+    outputs:
+    - L1
+    posX: 825
+    posY: 498
