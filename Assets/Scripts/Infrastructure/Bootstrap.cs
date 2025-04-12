@@ -14,7 +14,6 @@ namespace SmartHome.Infrastructure
         [SerializeField] private ElectricNetworkAsset _electricAsset;
 
         private DeviceRepository _repo;
-        private Dictionary<DeviceId, string> _deviceNames = new();
 
         private void Start()
         {
@@ -29,7 +28,6 @@ namespace SmartHome.Infrastructure
             foreach (var def in _electricAsset.devices)
             {
                 var id = new DeviceId(def.id);
-                _deviceNames[id] = def.displayName ?? def.id;
             }
 
             // 4. Инициализация UseCases
@@ -49,7 +47,7 @@ namespace SmartHome.Infrastructure
             }
 
             // 6. UI: виджеты
-            _widgetFactory.Init(_repo, toggleUC, selectCameraUC, powerSource, _deviceNames);
+            _widgetFactory.Init(_repo, toggleUC, selectCameraUC, powerSource);
 
             // 7. Симуляция
             gameObject.AddComponent<SimulationLoop>().Init(_repo);

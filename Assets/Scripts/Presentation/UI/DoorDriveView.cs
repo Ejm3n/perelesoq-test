@@ -12,10 +12,10 @@ namespace SmartHome.Presentation
         private DoorDrive _door;
 
 
-        public void Init(DoorDrive door, string name)
+        public void Init(DoorDrive door)
         {
             _door = door;
-            SetName(name);
+            SetName(door.Id.Value);
             Refresh();
             _door.OnSwitch += _ => Refresh();
             _button.onClick.AddListener(ToggleDoor);

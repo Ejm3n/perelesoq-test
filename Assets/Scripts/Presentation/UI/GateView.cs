@@ -7,9 +7,9 @@ namespace SmartHome.Presentation
     public class GateView : DeviceWidgetView
     {
 
-        public void Init(LogicGate gate, string displayName)
+        public void Init(LogicGate gate)
         {
-            SetName(displayName);
+            SetName(gate.Id.Value);
             UpdateUI(gate.IsOn);
 
             gate.OnSwitch += UpdateUI;

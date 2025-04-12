@@ -13,12 +13,13 @@ namespace SmartHome.Presentation
         [SerializeField] private DoorDriveView _doorPrefab;
         [SerializeField] private CameraView _cameraPrefab;
         [SerializeField] private GateView _gatePrefab;
+        [SerializeField] private CleanerBotView _cleanerBotPrefab;
 
         private ToggleDeviceUseCase _toggleUC;
         private SelectCameraUseCase _cameraUC;
         private PowerSource _powerSource;
 
-        public void Init(IDeviceRepository repo, ToggleDeviceUseCase toggleUC, SelectCameraUseCase cameraUC, PowerSource powerSource, Dictionary<DeviceId, string> names)
+        public void Init(IDeviceRepository repo, ToggleDeviceUseCase toggleUC, SelectCameraUseCase cameraUC, PowerSource powerSource)
         {
             _toggleUC = toggleUC;
             _cameraUC = cameraUC;
@@ -31,19 +32,19 @@ namespace SmartHome.Presentation
                 if (device is Lamp lamp)
                 {
                     var view = Instantiate(_lampPrefab, _root);
-                    view.Init(lamp, names[lamp.Id]);
+                    view.Init(lamp);
                     DeviceFactoryNotifier.Notify(lamp.Id, lamp);
                 }
                 else if (device is ElectricSwitch sw)
                 {
                     var view = Instantiate(_switchPrefab, _root);
-                    view.Init(sw, _toggleUC, names[sw.Id]);
+                    view.Init(sw, _toggleUC);
                     DeviceFactoryNotifier.Notify(sw.Id, sw);
                 }
                 else if (device is DoorDrive door)
                 {
                     var view = Instantiate(_doorPrefab, _root);
-                    view.Init(door, names[door.Id]);
+                    view.Init(door);
                     DeviceFactoryNotifier.Notify(door.Id, door);
                 }
                 else if (device is CameraDevice camera)
@@ -55,10 +56,15 @@ namespace SmartHome.Presentation
                 else if (device is LogicGate gate)
                 {
                     var view = Instantiate(_gatePrefab, _root);
-                    view.Init(gate, names[gate.Id]);
+                    view.Init(gate);
                     DeviceFactoryNotifier.Notify(gate.Id, gate);
                 }
-                // etc... можно вынести в словарь-реестр фабрик, если устройств будет много
+                else if (device is CleanerBot bot)
+                {
+                    var view = Instantiate(_cleanerBotPrefab, _root);
+                    view.Init(bot);
+                    DeviceFactoryNotifier.Notify(bot.Id, bot);
+                }
             }
         }
     }

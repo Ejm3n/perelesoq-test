@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 544567281266299978}
+  - component: {fileID: 4299772462128846108}
   m_Layer: 0
   m_Name: CleanerBot
   m_TagString: Untagged
@@ -33,6 +34,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4299772462128846108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 544567281266299979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab2b2d1db80fb5f4eafc440e4073fb95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: CleanerBot
+  _agent: {fileID: 8840785884335083447}
+  _dockPoint: {fileID: 544567281266299978}
+  checkInterval: 1
+  randomRadius: 5
 --- !u!1 &544567281724061896
 GameObject:
   m_ObjectHideFlags: 0
@@ -5476,6 +5494,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 544567281748608908}
+  - component: {fileID: 8840785884335083447}
   m_Layer: 0
   m_Name: Bot
   m_TagString: Untagged
@@ -5500,6 +5519,28 @@ Transform:
   m_Father: {fileID: 544567281266299978}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!195 &8840785884335083447
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 544567281748608909}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &544567281856710639
 GameObject:
   m_ObjectHideFlags: 0
