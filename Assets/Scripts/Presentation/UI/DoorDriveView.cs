@@ -56,7 +56,7 @@ namespace SmartHome.Presentation
         {
             if (_door.IsMoving || !_door.HasCurrent)
                 return;
-            _door.Switch(!_door.IsOpen);
+            _door.SwitchState(!_door.IsOpen);
         }
 
     }

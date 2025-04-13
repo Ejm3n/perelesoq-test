@@ -12,7 +12,7 @@ namespace SmartHome.Domain
     public interface ISwitchable
     {
         bool IsOn { get; }
-        void Switch(bool state);
+        void SwitchState(bool state);
         event Action<bool> OnSwitch;
         void RefreshState();
     }

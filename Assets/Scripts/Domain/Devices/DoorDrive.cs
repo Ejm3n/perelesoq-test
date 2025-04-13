@@ -32,12 +32,16 @@ namespace SmartHome.Domain
         /// <summary>
         /// Команда открыть/закрыть дверь.
         /// </summary>
-        public void Switch(bool open)
+        public void SwitchState(bool open)
         {
             if (_isMoving || _targetOpen == open) return;
             _targetOpen = open;
             _isMoving = true;
             OnSwitch?.Invoke(true);
+        }
+        public void Switch(bool state)
+        {
+            RefreshState();
         }
 
         /// <summary>
@@ -45,7 +49,11 @@ namespace SmartHome.Domain
         /// </summary>
         public void Tick(float deltaTime)
         {
-            if (!_input.HasCurrent || !_isMoving) return;
+            if (!_input.HasCurrent || !_isMoving)
+            {
+                OnSwitch?.Invoke(IsOn);
+                return;
+            }
 
             var dir = _targetOpen ? 1f : -1f;
             _progress = Mathf.Clamp01(_progress + dir * deltaTime / _useDuration);
@@ -62,11 +70,7 @@ namespace SmartHome.Domain
 
         public void RefreshState()
         {
-            var prev = IsOn;
-            if (IsOn != prev)
-            {
-                OnSwitch?.Invoke(IsOn);
-            }
+            OnSwitch?.Invoke(IsOn);
         }
 
         public void ConnectInput(IElectricNode input) => _input = input;

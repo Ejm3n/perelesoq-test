@@ -62,7 +62,7 @@ namespace SmartHome.Domain
         {
             if (State == CleanerBotState.Patrolling)
             {
-                Switch(false);
+                SwitchState(false);
                 SetState(CleanerBotState.Idle);
             }
         }
@@ -72,7 +72,7 @@ namespace SmartHome.Domain
             return (int)(BatteryLevel / BatteryCapacity * 100);
         }
 
-        public void Switch(bool state)
+        public void SwitchState(bool state)
         {
             //IsOn = state;
             OnSwitch?.Invoke(state);

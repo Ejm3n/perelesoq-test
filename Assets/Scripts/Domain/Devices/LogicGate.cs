@@ -34,7 +34,7 @@ namespace SmartHome.Domain
             else Debug.LogWarning($"[LogicGate] More than two inputs connected to {Id}");
         }
 
-        public void Switch(bool _) => RefreshState();
+        public void SwitchState(bool _) => RefreshState();
 
         /// <summary>
         /// Обновляет внутреннее состояние и оповещает выходы.

@@ -11,7 +11,7 @@ namespace SmartHome.Application
         {
             if (_repo.Get<IDevice>(id) is ISwitchable s)
             {
-                s.Switch(isOn);
+                s.SwitchState(isOn);
             }
         }
     }

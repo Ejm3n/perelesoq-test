@@ -23,7 +23,7 @@ namespace SmartHome.Domain
             Id = id;
         }
 
-        public void Switch(bool state)
+        public void SwitchState(bool state)
         {
             IsOn = state;
             OnSwitch?.Invoke(HasCurrent);

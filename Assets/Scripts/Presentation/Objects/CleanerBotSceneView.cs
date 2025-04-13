@@ -52,7 +52,7 @@ namespace SmartHome.Presentation
                 }
                 else if (_device.State == CleanerBotState.Returning)
                 {
-                    _device.Switch(false);
+                    _device.SwitchState(false);
                     _device.SetState(CleanerBotState.Charging);
                 }
             }

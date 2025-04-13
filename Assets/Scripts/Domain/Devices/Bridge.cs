@@ -25,7 +25,7 @@ namespace SmartHome.Domain
         public void ConnectInput(IElectricNode input) => _input = input;
         public void ConnectOutput(IElectricNode output) => _outputs.Add(output);
 
-        public void Switch(bool _) => RefreshState();
+        public void SwitchState(bool _) => RefreshState();
 
         /// <summary>
         /// Обновляет своё состояние в зависимости от входа, и обновляет все выходы.

@@ -46,7 +46,7 @@ namespace SmartHome.Domain
             }
         }
 
-        public void Switch(bool state)
+        public void SwitchState(bool state)
         {
             IsOn = state;
             RefreshState();

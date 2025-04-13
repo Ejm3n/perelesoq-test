@@ -173,6 +173,39 @@ MonoBehaviour:
     - Lamp 2
     posX: 1150
     posY: 1129
+  - id: Switch 5
+    displayName: Switch 5
+    consumptionMode: 0
+    energyRequired: 0
+    useDuration: 0
+    batteryCapacity: 0
+    drainPerSecond: 0
+    chargePerSecond: 0
+    type: 1
+    inputs:
+    - Bridge 1
+    outputs:
+    - Switch 7
+    - Switch 8
+    - Switch 9
+    - Switch 6
+    posX: 1144
+    posY: 1440
+  - id: Switch 6
+    displayName: Switch 6
+    consumptionMode: 0
+    energyRequired: 0
+    useDuration: 0
+    batteryCapacity: 0
+    drainPerSecond: 0
+    chargePerSecond: 0
+    type: 1
+    inputs:
+    - Switch 5
+    outputs:
+    - OrGate 1
+    posX: 1556
+    posY: 1355
   - id: Switch 7
     displayName: Switch 7
     consumptionMode: 0
@@ -203,24 +236,6 @@ MonoBehaviour:
     - AndGate 1
     posX: 875
     posY: 1750
-  - id: Switch 5
-    displayName: Switch 5
-    consumptionMode: 0
-    energyRequired: 0
-    useDuration: 0
-    batteryCapacity: 0
-    drainPerSecond: 0
-    chargePerSecond: 0
-    type: 1
-    inputs:
-    - Bridge 1
-    outputs:
-    - Switch 7
-    - Switch 8
-    - Switch 9
-    - Switch 6
-    posX: 1144
-    posY: 1440
   - id: Switch 9
     displayName: Switch 9
     consumptionMode: 0
@@ -236,21 +251,6 @@ MonoBehaviour:
     - AndGate 1
     posX: 1195
     posY: 1835
-  - id: Switch 6
-    displayName: Switch 6
-    consumptionMode: 0
-    energyRequired: 0
-    useDuration: 0
-    batteryCapacity: 0
-    drainPerSecond: 0
-    chargePerSecond: 0
-    type: 1
-    inputs:
-    - Switch 5
-    outputs:
-    - OrGate 1
-    posX: 1556
-    posY: 1355
   - id: Lamp 2
     displayName: Lamp 2
     consumptionMode: 1
@@ -297,20 +297,6 @@ MonoBehaviour:
     - Torsher 2
     posX: 999
     posY: 2040
-  - id: Torsher 2
-    displayName: Table Lamp 1
-    consumptionMode: 1
-    energyRequired: 50
-    useDuration: 0
-    batteryCapacity: 0
-    drainPerSecond: 0
-    chargePerSecond: 0
-    type: 2
-    inputs:
-    - AndGate 1
-    outputs: []
-    posX: 1297
-    posY: 2058
   - id: Torsher 1
     displayName: Table Lamp 1
     consumptionMode: 1
@@ -325,6 +311,20 @@ MonoBehaviour:
     outputs: []
     posX: 2148
     posY: 1453
+  - id: Torsher 2
+    displayName: Table Lamp 1
+    consumptionMode: 1
+    energyRequired: 50
+    useDuration: 0
+    batteryCapacity: 0
+    drainPerSecond: 0
+    chargePerSecond: 0
+    type: 2
+    inputs:
+    - AndGate 1
+    outputs: []
+    posX: 1297
+    posY: 2058
   - id: ChargingStation
     displayName: ChargingStation
     consumptionMode: 0
