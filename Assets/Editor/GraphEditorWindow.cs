@@ -79,7 +79,11 @@ namespace SmartHome.Serialization
             {
                 if (GUILayout.Button($"Add {type}"))
                 {
-                    var rect = new Rect(UnityEngine.Random.Range(300, 700), UnityEngine.Random.Range(100, 400), NODE_WIDTH, NODE_HEIGHT);
+                    float sidebarWidth = 250f;
+                    float centerX = scrollPosition.x + (position.width - sidebarWidth) / 2f - NODE_WIDTH / 2f;
+                    float centerY = scrollPosition.y + position.height / 2f - NODE_HEIGHT / 2f;
+                    var rect = new Rect(centerX, centerY, NODE_WIDTH, NODE_HEIGHT);
+
                     var node = new GraphNode(type, rect);
 
                     if (node.consumptionMode == EnergyConsumptionMode.PerUse)
