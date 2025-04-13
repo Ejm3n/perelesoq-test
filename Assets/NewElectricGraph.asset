@@ -40,8 +40,8 @@ MonoBehaviour:
     type: 6
     inputs: []
     outputs: []
-    posX: 87
-    posY: 308
+    posX: 137
+    posY: 296
   - id: Cam 1
     displayName: Camera 2
     consumptionMode: 0
@@ -53,8 +53,8 @@ MonoBehaviour:
     type: 6
     inputs: []
     outputs: []
-    posX: 373
-    posY: 286
+    posX: 379
+    posY: 232
   - id: Cam 2
     displayName: Camera 3
     consumptionMode: 0
@@ -143,7 +143,7 @@ MonoBehaviour:
     posX: 793
     posY: 908
   - id: Bridge 1
-    displayName: Bridge
+    displayName: Bridge 1
     consumptionMode: 0
     energyRequired: 0
     useDuration: 0
@@ -185,10 +185,10 @@ MonoBehaviour:
     inputs:
     - Bridge 1
     outputs:
+    - Switch 6
     - Switch 7
     - Switch 8
     - Switch 9
-    - Switch 6
     posX: 1144
     posY: 1440
   - id: Switch 6

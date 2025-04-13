@@ -26,6 +26,35 @@ namespace SmartHome.Utils
         }
 
         /// <summary>
+        /// Загружает все сцены из настроек сборки. Первая сцена загружается как основная, остальные как дополнительные.
+        /// </summary>
+        public static void LoadAllScenesFromBuildSettings()
+        {
+            int sceneCount = SceneManager.sceneCountInBuildSettings;
+
+            for (int i = 1; i < sceneCount; i++)
+            {
+                string scenePath = SceneUtility.GetScenePathByBuildIndex(i);
+                string sceneName = System.IO.Path.GetFileNameWithoutExtension(scenePath);
+
+                bool alreadyLoaded = false;
+
+                for (int j = 0; j < SceneManager.sceneCount; j++)
+                {
+                    Scene loadedScene = SceneManager.GetSceneAt(j);
+                    if (loadedScene.name == sceneName)
+                    {
+                        alreadyLoaded = true;
+                        break;
+                    }
+                }
+
+                if (!alreadyLoaded)
+                    SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
+            }
+        }
+
+        /// <summary>
         /// Полностью перезагружает все открытые сцены в порядке загрузки.
         /// </summary>
         public static void ReloadAllOpenScenes()
@@ -57,7 +86,7 @@ namespace SmartHome.Utils
             UnityEditor.EditorApplication.isPlaying = false;
 #else
                 // Quit the application
-                Application.Quit();
+               UnityEngine.Application.Quit();
 #endif
         }
     }
