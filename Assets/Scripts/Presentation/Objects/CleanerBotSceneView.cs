@@ -21,7 +21,8 @@ namespace SmartHome.Presentation
         /// </summary>
         private void Update()
         {
-            if (_device == null || _agent.pathPending) return;
+            if (_device == null || _agent.pathPending || !_agent.isOnNavMesh)
+                return;
 
             _checkTimer += Time.deltaTime;
             if (_checkTimer >= _checkInterval)
@@ -41,10 +42,22 @@ namespace SmartHome.Presentation
                         _agent.isStopped = true;
                     }
                 }
+
+                if (_device.State == CleanerBotState.Patrolling)
+                {
+                    // Если бот застрял, или путь исчез — попробовать перезапустить
+                    if (!_agent.hasPath || _agent.pathStatus != NavMeshPathStatus.PathComplete || _agent.velocity.sqrMagnitude < 0.01f)
+                    {
+                        _agent.isStopped = true;
+                        TryPickRandomTarget();
+                    }
+                }
             }
 
-            // Обработка завершения пути
-            if (!_agent.pathPending && !_agent.isStopped && _agent.remainingDistance < 0.2f)
+            // Обработка завершения пути (с антидребезгом)
+            if (!_agent.pathPending && !_agent.isStopped &&
+                _agent.remainingDistance < 0.2f &&
+                _agent.velocity.sqrMagnitude < 0.01f)
             {
                 if (_device.State == CleanerBotState.Patrolling)
                 {
@@ -57,6 +70,7 @@ namespace SmartHome.Presentation
                 }
             }
         }
+
 
         protected override void OnDestroy()
         {
