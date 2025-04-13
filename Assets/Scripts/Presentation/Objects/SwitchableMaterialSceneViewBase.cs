@@ -5,9 +5,9 @@ namespace SmartHome.Presentation
 {
     public abstract class SwitchableMaterialSceneViewBase<T> : SceneViewBase<T> where T : class, ISwitchable, IDevice
     {
-        [SerializeField] protected Renderer targetRenderer;
-        [SerializeField] protected Material activeMat;
-        [SerializeField] protected Material inactiveMat;
+        [SerializeField] protected Renderer _targetRenderer;
+        [SerializeField] protected Material _activeMat;
+        [SerializeField] protected Material _inactiveMat;
 
         protected override void OnDeviceBound(T device)
         {
@@ -15,10 +15,13 @@ namespace SmartHome.Presentation
             UpdateVisual(device.IsOn);
         }
 
+        /// <summary>
+        /// Меняет материал рендера в зависимости от состояния устройства.
+        /// </summary>
         protected virtual void UpdateVisual(bool isOn)
         {
-            if (targetRenderer != null)
-                targetRenderer.material = isOn ? activeMat : inactiveMat;
+            if (_targetRenderer != null)
+                _targetRenderer.material = isOn ? _activeMat : _inactiveMat;
         }
 
         protected override void OnDestroy()

@@ -6,17 +6,26 @@ using UnityEngine.ProBuilder.Shapes;
 
 namespace SmartHome.Presentation
 {
+    /// <summary>
+    /// Отображает состояние двери (цвет, статус) и анимирует открытие/закрытие.
+    /// </summary>
     public class DoorSceneView : SceneViewBase<DoorDrive>
     {
-        [SerializeField] private Transform targetTransform;
-        [SerializeField] private Vector3 closedRotation;
-        [SerializeField] private Vector3 openRotation;
+        [SerializeField] private Transform _targetTransform;
+        [SerializeField] private Vector3 _closedRotation;
+        [SerializeField] private Vector3 _openRotation;
         [SerializeField] private TMP_Text _statusText;
         [SerializeField] private Color _openColor = Color.green;
         [SerializeField] private Color _closedColor = Color.red;
         [SerializeField] private Color _movingColor = Color.yellow;
-
         private DoorDrive _door;
+
+        void Update()
+        {
+            if (_door == null) return;
+            var t = _door.Progress;
+            _targetTransform.localRotation = Quaternion.Euler(Vector3.Lerp(_closedRotation, _openRotation, t));
+        }
 
         protected override void OnDeviceBound(DoorDrive door)
         {
@@ -25,13 +34,9 @@ namespace SmartHome.Presentation
             UpdateStatusText(door.IsOpen);
         }
 
-        void Update()
-        {
-            if (_door == null) return;
-            var t = _door.Progress;
-            targetTransform.localRotation = Quaternion.Euler(Vector3.Lerp(closedRotation, openRotation, t));
-        }
-
+        /// <summary>
+        /// Обновляет текст и цвет статуса в зависимости от состояния двери.
+        /// </summary>
         private void UpdateStatusText(bool isOpen)
         {
             if (_statusText == null) return;

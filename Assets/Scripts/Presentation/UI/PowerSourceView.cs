@@ -26,6 +26,10 @@ namespace SmartHome.Presentation
             _power.OnTimeChange -= RefreshTime;
         }
 
+        /// <summary>
+        /// Обновляет отображение текущей мощности и общего потребления.
+        /// Если потребление > 100, округляет до целого.
+        /// </summary>
         private void Refresh(float currentPower, float totalConsumedEnergy)
         {
             _currentPowerText.text = $"CURRENT: {currentPower.ToString("F0")} W";
@@ -43,6 +47,5 @@ namespace SmartHome.Presentation
         {
             _timeText.text = SmartHome.Utils.Utils.FormatTime(time);
         }
-
     }
 }

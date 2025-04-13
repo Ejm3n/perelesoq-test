@@ -5,10 +5,12 @@ using UnityEngine;
 
 namespace SmartHome.Domain
 {
+    /// <summary>
+    /// Источник питания, считает текущую мощность и общее потребление.
+    /// </summary>
     public sealed class PowerSource : IDevice, IElectricNode
     {
         public DeviceId Id { get; private set; }
-
         public float CurrentPower { get; private set; }
         public float TotalConsumedEnergy { get; private set; }
         public float Time { get; private set; }

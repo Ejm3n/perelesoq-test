@@ -7,6 +7,10 @@ using SmartHome.Domain;
 
 namespace SmartHome.Serialization
 {
+    /// <summary>
+    /// Кастомный редактор графа электрических устройств.
+    /// Позволяет добавлять, соединять и сохранять устройства в ScriptableObject.
+    /// </summary>
     public class GraphEditorWindow : EditorWindow
     {
         private List<GraphNode> _nodes = new();
@@ -16,10 +20,7 @@ namespace SmartHome.Serialization
         private bool _dirty;
         private const float NODE_WIDTH = 210f;
         private const float NODE_HEIGHT = 170f;
-        private const float ARROW_SIZE = 10f;
-        private const float CURVE_OFFSET = 50f;
         private const float HEIGHT_FOR_ADDITIONAL_INFO = 20f;
-        private Rect _canvasRect = new Rect(0, 0, 5000, 5000); // зафиксированный огромный канвас
         private Vector2 _canvasOffset = Vector2.zero;
         private Vector2 scrollPosition;
         private Rect scrollAreaSize = new Rect(0, 0, 4000, 4000);
@@ -32,6 +33,9 @@ namespace SmartHome.Serialization
             window.minSize = new Vector2(900, 600);
         }
 
+        /// <summary>
+        /// Рисует основной интерфейс окна.
+        /// </summary>
         private void OnGUI()
         {
             // Нарисовать фон
@@ -69,7 +73,9 @@ namespace SmartHome.Serialization
             GUILayout.EndArea();
         }
 
-
+        /// <summary>
+        /// Рисует сайдбар с кнопками для добавления устройств.
+        /// </summary>
         private void DrawSidebar()
         {
             EditorGUILayout.BeginVertical();
@@ -123,34 +129,9 @@ namespace SmartHome.Serialization
             EditorGUILayout.EndVertical();
         }
 
-
-        private void DrawCanvas()
-        {
-            var canvasRect = CalculateCanvasRect(); // динамический канвас
-                                                    //  _scrollPos = EditorGUILayout.BeginScrollView(
-                                                    //      _scrollPos, true, true,
-                                                    //      GUILayout.Width(position.width - 250),
-                                                    //      GUILayout.Height(position.height)
-                                                    //  );
-
-            //    GUI.BeginGroup(new Rect(-_scrollPos.x, -_scrollPos.y, canvasRect.width, canvasRect.height));
-
-
-            BeginWindows();
-            for (int i = 0; i < _nodes.Count; i++)
-            {
-                var node = _nodes[i];
-                node.rect = GUI.Window(i, node.rect, id => DrawNodeWindow(id), node.id);
-            }
-            EndWindows();
-
-            DrawEdges(Vector2.zero); // offset уже включен в позиции
-            GUI.EndGroup();
-            EditorGUILayout.EndScrollView();
-
-            HandleEdgeClick(Vector2.zero);
-        }
-
+        /// <summary>
+        /// Рассчитывает размер канваса.
+        /// </summary>
         private Rect CalculateCanvasRect()
         {
             if (_nodes.Count == 0)
@@ -173,7 +154,6 @@ namespace SmartHome.Serialization
             return new Rect(0, 0, width, height);
         }
 
-
         private void FocusCanvas()
         {
             if (_nodes.Count == 0) return;
@@ -185,21 +165,15 @@ namespace SmartHome.Serialization
                 _nodes.Max(n => n.rect.yMax) - _nodes.Min(n => n.rect.yMin)
             );
 
-            // Improved scroll position calculation
+            // Рассчитывает размер канваса
             var canvasRect = CalculateCanvasRect();
-            float viewWidth = position.width - 250; // Account for sidebar
+            float viewWidth = position.width - 250;
             float viewHeight = position.height;
-
-            //  _scrollPos.x = Mathf.Clamp(
-            //     (canvasRect.width - viewWidth) * 0.5f,
-            //     0, canvasRect.width - viewWidth
-            // );
-            //_scrollPos.y = Mathf.Clamp(
-            //     (canvasRect.height - viewHeight) * 0.5f,
-            //   0, canvasRect.height - viewHeight
-            // );
         }
 
+        /// <summary>
+        /// Рендерит и обрабатывает окно одного узла графа.
+        /// </summary>
         private void DrawNodeWindow(int id)
         {
             var node = _nodes[id];
@@ -270,8 +244,9 @@ namespace SmartHome.Serialization
             GUI.DragWindow();
         }
 
-
-
+        /// <summary>
+        /// Рендерит и обрабатывает связи графа.
+        /// </summary>
         private void DrawEdges(Vector2 offset)
         {
             foreach (var edge in _edges)
@@ -286,6 +261,9 @@ namespace SmartHome.Serialization
             }
         }
 
+        /// <summary>
+        /// Рендерит стрелку.
+        /// </summary>
         private void DrawArrow(Vector2 from, Vector2 to)
         {
             Vector2 direction = (to - from).normalized;
@@ -300,7 +278,9 @@ namespace SmartHome.Serialization
             Handles.DrawAAConvexPolygon(p1, p2, p3);
         }
 
-
+        /// <summary>
+        /// Обрабатывает клик по связи. Удаляет ее при нажатии правой кнопки мыши.
+        /// </summary>
         private void HandleEdgeClick(Vector2 offset)
         {
             Event e = Event.current;
@@ -324,7 +304,9 @@ namespace SmartHome.Serialization
             }
         }
 
-
+        /// <summary>
+        /// Сохраняет текущий граф в ScriptableObject.
+        /// </summary>
         private void SaveAsset()
         {
             if (_nodes == null || _edges == null)
@@ -348,7 +330,7 @@ namespace SmartHome.Serialization
                 var def = new ElectricDeviceDefinition
                 {
                     id = node.id,
-                    displayName = node.displayName, // ← здесь
+                    displayName = node.displayName,
                     type = node.type,
                     inputs = new List<string>(),
                     outputs = new List<string>(),
@@ -361,8 +343,6 @@ namespace SmartHome.Serialization
                     drainPerSecond = node.drainPerSecond,
                     chargePerSecond = node.chargePerSecond
                 };
-
-
 
                 definitions[node.id] = def;
                 asset.devices.Add(def);
@@ -402,7 +382,6 @@ namespace SmartHome.Serialization
             _dirty = false;
         }
 
-
         private void OverwriteLoadedAsset()
         {
             if (_currentAsset == null) return;
@@ -414,7 +393,7 @@ namespace SmartHome.Serialization
                 var def = new ElectricDeviceDefinition
                 {
                     id = node.id,
-                    displayName = node.displayName, // ← здесь
+                    displayName = node.displayName,
                     type = node.type,
                     inputs = new List<string>(),
                     outputs = new List<string>(),
@@ -447,7 +426,9 @@ namespace SmartHome.Serialization
             _dirty = false;
         }
 
-
+        /// <summary>
+        /// Загружает граф из ScriptableObject. Для каждого EnergyConsumptionMode загружает только необходимые поля.
+        /// </summary>
         private void LoadAsset()
         {
             if (_currentAsset == null)
@@ -484,7 +465,8 @@ namespace SmartHome.Serialization
                 else if (def.consumptionMode == EnergyConsumptionMode.BatteryPowered)
                 {
                     var rect = new Rect(def.posX, def.posY, NODE_WIDTH, NODE_HEIGHT + HEIGHT_FOR_ADDITIONAL_INFO * 2);
-                    var node = new GraphNode(def.type, rect, def.id, def.displayName, def.consumptionMode, def.energyRequired, def.useDuration, def.batteryCapacity, def.drainPerSecond, def.chargePerSecond);
+                    var node = new GraphNode(def.type, rect, def.id, def.displayName, def.consumptionMode,
+                    def.energyRequired, def.useDuration, def.batteryCapacity, def.drainPerSecond, def.chargePerSecond);
                     _nodes.Add(node);
                     map[def.id] = node;
                 }
@@ -513,6 +495,7 @@ namespace SmartHome.Serialization
                     }
                 }
             }
+
             // Центрируем канвас по содержимому
             var bounds = new Rect(
                 _nodes.Min(n => n.rect.xMin),
@@ -520,11 +503,9 @@ namespace SmartHome.Serialization
                 _nodes.Max(n => n.rect.xMax) - _nodes.Min(n => n.rect.xMin),
                 _nodes.Max(n => n.rect.yMax) - _nodes.Min(n => n.rect.yMin)
             );
-            //_scrollPos = new Vector2(bounds.x - 100f, bounds.y - 100f);
             FocusCanvas();
             _dirty = false;
         }
-
 
         private class GraphNode
         {
@@ -554,7 +535,6 @@ namespace SmartHome.Serialization
                 this.chargePerSecond = chargePerSecond;
             }
         }
-
 
         private class GraphEdge
         {

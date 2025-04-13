@@ -12,6 +12,9 @@ namespace SmartHome.Application
             _allCameras = cameras;
         }
 
+        /// <summary>
+        /// Делает активной только выбранную камеру, выключая все остальные.
+        /// </summary>
         public void Select(CameraDevice target)
         {
             foreach (var cam in _allCameras)

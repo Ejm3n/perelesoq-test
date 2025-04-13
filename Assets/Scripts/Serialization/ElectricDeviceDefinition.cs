@@ -5,6 +5,10 @@ using UnityEngine;
 
 namespace SmartHome.Serialization
 {
+    /// <summary>
+    /// Конфигурация одного устройства в ассете.
+    /// Используется граф-редактором и Bootstrap.
+    /// </summary>
     [Serializable]
     public sealed class ElectricDeviceDefinition
     {

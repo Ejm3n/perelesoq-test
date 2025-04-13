@@ -4,16 +4,18 @@ using System.Collections.Generic;
 
 namespace SmartHome.Domain
 {
+    /// <summary>
+    /// Устройство-переходник: пропускает ток, если ток есть на входе.
+    /// Само не управляется — просто передаёт состояние дальше.
+    /// </summary>
     public sealed class Bridge : IElectricNode, IDevice, IInputAccepting, IOutputAccepting, ISwitchable
     {
-        private IElectricNode _input;
-        private readonly List<IElectricNode> _outputs = new();
         public DeviceId Id { get; }
-
         public bool IsOn { get; private set; } // "включен", если по входу есть ток
         public bool HasCurrent => _input?.HasCurrent == true;
-
         public event Action<bool> OnSwitch;
+        private IElectricNode _input;
+        private readonly List<IElectricNode> _outputs = new();
 
         public Bridge(DeviceId id)
         {
@@ -25,6 +27,9 @@ namespace SmartHome.Domain
 
         public void Switch(bool _) => RefreshState();
 
+        /// <summary>
+        /// Обновляет своё состояние в зависимости от входа, и обновляет все выходы.
+        /// </summary>
         public void RefreshState()
         {
             var prev = IsOn;

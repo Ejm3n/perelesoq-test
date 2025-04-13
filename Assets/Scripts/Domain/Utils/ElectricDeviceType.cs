@@ -1,5 +1,8 @@
 namespace SmartHome.Domain
 {
+    /// <summary>
+    /// Типы устройств для ассета / редактора.
+    /// </summary>
     public enum ElectricDeviceType
     {
         PowerSource,

@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace SmartHome.Domain
 {
+    /// <summary>
+    /// Базовый интерфейс для всех устройств.
+    /// </summary>
     public interface IDevice
     {
         DeviceId Id { get; }

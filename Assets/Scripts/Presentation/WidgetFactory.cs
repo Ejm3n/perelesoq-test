@@ -5,6 +5,10 @@ using UnityEngine;
 
 namespace SmartHome.Presentation
 {
+    /// <summary>
+    /// UI-фабрика, создающая все виджеты и связывающая их с логикой.
+    /// Вызывается из Bootstrap.
+    /// </summary>
     public sealed class WidgetFactory : MonoBehaviour
     {
         [SerializeField] private Transform _root;
@@ -19,6 +23,9 @@ namespace SmartHome.Presentation
         private SelectCameraUseCase _cameraUC;
         private PowerSource _powerSource;
 
+        /// <summary>
+        /// Обходит все устройства в репозитории, создаёт виджеты и регистрирует бинды.
+        /// </summary>
         public void Init(IDeviceRepository repo, ToggleDeviceUseCase toggleUC, SelectCameraUseCase cameraUC, PowerSource powerSource)
         {
             _toggleUC = toggleUC;

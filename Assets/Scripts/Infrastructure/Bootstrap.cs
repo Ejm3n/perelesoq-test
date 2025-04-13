@@ -7,14 +7,21 @@ using System.Collections.Generic;
 
 namespace SmartHome.Infrastructure
 {
+    /// <summary>
+    /// MonoBehaviour-инициализатор приложения.
+    /// Привязывает ассет, репозиторий, фабрику и запускает SimulationLoop.
+    /// </summary>
     public sealed class Bootstrap : MonoBehaviour
     {
         [SerializeField] private WidgetFactory _widgetFactory;
         [SerializeField] private PowerSourceView _powerSourceView;
         [SerializeField] private ElectricNetworkAsset _electricAsset;
-
         private DeviceRepository _repo;
 
+        /// <summary>
+        /// Главная точка запуска симуляции.
+        /// Загружает граф из ассета, инициализирует use cases, UI и симуляцию.
+        /// </summary>
         private void Start()
         {
             // 1. Подготовка репозитория и списка камер
@@ -34,8 +41,9 @@ namespace SmartHome.Infrastructure
             var toggleUC = new ToggleDeviceUseCase(_repo);
             var selectCameraUC = new SelectCameraUseCase(cameras);
             selectCameraUC.Select(cameras[0]);
-            PowerSource powerSource = null;
+
             // 5. UI: PowerSource
+            PowerSource powerSource = null;
             foreach (var node in nodeMap.Values)
             {
                 if (node is PowerSource power)

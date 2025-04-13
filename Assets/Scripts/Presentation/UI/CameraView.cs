@@ -9,9 +9,12 @@ using UnityEngine.UI;
 
 namespace SmartHome.Presentation
 {
+    /// <summary>
+    /// Виджет для выбора камеры. Отображает состояние и запускает UseCase.
+    /// </summary>
     public class CameraView : DeviceWidgetView
     {
-        [SerializeField] private Button selectButton;
+        [SerializeField] private Button _selectButton;
         private CameraDevice _device;
         private SelectCameraUseCase _useCase;
 
@@ -23,7 +26,7 @@ namespace SmartHome.Presentation
             SetName(_device.Id.Value);
             UpdateUI();
 
-            selectButton.onClick.AddListener(OnSelectClick);
+            _selectButton.onClick.AddListener(OnSelectClick);
             _device.OnSelected += _ => UpdateUI();
             if (_device.IsSelected)
                 OnSelectClick();
@@ -39,7 +42,7 @@ namespace SmartHome.Presentation
             bool selected = _device.IsSelected;
 
             SetStatus(selected ? "Selected" : "Select");
-            selectButton.interactable = !selected;
+            _selectButton.interactable = !selected;
         }
 
         private void OnDestroy()

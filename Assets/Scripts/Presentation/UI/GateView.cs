@@ -6,7 +6,9 @@ namespace SmartHome.Presentation
 {
     public class GateView : DeviceWidgetView
     {
-
+        /// <summary>
+        /// Инициализирует GateView и привязывает его к логическому гейту.
+        /// </summary>
         public void Init(LogicGate gate)
         {
             SetName(gate.Id.Value);

@@ -4,9 +4,13 @@ using SmartHome.Presentation;
 
 namespace SmartHome.Presentation
 {
+    /// <summary>
+    /// свет в настольной лампе(торшере) является настоящим Light, причем их два, один вверх светит, другой вниз. логика не как у всех, пришлось новый класс написать.
+    /// получилось довольно универсально, в будущем можно будет отделить логику в абстрактный класс.
+    /// </summary>
     public class TableLampSceneView : SceneViewBase<Lamp>
     {
-        [SerializeField] private GameObject[] targets;
+        [SerializeField] private GameObject[] _targets;
 
         protected override void OnDeviceBound(Lamp lamp)
         {
@@ -17,7 +21,7 @@ namespace SmartHome.Presentation
 
         private void UpdateState(bool isOn)
         {
-            foreach (var obj in targets)
+            foreach (var obj in _targets)
             {
                 if (obj != null)
                     obj.SetActive(isOn);

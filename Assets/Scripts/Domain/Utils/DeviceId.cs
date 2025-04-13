@@ -2,6 +2,9 @@ using System;
 
 namespace SmartHome.Domain
 {
+    /// <summary>
+    /// Уникальный идентификатор устройства, используется как ключ.
+    /// </summary>
     [Serializable]
     public struct DeviceId : IEquatable<DeviceId>
     {

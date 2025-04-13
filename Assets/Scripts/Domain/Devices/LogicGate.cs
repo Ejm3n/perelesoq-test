@@ -4,24 +4,29 @@ using UnityEngine;
 
 namespace SmartHome.Domain
 {
+    /// <summary>
+    /// Базовый класс для логических гейтов (AND/OR).
+    /// Имеет 2 входа (A, B), список выходов и управляет цепочкой.
+    /// </summary>
     public abstract class LogicGate : IDevice, IElectricNode, IInputAccepting, IOutputAccepting, ISwitchable
     {
         public IElectricNode A { get; private set; }
         public IElectricNode B { get; private set; }
-        protected readonly List<IElectricNode> _outputs = new();
-
         public DeviceId Id { get; }
         public bool IsOn { get; protected set; }
         public float CurrentPower => 0f;
         public abstract bool HasCurrent { get; }
-
         public event Action<bool> OnSwitch;
+        protected readonly List<IElectricNode> _outputs = new();
 
         protected LogicGate(DeviceId id)
         {
             Id = id;
         }
 
+        /// <summary>
+        /// Подключает вход. Первый идёт в A, второй в B.
+        /// </summary>
         public void ConnectInput(IElectricNode input)
         {
             if (A == null) A = input;
@@ -29,13 +34,11 @@ namespace SmartHome.Domain
             else Debug.LogWarning($"[LogicGate] More than two inputs connected to {Id}");
         }
 
-        public void AddOutput(IElectricNode output)
-        {
-            _outputs.Add(output);
-        }
-
         public void Switch(bool _) => RefreshState();
 
+        /// <summary>
+        /// Обновляет внутреннее состояние и оповещает выходы.
+        /// </summary>
         public void RefreshState()
         {
             var prev = IsOn;

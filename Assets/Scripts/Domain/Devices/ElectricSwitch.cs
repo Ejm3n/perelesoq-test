@@ -5,16 +5,17 @@ using UnityEngine;
 
 namespace SmartHome.Domain
 {
+    /// <summary>
+    /// Обновляет своё состояние и пробрасывает его на выходы.
+    /// </summary>
     public sealed class ElectricSwitch : IDevice, IElectricNode, ISwitchable, IInputAccepting, IOutputAccepting
     {
-        private IElectricNode _input;
-        private readonly List<IElectricNode> _outputs = new();
-
         public DeviceId Id { get; private set; }
         public bool IsOn { get; private set; }
         public bool HasCurrent => IsOn && _input?.HasCurrent == true;
-
         public event Action<bool> OnSwitch;
+        private IElectricNode _input;
+        private readonly List<IElectricNode> _outputs = new();
 
         public ElectricSwitch(IElectricNode input, DeviceId id)
         {

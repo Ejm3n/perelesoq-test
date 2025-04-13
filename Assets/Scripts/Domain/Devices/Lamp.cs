@@ -7,12 +7,12 @@ namespace SmartHome.Domain
 {
     public sealed class Lamp : IDevice, IConsumable, ISwitchable, IInputAccepting, IElectricNode
     {
-        private IElectricNode _input;
         public DeviceId Id { get; private set; }
         public event Action<bool> OnSwitch;
         public bool IsOn { get; private set; }
         public float RatedPower { get; }
         public float ConsumedEnergy { get; private set; }
+        private IElectricNode _input;
 
         public Lamp(IElectricNode input, DeviceId id, float energyRequired)
         {
@@ -21,6 +21,9 @@ namespace SmartHome.Domain
             RatedPower = energyRequired;
         }
 
+        /// <summary>
+        /// Учитывает потребление энергии при включённой лампе (Вт*ч).
+        /// </summary>
         public void Tick(float delta)
         {
             if (IsOn)

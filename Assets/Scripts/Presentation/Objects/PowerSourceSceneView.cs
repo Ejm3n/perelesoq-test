@@ -7,6 +7,9 @@ using UnityEngine;
 
 namespace SmartHome.Presentation
 {
+    /// <summary>
+    /// SceneView для источника питания — отображает время, мощность и расход энергии.
+    /// </summary>
     public class PowerSourceSceneView : SceneViewBase<PowerSource>
     {
         [SerializeField] private TMP_Text _statusText;
@@ -30,6 +33,9 @@ namespace SmartHome.Presentation
             UpdateText();
         }
 
+        /// <summary>
+        /// Обновляет текст в статусе.
+        /// </summary>
         private void UpdateText()
         {
             _statusText.text = $"Time: {Utils.Utils.FormatTime(_powerSource.Time)}\nTotal: {_powerSource.TotalConsumedEnergy.ToString("F0")} W\nCurrent: {_powerSource.CurrentPower.ToString("F0")} W";

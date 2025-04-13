@@ -11,7 +11,6 @@ namespace SmartHome.Presentation
         [SerializeField] private TMP_Text _buttonStatusText;
         private DoorDrive _door;
 
-
         public void Init(DoorDrive door)
         {
             _door = door;
@@ -21,6 +20,9 @@ namespace SmartHome.Presentation
             _button.onClick.AddListener(ToggleDoor);
         }
 
+        /// <summary>
+        /// Обновляет UI в зависимости от состояния и наличия тока.
+        /// </summary>
         private void Refresh()
         {
             if (!_door.HasCurrent)

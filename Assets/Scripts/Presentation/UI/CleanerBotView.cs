@@ -5,10 +5,14 @@ using TMPro;
 
 namespace SmartHome.Presentation
 {
+    /// <summary>
+    /// Виджет для управления пылесосом: запускает и останавливает уборку.
+    /// Отображает текущий статус и заряд.
+    /// </summary>
     public class CleanerBotView : DeviceWidgetView
     {
-        [SerializeField] private Button cleanBtn;
-        [SerializeField] private TMP_Text buttonLabel;
+        [SerializeField] private Button _cleanBtn;
+        [SerializeField] private TMP_Text _buttonLabel;
         private CleanerBot _bot;
 
         public void Init(CleanerBot bot)
@@ -16,7 +20,7 @@ namespace SmartHome.Presentation
             _bot = bot;
             SetName(bot.Id.Value);
 
-            cleanBtn.onClick.AddListener(() =>
+            _cleanBtn.onClick.AddListener(() =>
             {
                 if (_bot.State == CleanerBotState.Patrolling)
                     _bot.CommandStop();
@@ -42,26 +46,26 @@ namespace SmartHome.Presentation
             switch (state)
             {
                 case CleanerBotState.Patrolling:
-                    buttonLabel.text = "Stop";
-                    cleanBtn.interactable = true;
+                    _buttonLabel.text = "Stop";
+                    _cleanBtn.interactable = true;
                     break;
 
                 case CleanerBotState.Idle:
                     SetStatus("Idle " + _bot.GetCurrentBatteryLevelPercent() + "%");
-                    buttonLabel.text = "Start";
-                    cleanBtn.interactable = true;
+                    _buttonLabel.text = "Start";
+                    _cleanBtn.interactable = true;
                     break;
 
                 case CleanerBotState.Charging:
                     SetStatus(_bot.IsFullyCharged ? "Ready " + _bot.GetCurrentBatteryLevelPercent() + "%" : "Charging " + _bot.GetCurrentBatteryLevelPercent() + "%");
-                    buttonLabel.text = "Start";
-                    cleanBtn.interactable = true;
+                    _buttonLabel.text = "Start";
+                    _cleanBtn.interactable = true;
                     break;
 
                 case CleanerBotState.Returning:
                     SetStatus("Returning " + _bot.GetCurrentBatteryLevelPercent() + "%");
-                    buttonLabel.text = "Returning...";
-                    cleanBtn.interactable = false;
+                    _buttonLabel.text = "Returning...";
+                    _cleanBtn.interactable = false;
                     break;
             }
         }

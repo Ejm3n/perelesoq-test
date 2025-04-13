@@ -3,6 +3,9 @@ using SmartHome.Domain;
 
 namespace SmartHome.Presentation
 {
+    /// <summary>
+    /// Виджет для лампы. Показывает статус ON/OFF.
+    /// </summary>
     public sealed class LampView : DeviceWidgetView
     {
         private Lamp _lamp;

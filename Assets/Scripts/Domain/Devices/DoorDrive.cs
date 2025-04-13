@@ -9,16 +9,16 @@ namespace SmartHome.Domain
         public DeviceId Id { get; }
         public float RatedPower { get; }
         public float ConsumedEnergy { get; private set; }
-
         public event Action<bool> OnSwitch;
         public bool IsOn { get; private set; }
+        public bool IsMoving => _isMoving;
+        public bool IsOpen => _progress >= 1f;
+        public bool IsClosed => _progress <= 0f;
         private float _progress; // 0 закрыто, 1 открыто
         private bool _targetOpen;
         private bool _isMoving;
         private float _useDuration;
-        public bool IsMoving => _isMoving;
-        public bool IsOpen => _progress >= 1f;
-        public bool IsClosed => _progress <= 0f;
+
 
         public DoorDrive(IElectricNode input, DeviceId id, float ratedPower, float useDuration)
         {
@@ -28,6 +28,9 @@ namespace SmartHome.Domain
             _useDuration = useDuration;
         }
 
+        /// <summary>
+        /// Команда открыть/закрыть дверь.
+        /// </summary>
         public void Switch(bool open)
         {
             if (_isMoving || _targetOpen == open) return;
@@ -36,6 +39,9 @@ namespace SmartHome.Domain
             OnSwitch?.Invoke(true);
         }
 
+        /// <summary>
+        /// Привод двери: открывается/закрывается со временем при наличии тока.
+        /// </summary>
         public void Tick(float deltaTime)
         {
             if (!_input.HasCurrent || !_isMoving) return;
@@ -43,7 +49,6 @@ namespace SmartHome.Domain
             var dir = _targetOpen ? 1f : -1f;
             _progress = Mathf.Clamp01(_progress + dir * deltaTime / _useDuration);
 
-            // 💡 Равномерное потребление энергии:
             float energyPerSecond = RatedPower / _useDuration;
             ConsumedEnergy += energyPerSecond * deltaTime;
 

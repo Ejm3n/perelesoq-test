@@ -5,8 +5,14 @@ using UnityEngine;
 
 namespace SmartHome.Serialization
 {
+    /// <summary>
+    /// Строит электрическую сеть по ассету: создает ноды, соединяет связи.
+    /// </summary>
     public static class ElectricNetworkBuilder
     {
+        /// <summary>
+        /// Создает и связывает устройства на основе ScriptableObject.
+        /// </summary>
         public static Dictionary<string, IElectricNode> BuildFromAsset(ElectricNetworkAsset asset,
             IDeviceRepository repo,
             List<CameraDevice> cameraDevices)
@@ -53,6 +59,9 @@ namespace SmartHome.Serialization
             return nodes;
         }
 
+        /// <summary>
+        /// Создает конкретную реализацию устройства по типу.
+        /// </summary>
         public static object CreateNode(ElectricDeviceType type, DeviceId id, float energyRequired, float useDuration)
         {
             return type switch

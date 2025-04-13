@@ -2,11 +2,16 @@ using UnityEngine;
 
 namespace SmartHome.Domain
 {
+    /// <summary>
+    /// Зарядная станция — источник тока для устройств с батареей (например, CleanerBot).
+    /// Работает только если есть ток на входе.
+    /// </summary>
     public sealed class ChargingStation : IDevice, IElectricNode, IInputAccepting, IOutputAccepting
     {
+        public DeviceId Id { get; }
         private IElectricNode _input;
         private IElectricNode _output;
-        public DeviceId Id { get; }
+
 
         public ChargingStation(DeviceId id)
         {

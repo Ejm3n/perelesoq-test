@@ -7,6 +7,9 @@ using UnityEngine.UI;
 
 namespace SmartHome.Presentation
 {
+    /// <summary>
+    /// Виджет для переключателя — использует UseCase для отправки сигнала.
+    /// </summary>
     public sealed class SwitchView : DeviceWidgetView
     {
         [SerializeField] private Toggle _toggle;

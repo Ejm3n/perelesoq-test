@@ -2,12 +2,15 @@ using System;
 
 namespace SmartHome.Domain
 {
+    /// <summary>
+    /// Устройство-камера, умеет быть выбранной/невыбранной.
+    /// </summary>
     public sealed class CameraDevice : IDevice
     {
         public DeviceId Id { get; }
         public event Action<bool> OnSelected;
-        private bool _isSelected;
         public bool IsSelected => _isSelected;
+        private bool _isSelected;
 
         public CameraDevice(DeviceId id)
         {

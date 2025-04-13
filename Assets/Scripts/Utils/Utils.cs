@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 namespace SmartHome.Utils
 {
+    /// <summary>
+    /// Вспомогательные функции. Общий статик класс, отлично подходит для общих функций, которые не относятся к конкретному классу.
+    /// </summary>
     public static class Utils
     {
         public static string FormatTime(float timeInSeconds)
@@ -22,6 +25,9 @@ namespace SmartHome.Utils
             Time.timeScale = scale;
         }
 
+        /// <summary>
+        /// Полностью перезагружает все открытые сцены в порядке загрузки.
+        /// </summary>
         public static void ReloadAllOpenScenes()
         {
             int count = SceneManager.sceneCount;

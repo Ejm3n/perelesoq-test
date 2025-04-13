@@ -3,9 +3,12 @@ using SmartHome.Domain;
 
 namespace SmartHome.Presentation
 {
+    /// <summary>
+    /// Базовый SceneView, автоматически привязывается по ID к соответствующему устройству.
+    /// </summary>
     public abstract class SceneViewBase<T> : MonoBehaviour where T : class, IDevice
     {
-        [SerializeField] protected string id;
+        [SerializeField] protected string _id;
         protected T _device;
 
         protected virtual void Awake()
@@ -15,7 +18,7 @@ namespace SmartHome.Presentation
 
         protected virtual void TryBind(DeviceId deviceId, IDevice device)
         {
-            if (deviceId.Value != id) return;
+            if (deviceId.Value != _id) return;
             if (device is not T typed) return;
 
             _device = typed;

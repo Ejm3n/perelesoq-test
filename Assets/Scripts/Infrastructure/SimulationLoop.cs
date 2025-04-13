@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace SmartHome.Infrastructure
 {
+    /// <summary>
+    /// Централизованный апдейт всех устройств через IDevice.Tick(dt).
+    /// Работает как рантайм-симуляция.
+    /// </summary>
     public sealed class SimulationLoop : MonoBehaviour
     {
         private Application.IDeviceRepository _repo;
