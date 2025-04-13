@@ -15,7 +15,6 @@ public class CleanerBotSceneView : SceneViewBase<CleanerBot>
     protected override void OnDeviceBound(CleanerBot bot)
     {
         _device = bot;
-        bot.DockPosition = _dockPoint.position;
         bot.OnStateChanged += HandleStateChange;
         HandleStateChange(bot.State);
     }

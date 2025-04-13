@@ -2,8 +2,9 @@ using UnityEngine;
 
 namespace SmartHome.Domain
 {
-    public sealed class ChargingStation : IDevice, IElectricNode, IOutputAccepting
+    public sealed class ChargingStation : IDevice, IElectricNode, IInputAccepting, IOutputAccepting
     {
+        private IElectricNode _input;
         private IElectricNode _output;
         public DeviceId Id { get; }
 
@@ -22,6 +23,11 @@ namespace SmartHome.Domain
             _output = output;
         }
 
-        public bool HasCurrent => true; // Всегда даёт ток
+        public bool HasCurrent => _input?.HasCurrent == true;
+
+        public void ConnectInput(IElectricNode input)
+        {
+            _input = input;
+        }
     }
 }

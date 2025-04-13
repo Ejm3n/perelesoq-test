@@ -26,7 +26,6 @@ namespace SmartHome.Domain
         public float ConsumedEnergy { get; private set; }
         public CleanerBotState State { get; private set; }
         public bool IsFullyCharged => Mathf.Approximately(BatteryLevel, BatteryCapacity);
-        public Vector3 DockPosition { get; set; } // передаётся из сценвью
 
         public event Action<CleanerBotState> OnStateChanged;
         public bool HasCurrent => BatteryLevel > 0f;
@@ -50,6 +49,11 @@ namespace SmartHome.Domain
                 Switch(false);
                 SetState(CleanerBotState.Idle);
             }
+        }
+
+        public int GetCurrentBatteryLevelPercent()
+        {
+            return (int)(BatteryLevel / BatteryCapacity * 100);
         }
 
         public void Switch(bool state)
