@@ -201,10 +201,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ff7aafb231c8994aa444ba83d47aefe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: AndGate 1
-  targetRenderer: {fileID: 3386247213280508309}
-  activeMat: {fileID: 2100000, guid: 8f06f88536682b94abaffa2764b52f9f, type: 2}
-  inactiveMat: {fileID: 2100000, guid: 0beffbed72a29764c911945ff80620af, type: 2}
+  _id: Gate
+  _targetRenderer: {fileID: 3386247213280508309}
+  _activeMat: {fileID: 2100000, guid: 8f06f88536682b94abaffa2764b52f9f, type: 2}
+  _inactiveMat: {fileID: 2100000, guid: 0beffbed72a29764c911945ff80620af, type: 2}
   _inputA: {fileID: 7389468757001462661}
   _inputB: {fileID: 4735559387770921667}
 --- !u!1 &2670087269659233843

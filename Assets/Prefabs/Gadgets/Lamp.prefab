@@ -1692,8 +1692,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbe1889161e712840a662487bc300270, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: Torsher 1
-  targets:
+  _id: TableLamp
+  _targets:
   - {fileID: 2774957767367426767}
   - {fileID: 3759430850911257487}
 --- !u!1 &9003575194112234733

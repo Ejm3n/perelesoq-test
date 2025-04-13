@@ -182,8 +182,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _statusText: {fileID: 6387652121872365520}
   _nameText: {fileID: 6757797905654733255}
-  cleanBtn: {fileID: 3770299535736808775}
-  buttonLabel: {fileID: 3568286926707051960}
+  _cleanBtn: {fileID: 3770299535736808775}
+  _buttonLabel: {fileID: 3568286926707051960}
 --- !u!224 &5908483769081157659 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4859924048897731613, guid: db3b5a5058a46724d9735bd2b0bb84e0, type: 3}

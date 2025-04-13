@@ -72,6 +72,10 @@ namespace SmartHome.Presentation
                     view.Init(bot);
                     DeviceFactoryNotifier.Notify(bot.Id, bot);
                 }
+                else if (device is ChargingStation chargingStation)
+                {
+                    DeviceFactoryNotifier.Notify(chargingStation.Id, chargingStation);
+                }
             }
         }
     }

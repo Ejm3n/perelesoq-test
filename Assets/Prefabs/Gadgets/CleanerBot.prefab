@@ -46,11 +46,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab2b2d1db80fb5f4eafc440e4073fb95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: CleanerBot
+  _id: CleanerBot
   _agent: {fileID: 8840785884335083447}
   _dockPoint: {fileID: 544567281266299978}
-  checkInterval: 1
-  randomRadius: 5
+  _checkInterval: 0
+  _randomRadius: 5
 --- !u!1 &544567281724061896
 GameObject:
   m_ObjectHideFlags: 0
@@ -5794,6 +5794,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 544567282484850698}
+  - component: {fileID: 1363147092360820702}
   m_Layer: 0
   m_Name: ChargeStation
   m_TagString: Untagged
@@ -5818,6 +5819,22 @@ Transform:
   m_Father: {fileID: 544567281266299978}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1363147092360820702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 544567282484850699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95f2ca83174297d41b9cc25bce66a551, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _id: ChargingStation
+  _targetRenderer: {fileID: 544567281856710636}
+  _activeMat: {fileID: 2100000, guid: 8f06f88536682b94abaffa2764b52f9f, type: 2}
+  _inactiveMat: {fileID: 2100000, guid: 0beffbed72a29764c911945ff80620af, type: 2}
 --- !u!1 &544567282596581349
 GameObject:
   m_ObjectHideFlags: 0

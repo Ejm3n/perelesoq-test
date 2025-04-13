@@ -22,7 +22,7 @@ namespace SmartHome.Serialization
             foreach (var def in asset.devices)
             {
                 var id = new DeviceId(def.id);
-                var node = CreateNode(def.type, id, def.energyRequired, def.useDuration);
+                var node = CreateNode(def.type, id, def.energyRequired, def.useDuration, def.batteryCapacity, def.drainPerSecond, def.chargePerSecond);
 
                 if (node is IDevice device)
                 {
@@ -62,7 +62,8 @@ namespace SmartHome.Serialization
         /// <summary>
         /// Создает конкретную реализацию устройства по типу.
         /// </summary>
-        public static object CreateNode(ElectricDeviceType type, DeviceId id, float energyRequired, float useDuration)
+        public static object CreateNode(ElectricDeviceType type, DeviceId id, float energyRequired, float useDuration, float batteryCapacity,
+         float drainPerSecond, float chargePerSecond)
         {
             return type switch
             {
@@ -74,7 +75,7 @@ namespace SmartHome.Serialization
                 ElectricDeviceType.OrGate => new GateOr(id),
                 ElectricDeviceType.Camera => new CameraDevice(id),
                 ElectricDeviceType.Bridge => new Bridge(id),
-                ElectricDeviceType.CleanerBot => new CleanerBot(id),
+                ElectricDeviceType.CleanerBot => new CleanerBot(id, batteryCapacity, drainPerSecond, chargePerSecond),
                 ElectricDeviceType.ChargingStation => new ChargingStation(id),
                 _ => throw new System.Exception($"Unsupported device type: {type}")
             };

@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ccbd9165eda8ef40a4bbd40b2aa97d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: Lamp
-  targetRenderer: {fileID: 7185220706437533140}
-  activeMat: {fileID: 2100000, guid: 559c96d2754c1774d952cc0f2979bbd0, type: 2}
-  inactiveMat: {fileID: 2100000, guid: d8a62ab40d402914da72efdd0c273534, type: 2}
+  _id: Lamp
+  _targetRenderer: {fileID: 7185220706437533140}
+  _activeMat: {fileID: 2100000, guid: 8f06f88536682b94abaffa2764b52f9f, type: 2}
+  _inactiveMat: {fileID: 2100000, guid: 0beffbed72a29764c911945ff80620af, type: 2}

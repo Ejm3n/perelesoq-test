@@ -1,0 +1,112 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4818055037a32ef4c98fe6893a8d16a7, type: 3}
+  m_Name: testGraph
+  m_EditorClassIdentifier: 
+  devices:
+  - id: PS
+    displayName: PS
+    consumptionMode: 0
+    energyRequired: 0
+    useDuration: 0
+    batteryCapacity: 0
+    drainPerSecond: 0
+    chargePerSecond: 0
+    type: 0
+    inputs: []
+    outputs:
+    - Switch 1
+    posX: 192
+    posY: 244
+  - id: Switch 1
+    displayName: Switch 1
+    consumptionMode: 0
+    energyRequired: 0
+    useDuration: 0
+    batteryCapacity: 0
+    drainPerSecond: 0
+    chargePerSecond: 0
+    type: 1
+    inputs:
+    - PS
+    outputs:
+    - Charging Station
+    posX: 450
+    posY: 250
+  - id: Charging Station
+    displayName: Charging Station
+    consumptionMode: 0
+    energyRequired: 0
+    useDuration: 0
+    batteryCapacity: 0
+    drainPerSecond: 0
+    chargePerSecond: 0
+    type: 9
+    inputs:
+    - Switch 1
+    outputs:
+    - CleanerBot
+    posX: 791
+    posY: 348
+  - id: CleanerBot
+    displayName: Cleaner Bot
+    consumptionMode: 3
+    energyRequired: 0
+    useDuration: 0
+    batteryCapacity: 50
+    drainPerSecond: 0.8
+    chargePerSecond: 1.6
+    type: 8
+    inputs:
+    - Charging Station
+    outputs: []
+    posX: 1047
+    posY: 358
+  - id: Cam 1
+    displayName: Cam 1
+    consumptionMode: 0
+    energyRequired: 0
+    useDuration: 0
+    batteryCapacity: 0
+    drainPerSecond: 0
+    chargePerSecond: 0
+    type: 6
+    inputs: []
+    outputs: []
+    posX: 296
+    posY: 538
+  - id: Cam
+    displayName: Cam
+    consumptionMode: 0
+    energyRequired: 0
+    useDuration: 0
+    batteryCapacity: 0
+    drainPerSecond: 0
+    chargePerSecond: 0
+    type: 6
+    inputs: []
+    outputs: []
+    posX: 57
+    posY: 503
+  - id: Cam 2
+    displayName: Cam 2
+    consumptionMode: 0
+    energyRequired: 0
+    useDuration: 0
+    batteryCapacity: 0
+    drainPerSecond: 0
+    chargePerSecond: 0
+    type: 6
+    inputs: []
+    outputs: []
+    posX: 542
+    posY: 539

@@ -470,7 +470,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _widgetFactory: {fileID: 360091073}
   _powerSourceView: {fileID: 424473124}
-  _electricAsset: {fileID: 11400000, guid: dcdacca102e328b43bc85735fd5de184, type: 2}
+  _electricAsset: {fileID: 11400000, guid: 44d1ac0a53bcf6746a04066f15e5afc8, type: 2}
 --- !u!4 &360091075
 Transform:
   m_ObjectHideFlags: 0

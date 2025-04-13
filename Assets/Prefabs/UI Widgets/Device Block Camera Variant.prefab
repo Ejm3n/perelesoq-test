@@ -315,7 +315,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _statusText: {fileID: 8157107180123564660}
   _nameText: {fileID: 3081971970542379139}
-  selectButton: {fileID: 8422871210411377291}
+  _selectButton: {fileID: 8422871210411377291}
 --- !u!224 &2806585787652514143 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4859924048897731613, guid: db3b5a5058a46724d9735bd2b0bb84e0, type: 3}

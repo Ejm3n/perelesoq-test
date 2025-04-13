@@ -10757,6 +10757,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd5ba4539e41fbc4f8778cbc2a49078b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: Cam 1
-  cameraTransform: {fileID: 0}
-  cameraRotation: {x: 45, y: -45, z: 0}
+  _id: Cam
+  _cameraTransform: {fileID: 0}
+  _cameraRotation: {x: 0, y: 0, z: 0}

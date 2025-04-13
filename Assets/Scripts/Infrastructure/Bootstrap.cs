@@ -31,18 +31,14 @@ namespace SmartHome.Infrastructure
             // 2. Загрузка графа и наполнение
             Dictionary<string, IElectricNode> nodeMap = ElectricNetworkBuilder.BuildFromAsset(_electricAsset, _repo, cameras);
 
-            // 3. Сбор имён
-            foreach (var def in _electricAsset.devices)
-            {
-                var id = new DeviceId(def.id);
-            }
-
-            // 4. Инициализация UseCases
+            // 3. Инициализация UseCases
             var toggleUC = new ToggleDeviceUseCase(_repo);
             var selectCameraUC = new SelectCameraUseCase(cameras);
-            selectCameraUC.Select(cameras[0]);
-
-            // 5. UI: PowerSource
+            if (cameras.Count > 0)
+                selectCameraUC.Select(cameras[0]);
+            else
+                Debug.LogError("No cameras found");
+            // 4. UI: PowerSource
             PowerSource powerSource = null;
             foreach (var node in nodeMap.Values)
             {
@@ -54,10 +50,10 @@ namespace SmartHome.Infrastructure
                 }
             }
 
-            // 6. UI: виджеты
+            // 5. UI: виджеты
             _widgetFactory.Init(_repo, toggleUC, selectCameraUC, powerSource);
 
-            // 7. Симуляция
+            // 6. Симуляция
             gameObject.AddComponent<SimulationLoop>().Init(_repo);
         }
     }
