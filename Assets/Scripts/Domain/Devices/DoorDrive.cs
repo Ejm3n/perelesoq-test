@@ -7,10 +7,10 @@ namespace SmartHome.Domain
     {
         private IElectricNode _input;
         public DeviceId Id { get; }
-        public float RatedPower { get; }
+        public float RatedPower { get { return _powerPerUse; } }
         public float ConsumedEnergy { get; private set; }
         public event Action<bool> OnSwitch;
-        public bool IsOn { get; private set; }
+        public bool IsOn { get { return _input.HasCurrent && _isMoving; } }
         public bool IsMoving => _isMoving;
         public bool IsOpen => _progress >= 1f;
         public bool IsClosed => _progress <= 0f;
@@ -18,13 +18,14 @@ namespace SmartHome.Domain
         private bool _targetOpen;
         private bool _isMoving;
         private float _useDuration;
+        private float _powerPerUse;
 
 
-        public DoorDrive(IElectricNode input, DeviceId id, float ratedPower, float useDuration)
+        public DoorDrive(IElectricNode input, DeviceId id, float powerPerUse, float useDuration)
         {
             _input = input;
             Id = id;
-            RatedPower = ratedPower;
+            _powerPerUse = powerPerUse;
             _useDuration = useDuration;
         }
 
@@ -62,7 +63,6 @@ namespace SmartHome.Domain
         public void RefreshState()
         {
             var prev = IsOn;
-            IsOn = _input.HasCurrent;
             if (IsOn != prev)
             {
                 OnSwitch?.Invoke(IsOn);

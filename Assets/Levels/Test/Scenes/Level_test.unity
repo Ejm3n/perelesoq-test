@@ -1811,6 +1811,10 @@ PrefabInstance:
       propertyPath: id
       value: Lamp 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6856418210460632049, guid: bed348c1be16d994e9e26e615014b115, type: 3}
+      propertyPath: _id
+      value: Lamp 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bed348c1be16d994e9e26e615014b115, type: 3}
 --- !u!4 &229311050 stripped
@@ -12950,6 +12954,10 @@ PrefabInstance:
       propertyPath: id
       value: Lamp 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6856418210460632049, guid: bed348c1be16d994e9e26e615014b115, type: 3}
+      propertyPath: _id
+      value: Lamp 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bed348c1be16d994e9e26e615014b115, type: 3}
 --- !u!4 &6484695515905750381 stripped
@@ -12971,6 +12979,10 @@ PrefabInstance:
     - target: {fileID: 1465874950250226312, guid: 3ac9501c7655dbf4496b16a1dcd37c86, type: 3}
       propertyPath: m_VersionIndex
       value: 173
+      objectReference: {fileID: 0}
+    - target: {fileID: 1708345171493429500, guid: 3ac9501c7655dbf4496b16a1dcd37c86, type: 3}
+      propertyPath: _id
+      value: Bridge 1
       objectReference: {fileID: 0}
     - target: {fileID: 2700473822297527079, guid: 3ac9501c7655dbf4496b16a1dcd37c86, type: 3}
       propertyPath: m_Mesh

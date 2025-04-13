@@ -26,11 +26,10 @@ namespace SmartHome.Domain
         {
             get
             {
-                Debug.Log($"RatedPower: {State} {_input?.HasCurrent}");
                 if (State == CleanerBotState.Charging && _input?.HasCurrent == true)
-                    return ChargeRate;
+                    return BatteryCapacity;
 
-                return IsOn ? DrainRate : 0f;
+                return 0f;
             }
         }
 

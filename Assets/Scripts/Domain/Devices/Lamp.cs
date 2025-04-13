@@ -10,15 +10,17 @@ namespace SmartHome.Domain
         public DeviceId Id { get; private set; }
         public event Action<bool> OnSwitch;
         public bool IsOn { get; private set; }
-        public float RatedPower { get; }
+        public float RatedPower { get { return _energyRequiredPerHour; } }
         public float ConsumedEnergy { get; private set; }
         private IElectricNode _input;
+        private float _energyRequiredPerHour;
 
         public Lamp(IElectricNode input, DeviceId id, float energyRequired)
         {
             _input = input;
             Id = id;
-            RatedPower = energyRequired;
+            _energyRequiredPerHour = energyRequired;
+            IsOn = true;
         }
 
         /// <summary>
@@ -27,7 +29,7 @@ namespace SmartHome.Domain
         public void Tick(float delta)
         {
             if (IsOn)
-                ConsumedEnergy += RatedPower / 3600f * delta; // потому что в час а не в секунду.
+                ConsumedEnergy += _energyRequiredPerHour / 3600f * delta; // потому что в час а не в секунду.
         }
 
         public void ConnectInput(IElectricNode node)
